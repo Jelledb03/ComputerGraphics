@@ -10,6 +10,12 @@ public class TestClass {
                 new int[]{3, 5, -8, 30}
         };
 
+        double[][] matrixTest = {
+                new double[]{1, 15, 20, 50},
+                new double[]{-12, 7, -9, 20},
+                new double[]{3, 5, -8, 30}
+        };
+
         int[][] matrixB = {
                 new int[]{12, -7, 13},
                 new int[]{2, 11, 10},
@@ -21,7 +27,7 @@ public class TestClass {
         System.out.println("Matrix B = " + Arrays.deepToString(matrixB));
         System.out.println("A x B = " + Arrays.deepToString(transformedMatrix));
 
-        Matrix matrix = new Matrix(matrixA);
+        Matrix matrix = new Matrix(matrixTest);
 
         System.out.println("Row size: " + matrix.get_row_size());
         System.out.println("Column size: " + matrix.get_column_size());
