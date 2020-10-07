@@ -104,20 +104,136 @@ public class Matrix3DFactory {
         };
         return new Matrix(transf_matrix);
     }
-    public Matrix create_shear_matrix(double h){
+
+    //How to implement shear functions?
+    //with px is being offset by margin of y
+    //Q = (f*Py + Px, Py, Pz)
+    public Matrix create_y_off_x_shear_matrix(double f){
         double[][] transf_matrix = {
-                new double[]{1, h, 0},
-                new double[]{0, 1, 0},
-                new double[]{0, 0, 1}
+                new double[]{1, f, 0, 0},
+                new double[]{0, 1, 0, 0},
+                new double[]{0, 0, 1, 0},
+                new double[]{0, 0, 0, 1}
 
         };
         return new Matrix(transf_matrix);
     }
-    public Matrix create_inv_shear_matrix(double h){
+    public Matrix create_inv_y_off_x_shear_matrix(double f){
         double[][] transf_matrix = {
-                new double[]{1, 0, 0},
-                new double[]{-h, 1, 0},
-                new double[]{0, 0, 1}
+                new double[]{1, -f, 0, 0},
+                new double[]{0, 1, 0, 0},
+                new double[]{0, 0, 1, 0},
+                new double[]{0, 0, 0, 1}
+
+        };
+        return new Matrix(transf_matrix);
+    }
+    //with px is being offset by margin of z
+    //Q = (f*Pz + Px, Py, Pz)
+    public Matrix create_z_off_x_shear_matrix(double f){
+        double[][] transf_matrix = {
+                new double[]{1, 0, f, 0},
+                new double[]{0, 1, 0, 0},
+                new double[]{0, 0, 1, 0},
+                new double[]{0, 0, 0, 1}
+
+        };
+        return new Matrix(transf_matrix);
+    }
+    public Matrix create_inv_z_off_x_shear_matrix(double f){
+        double[][] transf_matrix = {
+                new double[]{1, 0, -f, 0},
+                new double[]{0, 1, 0, 0},
+                new double[]{0, 0, 1, 0},
+                new double[]{0, 0, 0, 1}
+
+        };
+        return new Matrix(transf_matrix);
+    }
+    //with py is being offset by margin of x
+    //Q = (Px, f*Px + Py, Pz)
+    public Matrix create_x_off_y_shear_matrix(double f){
+        double[][] transf_matrix = {
+                new double[]{1, 0, 0, 0},
+                new double[]{f, 1, 0, 0},
+                new double[]{0, 0, 1, 0},
+                new double[]{0, 0, 0, 1}
+
+        };
+        return new Matrix(transf_matrix);
+    }
+    public Matrix create_inv_x_off_y_shear_matrix(double f){
+        double[][] transf_matrix = {
+                new double[]{1, 0, 0, 0},
+                new double[]{-f, 1, 0, 0},
+                new double[]{0, 0, 1, 0},
+                new double[]{0, 0, 0, 1}
+
+        };
+        return new Matrix(transf_matrix);
+    }
+    //with py is being offset by margin of z
+    //Q = (Px, f*Pz + Py, Pz)
+    public Matrix create_z_off_y_shear_matrix(double f){
+        double[][] transf_matrix = {
+                new double[]{1, 0, 0, 0},
+                new double[]{0, 1, f, 0},
+                new double[]{0, 0, 1, 0},
+                new double[]{0, 0, 0, 1}
+
+        };
+        return new Matrix(transf_matrix);
+    }
+    public Matrix create_inv_z_off_y_shear_matrix(double f){
+        double[][] transf_matrix = {
+                new double[]{1, 0, 0, 0},
+                new double[]{0, 1, -f, 0},
+                new double[]{0, 0, 1, 0},
+                new double[]{0, 0, 0, 1}
+
+        };
+        return new Matrix(transf_matrix);
+    }
+    //with px is being offset by margin of y
+    //Q = (Px, Py, f*Px + Pz)
+    public Matrix create_x_off_z_shear_matrix(double f){
+        double[][] transf_matrix = {
+                new double[]{1, 0, 0, 0},
+                new double[]{0, 1, 0, 0},
+                new double[]{f, 0, 1, 0},
+                new double[]{0, 0, 0, 1}
+
+        };
+        return new Matrix(transf_matrix);
+    }
+    public Matrix create_inv_x_off_z_shear_matrix(double f){
+        double[][] transf_matrix = {
+                new double[]{1, 0, 0, 0},
+                new double[]{0, 1, 0, 0},
+                new double[]{-f, 0, 1, 0},
+                new double[]{0, 0, 0, 1}
+
+        };
+        return new Matrix(transf_matrix);
+    }
+    //with px is being offset by margin of y
+    //Q = (Px, Py, f*Py + Pz)
+    public Matrix create_y_off_z_shear_matrix(double f){
+        double[][] transf_matrix = {
+                new double[]{1, 0, 0, 0},
+                new double[]{0, 1, 0, 0},
+                new double[]{0, f, 1, 0},
+                new double[]{0, 0, 0, 1}
+
+        };
+        return new Matrix(transf_matrix);
+    }
+    public Matrix create_inv_y_off_z_shear_matrix(double f){
+        double[][] transf_matrix = {
+                new double[]{1, 0, 0, 0},
+                new double[]{0, 1, 0, 0},
+                new double[]{0, -f, 1, 0},
+                new double[]{0, 0, 0, 1}
 
         };
         return new Matrix(transf_matrix);
