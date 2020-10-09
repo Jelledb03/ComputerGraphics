@@ -3,8 +3,8 @@ public class Matrix2DFactory {
     }
     public Matrix create_transl_matrix(double m13, double m23){
         double[][] transf_matrix = {
-                new double[]{0, 0, m13},
-                new double[]{0, 0, m23},
+                new double[]{1, 0, m13},
+                new double[]{0, 1, m23},
                 new double[]{0, 0, 1}
 
         };
@@ -12,8 +12,8 @@ public class Matrix2DFactory {
     }
     public Matrix create_inv_transl_matrix(double m13, double m23){
         double[][] transf_matrix = {
-                new double[]{0, 0, -m13},
-                new double[]{0, 0, -m23},
+                new double[]{1, 0, -m13},
+                new double[]{0, 1, -m23},
                 new double[]{0, 0, 1}
 
         };

@@ -4,6 +4,8 @@ public class TestClass {
     public static void main(String[] args) {
         double pi = Math.PI;
         Matrix2DFactory matrixFactory = new Matrix2DFactory();
+        MatrixTransformer matrixTransformer = new MatrixTransformer();
+
         int[][] matrixA = {
                 new int[]{1, 15, 20, 50},
                 new int[]{-12, 7, -9, 20},
@@ -27,15 +29,19 @@ public class TestClass {
         System.out.println("Row size: " + matrix.get_row_size());
         System.out.println("Column size: " + matrix.get_column_size());
 
-        double m13 = 2;
-        double m23 = 5;
-        Matrix transformed_matrix = matrixFactory.create_trans_matrix(m13, m23);
+        //matrix factory tests
 
-        System.out.println(Arrays.deepToString(transformed_matrix.get_matrix()));
+        //double m13 = 2;
+        //double m23 = 5;
+        //Matrix transformed_matrix = matrixFactory.create_transl_matrix(m13, m23);
+
+        //System.out.println(Arrays.deepToString(transformed_matrix.get_matrix()));
 
         double phi = pi/6;
-        transformed_matrix = matrixFactory.create_rot_matrix(phi);
+        Matrix transformed_matrix = matrixFactory.create_rot_matrix(phi);
         System.out.println(Arrays.deepToString(transformed_matrix.get_matrix()));
+        System.out.println(transformed_matrix.get_column_size());
+        System.out.println(transformed_matrix.get_row_size());
 
         double sx = 1;
         double sy = 2;
@@ -44,5 +50,26 @@ public class TestClass {
 
         transformed_matrix = matrixFactory.create_inv_scal_matrix(sx,sy);
         System.out.println(Arrays.deepToString(transformed_matrix.get_matrix()));
+
+        //Matrix transformer test with Point and MatrixFactory
+        //PointA coordinates
+        double x = 50;
+        double y = 50;
+
+        //Transformation Parameters
+        double m13 = 50;
+        double m23 = 0;
+
+        Point pointA = new Point(x,y);
+        Matrix translationMatrix = matrixFactory.create_transl_matrix(m13, m23);
+        System.out.println(Arrays.deepToString(pointA.get_point()));
+        System.out.println(Arrays.deepToString(translationMatrix.get_matrix()));
+
+        double[][] transformedMatrix = matrixTransformer.multiplyMatrices(translationMatrix.get_matrix(), pointA.get_point());
+
+        System.out.println(Arrays.deepToString(transformedMatrix));
+
+        GUI gui = new GUI(500,500);
+        gui.setVisible(true);
     }
 }

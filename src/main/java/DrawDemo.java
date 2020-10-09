@@ -15,7 +15,7 @@ public class DrawDemo extends Frame {
     }
 
     private void prepareGUI(){
-        setSize(400,400);
+        setSize(500,500);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent windowEvent){
                 System.exit(0);

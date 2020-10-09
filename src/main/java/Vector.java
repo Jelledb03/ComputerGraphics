@@ -1,8 +1,30 @@
 public class Vector {
-    double[] vector;
+    private double[][] vector;
 
-    //Creates a point with x and y coordinates
+    //Creates a vector with x and y coordinates
     public Vector(double x, double y) {
-        this.vector = new double[]{x,y,0};
+        this.vector = new double[][]{
+                new double[]{x},
+                new double[]{y},
+                new double[]{0}
+        };
+    }
+
+    //Creates a vector with x and y coordinates
+    public Vector(double x, double y, double z) {
+        this.vector = new double[][]{
+                new double[]{x},
+                new double[]{y},
+                new double[]{z},
+                new double[]{0}
+        };
+    }
+
+    public double[][] get_vector() {
+        return vector;
+    }
+
+    public void set_vector(double[][] vector) {
+        this.vector = vector;
     }
 }
