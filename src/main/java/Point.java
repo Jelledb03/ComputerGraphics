@@ -53,27 +53,27 @@ public class Point {
         this.point = point;
     }
 
-    public double getX() {
+    public double get_X() {
         return x;
     }
 
-    public void setX(double x) {
+    public void set_X(double x) {
         this.x = x;
     }
 
-    public double getY() {
+    public double get_Y() {
         return y;
     }
 
-    public void setY(double y) {
+    public void set_Y(double y) {
         this.y = y;
     }
 
-    public double getZ() {
+    public double get_Z() {
         return z;
     }
 
-    public void setZ(double z) {
+    public void set_Z(double z) {
         this.z = z;
     }
 }

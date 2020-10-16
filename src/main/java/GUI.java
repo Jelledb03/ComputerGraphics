@@ -1,7 +1,6 @@
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Arrays;
 
 public class GUI extends Frame {
 
@@ -43,7 +42,7 @@ public class GUI extends Frame {
 
         //Transformation Parameters
         double m13 = 0;
-        double m23 = -50;
+        double m23 = 50;
 
         Point pointA = new Point(x,y);
         Matrix translationMatrix = matrixFactory.create_transl_matrix(m13, m23);
@@ -52,8 +51,8 @@ public class GUI extends Frame {
         Point pointB = new Point(transformedMatrix);
         //System.out.println(pointB.getX() + " " + pointB.getY());
 
-        drawPoint(g2, pointA.getX(), pointA.getY());
-        drawPoint(g2, pointB.getX(), pointB.getY());
+        drawPoint(g2, pointA.get_X(), pointA.get_Y());
+        drawPoint(g2, pointB.get_X(), pointB.get_Y());
 
     }
 
