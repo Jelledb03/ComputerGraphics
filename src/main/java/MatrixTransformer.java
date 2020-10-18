@@ -12,7 +12,6 @@ public class MatrixTransformer {
                 result[row][col] = multiplyMatricesCell(firstMatrix, secondMatrix, row, col);
             }
         }
-
         return result;
     }
 

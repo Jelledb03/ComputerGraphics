@@ -17,9 +17,8 @@ public class TestHitPoint {
 
         Sphere genericSphere = new Sphere(sphere_transformation_matrix, sphere_inv_transformation_matrix);
 
-        HitObject hit = genericSphere.sphere_hit_detec(ray);
+        HitObject hit = genericSphere.hit_reg(ray);
         System.out.println(hit.get_hit_time());
-
 
         System.out.println(hit.get_hit_point().get_X() + " " + hit.get_hit_point().get_Y() + " " + hit.get_hit_point().get_Z());
     }
