@@ -7,11 +7,11 @@ public class Sphere extends Object {
     //Op het moment enkel geimplementeerd voor generic spheres
     //Moet nog aangepast worden naar hitregistratie met alle transformeerde spheres zie p620
     @Override
-    public double hit_reg(Ray ray) {
+    public HitObject hit_reg(Ray ray) {
         return sphere_hit_detec(ray);
     }
 
-    public double sphere_hit_detec(Ray ray){
+    public HitObject sphere_hit_detec(Ray ray){
         //Hier gaan we A,B en C eerst berekenen
         Point S = ray.get_eye();
         Vector c = ray.get_dir();
@@ -33,6 +33,11 @@ public class Sphere extends Object {
             //Find lowest hit time
             t_hit = Math.min(t_hit1, t_hit2);
         }
-        return t_hit;
+        //Going to create a hit object here
+        double x = S.get_X() + c.get_X()*t_hit;
+        double y = S.get_Y() + c.get_Y()*t_hit;
+        double z = S.get_Z() + c.get_Z()*t_hit;
+        Point hitPoint = new Point(x, y, z);
+        return new HitObject(hitPoint, t_hit);
     }
 }

@@ -28,5 +28,5 @@ public abstract class Object {
     //Nadat dit voor alle objecten gebeurd is zal er moeten nagekeken worden wat de laagste hit time is en hiermee het hitpoint berekenen
     //Want in dit hitpoint zal de ray daadwerkelijk komen en raken. De andere hitpoints kunnen mogelijk zijn van objecten achter dit object (zijn we niet in geintresseerd)
     //Verder uitwerken in de overgeerfde klassen
-    public abstract double hit_reg(Ray ray);
+    public abstract HitObject hit_reg(Ray ray);
 }
