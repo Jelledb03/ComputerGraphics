@@ -39,4 +39,60 @@ public class Camera {
         this.H = H;
         this.N = N;
     }
+
+    public Point get_eye() {
+        return eye;
+    }
+
+    public void set_eye(Point eye) {
+        this.eye = eye;
+    }
+
+    public Vector get_u() {
+        return u;
+    }
+
+    public void set_u(Vector u) {
+        this.u = u;
+    }
+
+    public Vector get_v() {
+        return v;
+    }
+
+    public void set_v(Vector v) {
+        this.v = v;
+    }
+
+    public Vector get_n() {
+        return n;
+    }
+
+    public void set_N(double n) {
+        N = n;
+    }
+
+    public double get_N() {
+        return N;
+    }
+
+    public void set_n(Vector n) {
+        this.n = n;
+    }
+
+    public int get_w() {
+        return W;
+    }
+
+    public void set_w(int w) {
+        W = w;
+    }
+
+    public int get_h() {
+        return H;
+    }
+
+    public void set_h(int h) {
+        H = h;
+    }
 }

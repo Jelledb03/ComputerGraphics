@@ -50,6 +50,18 @@ public class Vector {
         }
     }
 
+    private double calculate_magnitude() {
+        return Math.sqrt(Math.pow(x,2) + Math.pow(y,2) + Math.pow(z,2));
+    }
+
+    public Vector normalize(){
+        double vector_magnitude = calculate_magnitude();
+        double x_norm = x/vector_magnitude;
+        double y_norm = y/vector_magnitude;
+        double z_norm = z/vector_magnitude;
+        return new Vector(x_norm, y_norm, z_norm);
+    }
+
     public double[][] get_vector() {
         return vector;
     }
