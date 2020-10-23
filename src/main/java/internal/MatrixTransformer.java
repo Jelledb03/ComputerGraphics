@@ -1,4 +1,4 @@
-package matrix_related;
+package internal;
 
 public class MatrixTransformer {
     public double[][] createTransformationMatrix(double[][] MatrixA, double[][] MatrixB) {

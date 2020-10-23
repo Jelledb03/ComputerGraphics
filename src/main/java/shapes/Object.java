@@ -1,7 +1,7 @@
 package shapes;
 
 import internal.*;
-import matrix_related.MatrixTransformer;
+import internal.MatrixTransformer;
 
 import java.util.Arrays;
 
@@ -45,21 +45,21 @@ public abstract class Object {
         //System.out.println(Arrays.deepToString(this.get_inverse_transformation_matrix().get_matrix()));
         double[][] point_s = matrixTransformer.multiplyMatrices(this.get_inverse_transformation_matrix().get_matrix(), S.get_point());
         double[][] vector_c = matrixTransformer.multiplyMatrices(this.get_inverse_transformation_matrix().get_matrix(), c.get_vector());
-        System.out.println("point: " + Arrays.deepToString(point_s));
-        System.out.println("vector: " + Arrays.deepToString(vector_c));
+        //System.out.println("point: " + Arrays.deepToString(point_s));
+        //System.out.println("vector: " + Arrays.deepToString(vector_c));
         Point S_t = new Point(point_s);
         Vector c_t = new Vector(vector_c);
 
         //2. Calculate hit_time with transformed ray
         double t_hit = sphere_hit_detec(S_t, c_t);
         if (t_hit == 0) {
-            return null;
+            return new HitObject();
         } else {
             //3. Going to create a hit object here and calculate hit point with original ray
             Point hitPoint = calculate_hit_point(S, c, t_hit);
             if (hitPoint == null) {
                 //This can happen, for example when looking for an intersection with a square
-                return null;
+                return new HitObject();
             } else {
                 return new HitObject(hitPoint, t_hit);
             }

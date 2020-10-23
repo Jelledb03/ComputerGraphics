@@ -1,7 +1,7 @@
 import internal.Matrix;
 import internal.Point;
-import matrix_related.Matrix2DFactory;
-import matrix_related.MatrixTransformer;
+import depricated.Matrix2DFactory;
+import internal.MatrixTransformer;
 
 import java.util.Arrays;
 

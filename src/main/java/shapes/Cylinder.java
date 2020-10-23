@@ -27,25 +27,25 @@ public class Cylinder extends Object {
         double B = c_t.get_X() * S_t.get_X() + c_t.get_Y() * S_t.get_Y() - F*d;
         double C = Math.pow(S_t.get_X(), 2) + Math.pow(S_t.get_Y(), 2) - Math.pow(F, 2);
         double Discriminant = Math.pow(B, 2) - A * C;
-        System.out.println(A);
-        System.out.println(B);
-        System.out.println(C);
-        System.out.println(Discriminant);
+//        System.out.println(A);
+//        System.out.println(B);
+//        System.out.println(C);
+//        System.out.println(Discriminant);
         double t_hit1 = 0;
         double t_hit2 = 0;
         //lowest hit time;
         double t_hit_min = 0;
         int surface = 0;
         if (Discriminant < 0) {
-            System.out.println("Geen hitpunten");
+            //System.out.println("Geen hitpunten");
         } else if (Discriminant == 0) {
             t_hit1 = t_hit2 = (-B) / A;
         } else {
             t_hit1 = (-B) / A + Math.sqrt(Discriminant) / A;
             t_hit2 = (-B) / A - Math.sqrt(Discriminant) / A;
         }
-        System.out.println(t_hit1);
-        System.out.println(t_hit2);
+        //System.out.println(t_hit1);
+        //System.out.println(t_hit2);
         //Moeten deze internal.Point objecten aanmaken om na te gaan of de hitpoints wel in de cylinder liggen.
         Point hit_point_1 = calculate_hit_point(S_t, c_t, t_hit1);
         Point hit_point_2 = calculate_hit_point(S_t, c_t, t_hit2);

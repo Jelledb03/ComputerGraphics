@@ -1,4 +1,4 @@
-package matrix_related;
+package depricated;
 
 import internal.Matrix;
 

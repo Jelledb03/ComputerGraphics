@@ -15,7 +15,7 @@ public class Sphere extends Object {
 //        //Kan ik hier initialiseren of meegeven als parameter (not sure wat het beste is)
 //        internal.Point S = ray.get_eye();
 //        internal.Vector c = ray.get_dir();
-//        matrix_related.MatrixTransformer matrixTransformer = new matrix_related.MatrixTransformer();
+//        internal.MatrixTransformer matrixTransformer = new internal.MatrixTransformer();
 //        //1. Have to transform ray with inverse transformation off sphere
 //        System.out.println(Arrays.deepToString(c.get_vector()));
 //        System.out.println(Arrays.deepToString(this.get_inverse_transformation_matrix().get_matrix()));
@@ -45,14 +45,16 @@ public class Sphere extends Object {
 //        System.out.println(C);
         double t_hit = 0;
         if(Discriminant < 0){
-            System.out.println("Geen hitpunten");
+            //System.out.println("Geen hitpunten");
         }else if(Discriminant == 0){
             t_hit = (-B)/A;
+            //System.out.println("hit");
         }else{
             double t_hit1 = (-B)/A + Math.sqrt(Discriminant)/A;
             double t_hit2 = (-B)/A - Math.sqrt(Discriminant)/A;
             //Find lowest hit time
             t_hit = Math.min(t_hit1, t_hit2);
+            //System.out.println("hit");
         }
         return t_hit;
     }

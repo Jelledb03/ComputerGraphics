@@ -1,4 +1,4 @@
-package matrix_related;
+package internal;
 
 import internal.Matrix;
 

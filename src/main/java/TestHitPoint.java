@@ -1,5 +1,5 @@
 import internal.*;
-import matrix_related.Matrix3DFactory;
+import internal.Matrix3DFactory;
 import shapes.Cylinder;
 import shapes.Sphere;
 import shapes.Square;

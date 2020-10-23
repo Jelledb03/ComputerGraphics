@@ -5,10 +5,19 @@ public class HitObject {
     //Later this object will also include a color and potentially a parameter that indicates reflection or refraction
     private Point hit_point;
     private double hit_time;
+    private boolean collided;
+
+    //Used for lowest hit time hitobject in world (only the collided boolean is used)
+    public HitObject() {
+        this.hit_point = new Point(0, 0, 0);
+        this.hit_time = 0;
+        this.collided = false;
+    }
 
     public HitObject(Point hit_point, double hit_time) {
         this.hit_point = hit_point;
         this.hit_time = hit_time;
+        this.collided = true;
     }
 
     public Point get_hit_point() {
@@ -25,5 +34,13 @@ public class HitObject {
 
     public void set_hit_time(double hit_time) {
         this.hit_time = hit_time;
+    }
+
+    public boolean is_collided() {
+        return collided;
+    }
+
+    public void set_collided(boolean collided) {
+        this.collided = collided;
     }
 }
