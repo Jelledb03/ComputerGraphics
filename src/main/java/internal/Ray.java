@@ -1,3 +1,5 @@
+package internal;
+
 public class Ray {
     private Point eye;
     private Vector dir;

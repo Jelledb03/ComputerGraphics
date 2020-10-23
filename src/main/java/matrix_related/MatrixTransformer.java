@@ -1,10 +1,12 @@
+package matrix_related;
+
 public class MatrixTransformer {
     public double[][] createTransformationMatrix(double[][] MatrixA, double[][] MatrixB) {
         return multiplyMatrices(MatrixA, MatrixB);
     }
 
     //Calculates the entire return matrix by multiplying both matrices
-    double[][] multiplyMatrices(double[][] firstMatrix, double[][] secondMatrix) {
+    public double[][] multiplyMatrices(double[][] firstMatrix, double[][] secondMatrix) {
         double[][] result = new double[firstMatrix.length][secondMatrix[0].length];
 
         for (int row = 0; row < result.length; row++) {
@@ -17,9 +19,11 @@ public class MatrixTransformer {
 
     //Calculates one cell of the result matrix by multiplying the row of the firstMatrix with the column of the secondMatrix
     double multiplyMatricesCell(double[][] firstMatrix, double[][] secondMatrix, int row, int col) {
-        int matrix_cell = 0;
+        double matrix_cell = 0;
         for (int i = 0; i < secondMatrix.length; i++) {
-            matrix_cell += firstMatrix[row][i] * secondMatrix[i][col];
+            double first_cell = firstMatrix[row][i];
+            double second_cell = secondMatrix[i][col];
+            matrix_cell += first_cell * second_cell;
         }
         return matrix_cell;
     }

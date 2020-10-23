@@ -1,3 +1,9 @@
+package shapes;
+
+import internal.Matrix;
+import internal.Point;
+import internal.Vector;
+
 public class Cylinder extends Object {
     private double s;
 
@@ -24,6 +30,7 @@ public class Cylinder extends Object {
         System.out.println(A);
         System.out.println(B);
         System.out.println(C);
+        System.out.println(Discriminant);
         double t_hit1 = 0;
         double t_hit2 = 0;
         //lowest hit time;
@@ -39,7 +46,7 @@ public class Cylinder extends Object {
         }
         System.out.println(t_hit1);
         System.out.println(t_hit2);
-        //Moeten deze Point objecten aanmaken om na te gaan of de hitpoints wel in de cylinder liggen.
+        //Moeten deze internal.Point objecten aanmaken om na te gaan of de hitpoints wel in de cylinder liggen.
         Point hit_point_1 = calculate_hit_point(S_t, c_t, t_hit1);
         Point hit_point_2 = calculate_hit_point(S_t, c_t, t_hit2);
         boolean correct_hit_1 = false;
@@ -52,6 +59,7 @@ public class Cylinder extends Object {
         if(correct_hit_1 && correct_hit_2){
             //Uiteindelijk willen we hier enkel de kleinste hit time returnen
             //Surface is hier 0
+            //Misschien hier nog nakijken of hit_time groter is dan 0. Wel nog eens navragen
             t_hit_min = Math.min(t_hit1, t_hit2);
         }else if(correct_hit_1){
             t_hit_min = t_hit1;
@@ -61,7 +69,8 @@ public class Cylinder extends Object {
         //Base
         //Intersectie bepalen met z=0
         //Intersectie als x² + y² < 1
-        if (S_t.get_Z() != 0) {
+        //Oog mag niet op z=0 zitten (want dan is er al een intersectie op tijdstip 0 en er moet ook een z beweging zijn van de ray)
+        if (S_t.get_Z() != 0 && c_t.get_Z() !=0) {
             //Dit berekent de hit_time wanneer er een intersectie is en returned deze
             t_hit1 = -(S_t.get_Z() / c_t.get_Z());
             hit_point_1 = calculate_hit_point(S_t, c_t, t_hit1);
@@ -70,11 +79,15 @@ public class Cylinder extends Object {
             //Betekent dat hitpoint in de base van de cylinder ligt
             if(Math.pow(x, 2) + Math.pow(y, 2) < 1)
                 t_hit_min = Math.min(t_hit_min, t_hit1);
+                //Hit zal op base eerst gebeuren
+                if(t_hit_min == t_hit1)
+                    surface = 1;
         }
         //Cap
         //Intersectie bepalen met z=1
         //Intersectie als x² + y² < s²
-        if (S_t.get_Z() != 1) {
+        //Oog mag niet op z=1 zitten (want dan is er al een intersectie op tijdstip 0 en er moet ook een z beweging zijn van de ray)
+        if (S_t.get_Z() != 1 && c_t.get_Z() !=0) {
             //Dit berekent de hit_time wanneer er een intersectie is en returned deze
             t_hit1 = -(S_t.get_Z() / c_t.get_Z());
             hit_point_1 = calculate_hit_point(S_t, c_t, t_hit1);
@@ -83,6 +96,9 @@ public class Cylinder extends Object {
             //Betekent dat hitpoint in de cap van de cylinder ligt
             if(Math.pow(x, 2) + Math.pow(y, 2) < Math.pow(s, 2))
                 t_hit_min = Math.min(t_hit_min, t_hit1);
+            //hit zal gebeuren op cap
+            if(t_hit_min == t_hit1)
+                surface = 2;
         }
         return t_hit_min;
     }

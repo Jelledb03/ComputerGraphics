@@ -1,3 +1,7 @@
+package matrix_related;
+
+import internal.Matrix;
+
 public class Matrix2DFactory {
     public Matrix2DFactory() {
     }

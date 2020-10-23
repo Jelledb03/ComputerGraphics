@@ -1,28 +1,28 @@
-public class Vector {
-    private double[][] vector;
+package internal;
+
+public class Point {
+    private double[][] point;
     private double x;
     private double y;
     private double z;
 
-    //Creates a vector with x and y coordinates
-    public Vector(double x, double y) {
-        this.vector = new double[][]{
+    //Creates a point with x and y coordinates
+    public Point(double x, double y) {
+        this.point = new double[][]{
                 new double[]{x},
                 new double[]{y},
-                new double[]{0}
+                new double[]{1}
         };
         this.x = x;
         this.y = y;
         this.z = 0;
     }
-
-    //Creates a vector with x and y coordinates
-    public Vector(double x, double y, double z) {
-        this.vector = new double[][]{
+    public Point(double x, double y, double z) {
+        this.point = new double[][]{
                 new double[]{x},
                 new double[]{y},
                 new double[]{z},
-                new double[]{0}
+                new double[]{1}
         };
         this.x = x;
         this.y = y;
@@ -30,29 +30,30 @@ public class Vector {
     }
 
     //Have to implement checkers that it is indeed a point? Otherwise not allow it?
-    public Vector(double[][] vector) {
-        if(vector.length == 3 && vector[0].length == 1){
-            this.vector = vector;
-            this.x = vector[0][0];
-            this.y = vector[1][0];
+    public Point(double[][] point) {
+        if(point.length == 3 && point[0].length == 1){
+            this.point = point;
+            this.x = point[0][0];
+            this.y = point[1][0];
             this.z = 0;
         }
-        else if(vector.length == 4 && vector[0].length == 1){
-            this.vector = vector;
-            this.x = vector[0][0];
-            this.y = vector[1][0];
-            this.z = vector[2][0];
+        else if(point.length == 4 && point[0].length == 1){
+            this.point = point;
+            this.x = point[0][0];
+            this.y = point[1][0];
+            this.z = point[2][0];
         }else {
             //Can we return a error message in another else loop, where the point can't be created because it isn't a point
+            throw new IllegalArgumentException("Vector size needs to be right");
         }
     }
 
-    public double[][] get_vector() {
-        return vector;
+    public double[][] get_point() {
+        return point;
     }
 
-    public void set_vector(double[][] vector) {
-        this.vector = vector;
+    public void set_point(double[][] point) {
+        this.point = point;
     }
 
     public double get_X() {

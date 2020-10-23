@@ -1,3 +1,9 @@
+package shapes;
+
+import internal.Matrix;
+import internal.Point;
+import internal.Vector;
+
 public class Square extends Object {
     //In boek p630 spreken ze over de hitregistratie met een square.
     //De generieke square ligt op de z=0 plane en heeft coordinaten -1 <= Px <= 1 en -1 <= Py <= 1

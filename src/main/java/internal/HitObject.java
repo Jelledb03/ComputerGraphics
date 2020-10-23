@@ -1,3 +1,5 @@
+package internal;
+
 public class HitObject {
     //This will create a hit object that will include the hit point in the 3D world, the hit time (when the ray hits, have to search for the lowest)
     //Later this object will also include a color and potentially a parameter that indicates reflection or refraction

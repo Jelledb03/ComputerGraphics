@@ -1,3 +1,8 @@
+import internal.Matrix;
+import internal.Point;
+import matrix_related.Matrix2DFactory;
+import matrix_related.MatrixTransformer;
+
 import java.util.Arrays;
 
 public class TestClass {
@@ -33,7 +38,7 @@ public class TestClass {
 
         //double m13 = 2;
         //double m23 = 5;
-        //Matrix transformed_matrix = matrixFactory.create_transl_matrix(m13, m23);
+        //internal.Matrix transformed_matrix = matrixFactory.create_transl_matrix(m13, m23);
 
         //System.out.println(Arrays.deepToString(transformed_matrix.get_matrix()));
 
@@ -51,7 +56,7 @@ public class TestClass {
         transformed_matrix = matrixFactory.create_inv_scal_matrix(sx,sy);
         System.out.println(Arrays.deepToString(transformed_matrix.get_matrix()));
 
-        //Matrix transformer test with Point and MatrixFactory
+        //internal.Matrix transformer test with internal.Point and MatrixFactory
         //PointA coordinates
         double x = 50;
         double y = 50;

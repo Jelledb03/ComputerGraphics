@@ -1,3 +1,9 @@
+package shapes;
+
+import internal.Matrix;
+import internal.Point;
+import internal.Vector;
+
 public class Cube extends Object {
     public Cube(Matrix transformation_matrix, Matrix inverse_transformation_matrix) {
         super(transformation_matrix, inverse_transformation_matrix);

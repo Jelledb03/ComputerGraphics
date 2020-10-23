@@ -1,3 +1,5 @@
+package internal;
+
 public class Matrix {
     private int row_size;
     private int column_size;

@@ -1,3 +1,8 @@
+package shapes;
+
+import internal.*;
+import matrix_related.MatrixTransformer;
+
 import java.util.Arrays;
 
 //Wanneer we dit als abstract classificieren kunnen we hier geen objecten van initialiseren
@@ -36,8 +41,8 @@ public abstract class Object {
         Vector c = ray.get_dir();
         MatrixTransformer matrixTransformer = new MatrixTransformer();
         //1. Have to transform ray with inverse transformation off sphere
-        System.out.println(Arrays.deepToString(c.get_vector()));
-        System.out.println(Arrays.deepToString(this.get_inverse_transformation_matrix().get_matrix()));
+        //System.out.println(Arrays.deepToString(c.get_vector()));
+        //System.out.println(Arrays.deepToString(this.get_inverse_transformation_matrix().get_matrix()));
         double[][] point_s = matrixTransformer.multiplyMatrices(this.get_inverse_transformation_matrix().get_matrix(), S.get_point());
         double[][] vector_c = matrixTransformer.multiplyMatrices(this.get_inverse_transformation_matrix().get_matrix(), c.get_vector());
         System.out.println("point: " + Arrays.deepToString(point_s));

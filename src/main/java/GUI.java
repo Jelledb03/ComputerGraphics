@@ -1,3 +1,8 @@
+import internal.Matrix;
+import internal.Point;
+import matrix_related.Matrix2DFactory;
+import matrix_related.MatrixTransformer;
+
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -35,7 +40,7 @@ public class GUI extends Frame {
         */
         Matrix2DFactory matrixFactory = new Matrix2DFactory();
         MatrixTransformer matrixTransformer = new MatrixTransformer();
-        //Matrix transformer test with Point and MatrixFactory
+        //internal.Matrix transformer test with internal.Point and MatrixFactory
         //PointA coordinates
         double x = 100;
         double y = 100;
@@ -44,11 +49,11 @@ public class GUI extends Frame {
         double m13 = 0;
         double m23 = 50;
 
-        Point pointA = new Point(x,y);
+        internal.Point pointA = new internal.Point(x,y);
         Matrix translationMatrix = matrixFactory.create_transl_matrix(m13, m23);
 
         double[][] transformedMatrix = matrixTransformer.multiplyMatrices(translationMatrix.get_matrix(), pointA.get_point());
-        Point pointB = new Point(transformedMatrix);
+        Point pointB = new internal.Point(transformedMatrix);
         //System.out.println(pointB.getX() + " " + pointB.getY());
 
         drawPoint(g2, pointA.get_X(), pointA.get_Y());

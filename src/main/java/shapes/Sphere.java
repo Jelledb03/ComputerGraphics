@@ -1,4 +1,8 @@
-import java.util.Arrays;
+package shapes;
+
+import internal.Matrix;
+import internal.Point;
+import internal.Vector;
 
 public class Sphere extends Object {
     public Sphere(Matrix transformation_matrix, Matrix inverse_transformation_matrix) {
@@ -7,11 +11,11 @@ public class Sphere extends Object {
 
     //Hier gaan we dan daadwerkelijk de hitregistratie doen
 //    @Override
-//    public HitObject hit_reg(Ray ray) {
+//    public internal.HitObject hit_reg(internal.Ray ray) {
 //        //Kan ik hier initialiseren of meegeven als parameter (not sure wat het beste is)
-//        Point S = ray.get_eye();
-//        Vector c = ray.get_dir();
-//        MatrixTransformer matrixTransformer = new MatrixTransformer();
+//        internal.Point S = ray.get_eye();
+//        internal.Vector c = ray.get_dir();
+//        matrix_related.MatrixTransformer matrixTransformer = new matrix_related.MatrixTransformer();
 //        //1. Have to transform ray with inverse transformation off sphere
 //        System.out.println(Arrays.deepToString(c.get_vector()));
 //        System.out.println(Arrays.deepToString(this.get_inverse_transformation_matrix().get_matrix()));
@@ -19,14 +23,14 @@ public class Sphere extends Object {
 //        double[][] vector_c = matrixTransformer.multiplyMatrices(this.get_inverse_transformation_matrix().get_matrix(), c.get_vector());
 //        System.out.println("point: " + Arrays.deepToString(point_s));
 //        System.out.println("vector: " + Arrays.deepToString(vector_c));
-//        Point S_t = new Point(point_s);
-//        Vector c_t = new Vector(vector_c);
+//        internal.Point S_t = new internal.Point(point_s);
+//        internal.Vector c_t = new internal.Vector(vector_c);
 //
 //        //2. Calculate hit_time with transformed ray
 //        double t_hit = sphere_hit_detec(S_t, c_t);
 //        //3. Going to create a hit object here and calculate hit point with original ray
-//        Point hitPoint = calculate_hit_point(S, c, t_hit);
-//        return new HitObject(hitPoint, t_hit);
+//        internal.Point hitPoint = calculate_hit_point(S, c, t_hit);
+//        return new internal.HitObject(hitPoint, t_hit);
 //    }
 
     @Override

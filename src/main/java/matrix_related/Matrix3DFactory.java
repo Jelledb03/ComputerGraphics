@@ -1,3 +1,7 @@
+package matrix_related;
+
+import internal.Matrix;
+
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
