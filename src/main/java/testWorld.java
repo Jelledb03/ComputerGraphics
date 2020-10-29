@@ -11,7 +11,7 @@ public class testWorld {
         Matrix3DFactory matrix3DFactory = new Matrix3DFactory();
         Camera camera = new Camera();
         //afstand van camera tot de viewpoint
-        camera.set_N(1000);
+        camera.set_N(100);
         Point eye = new Point(10, 10, 10);
         camera.set_eye(eye);
         Vector n = new Vector(1, 1, 1);
@@ -23,17 +23,18 @@ public class testWorld {
         Ray ray = internalFactory.createRay(camera, 25, 25);
         World world = new World(camera);
 
-        //objects.Sphere Transformation matrices
-        double m14 = 0;
-        double m24 = 0;
-        double m34 = 0;
-        Matrix object_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
-        Matrix object_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
+        //objects.Sph
+        // re Transformation matrices
+        double sx = 1; //x
+        double sy = 1; //y
+        double sz = 1; //z
+        Matrix object_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
+        Matrix object_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
 
         //Sphere sphere = new Sphere(object_transformation_matrix, object_inv_transformation_matrix);
         //world.add_object(sphere);
 
-        Cylinder cylinder = new Cylinder(object_transformation_matrix, object_inv_transformation_matrix, 1);
+        Cylinder cylinder = new Cylinder(object_transformation_matrix, object_inv_transformation_matrix, 0);
         world.add_object(cylinder);
 
 //        //objects.Sphere Transformation matrices
