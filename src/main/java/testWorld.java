@@ -34,7 +34,7 @@ public class testWorld {
         //Sphere sphere = new Sphere(object_transformation_matrix, object_inv_transformation_matrix);
         //world.add_object(sphere);
 
-        Cylinder cylinder = new Cylinder(object_transformation_matrix, object_inv_transformation_matrix, 0);
+        Cylinder cylinder = new Cylinder(object_transformation_matrix, object_inv_transformation_matrix, 0.5);
         world.add_object(cylinder);
 
 //        //objects.Sphere Transformation matrices
