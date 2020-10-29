@@ -44,4 +44,11 @@ public class InternalTransformer {
         double vector_z = -ray.get_Z();
         return new Vector(vector_x,vector_y,vector_z);
     }
+
+    public Vector vector_sum(Vector v1, Vector v2) {
+        double vector_x = v1.get_X() * v2.get_X();
+        double vector_y = v1.get_Y() * v2.get_Y();
+        double vector_z = v1.get_Z() * v2.get_Z();
+        return new Vector(vector_x, vector_y, vector_z);
+    }
 }

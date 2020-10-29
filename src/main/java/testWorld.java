@@ -3,6 +3,7 @@ import rendering2D.Renderer;
 import shapes.Cylinder;
 import shapes.Sphere;
 import world.Camera;
+import world.Light;
 import world.World;
 
 public class testWorld {
@@ -22,6 +23,9 @@ public class testWorld {
         camera.set_v(v);
         Ray ray = internalFactory.createRay(camera, 25, 25);
         World world = new World(camera);
+        Point lightPoint = new Point(0, 3, 1);
+        Light light = new Light(lightPoint, 150);
+        world.add_light(light);
 
         //objects.Sph
         // re Transformation matrices

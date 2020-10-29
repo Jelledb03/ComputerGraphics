@@ -16,16 +16,19 @@ public class World {
         this.camera = camera;
         this.objects = objects;
         this.internalTransformer = new InternalTransformer();
+        this.lights = new ArrayList<>();
     }
 
     public World(Camera camera) {
         this.camera = camera;
         this.objects = new ArrayList<>();
+        this.lights = new ArrayList<>();
     }
 
     public World() {
         this.camera = new Camera();
         this.objects = new ArrayList<>();
+        this.lights = new ArrayList<>();
     }
 
     public Camera getCamera() {
@@ -58,7 +61,10 @@ public class World {
                 }
             }
         }
-        double diffuse_component = calculate_diffuse_component(ray.get_dir(), lowest_time_hitObject);
+        if(lowest_time_hitObject.is_collided()) {
+            double intensity = calculate_intensity(ray.get_dir(), lowest_time_hitObject);
+            lowest_time_hitObject.set_intensity(intensity);
+        }
         //if (lowest_time_hitObject.is_collided()) {
             //System.out.println("creating hit objects");
             //System.out.println(lowest_time_hitObject.get_hit_time());
@@ -67,10 +73,13 @@ public class World {
         return lowest_time_hitObject;
     }
 
-    public double calculate_diffuse_component(Vector ray, HitObject hitObject){
+    //Nog wat aanpassingen doen voor color (RGB zie p390, maar basics blijven hetzelfde)
+    public double calculate_intensity(Vector ray, HitObject hitObject){
         //First we will loop through all the lights
         // It is possible that more than one light shines to the eye through an object (have to sum it)
         double total_diff_coefficient = 0;
+        double total_spec_coefficient = 0;
+        double total_ambient_coefficient = 0;
         for(Light light: lights){
             Point L = light.getLightPoint();
             Point P = hitObject.get_hit_point();
@@ -87,18 +96,35 @@ public class World {
             // Id = Is * rhod max(s*m/|s||m| , 0 )
             Vector s_norm = s.normalize();
             Vector m_norm = m.normalize();
-            double dot_prod = internalTransformer.dot_product(s_norm, m_norm);
+            double dot_prod_diffuse = internalTransformer.dot_product(s_norm, m_norm);
             //Have to calculate the diffuse component for this light and eye
-            if(dot_prod > 0){
-                double diff_coeff = light.getLight_source_intensity() * hitObject.getDiffuse_reflection_coeff() * dot_prod;
+            if(dot_prod_diffuse > 0){
+                double diff_coeff = light.getLight_source_intensity() * hitObject.get_diffuse_reflection_coeff() * dot_prod_diffuse;
                 total_diff_coefficient += diff_coeff;
             }// if dot prod is negative the eye is faced away from the light
+            //Calculation of direction r
+            double dot_prod_s_m = internalTransformer.dot_product(s, m);
+            double double_m_magnitude = Math.pow(m.calculate_magnitude(), 2);
+            double m_mult_factor = 2 * dot_prod_s_m / double_m_magnitude;
+            Vector m_transformed = internalTransformer.vector_product(m, m_mult_factor);
+            Vector s_transformed = internalTransformer.vector_product(s, -1);
+            Vector r = internalTransformer.vector_sum(m_transformed, s_transformed);
+            Vector r_norm = r.normalize();
+            Vector v_norm = v.normalize();
+            double dot_prod_specular = internalTransformer.dot_product(r_norm, v_norm);
+            double spec_coeff = light.getLight_source_intensity() * hitObject.get_specular_reflection_coeff() * Math.pow(internalTransformer.dot_product(r_norm, v_norm), dot_prod_specular);
+            total_spec_coefficient += spec_coeff;
+            double ambient_coeff = light.getLight_source_intensity() * hitObject.get_ambient_reflection_coeff();
+            total_ambient_coefficient += ambient_coeff;
         }
-        return 0.5;
+        return total_diff_coefficient + total_spec_coefficient + total_ambient_coefficient;
     }
-
 
     public void add_object(Object object) {
         this.objects.add(object);
+    }
+
+    public void add_light(Light light){
+        this.lights.add(light);
     }
 }
