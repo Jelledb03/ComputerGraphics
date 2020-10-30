@@ -9,10 +9,12 @@ import java.util.Arrays;
 public abstract class Object {
     private Matrix transformation_matrix;
     private Matrix inverse_transformation_matrix;
+    private InternalTransformer internalTransformer;
 
     public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix) {
         this.transformation_matrix = transformation_matrix;
         this.inverse_transformation_matrix = inverse_transformation_matrix;
+        this.internalTransformer = new InternalTransformer();
     }
 
     public Matrix get_transformation_matrix() {
@@ -29,6 +31,14 @@ public abstract class Object {
 
     public void set_inverse_transformation_matrix(Matrix inverse_transformation_matrix) {
         this.inverse_transformation_matrix = inverse_transformation_matrix;
+    }
+
+    public InternalTransformer getInternalTransformer() {
+        return internalTransformer;
+    }
+
+    public void setInternalTransformer(InternalTransformer internalTransformer) {
+        this.internalTransformer = internalTransformer;
     }
 
     //Zal een hitpoint time terug geven van wanneer de ray dit object hit
@@ -61,10 +71,19 @@ public abstract class Object {
                 //This can happen, for example when looking for an intersection with a square
                 return new HitObject();
             } else {
-                return new HitObject(hitPoint, t_hit);
+                //Calculate normal_vector
+                Point transformed_hit_point = calculate_hit_point(S_t, c_t, t_hit);
+                Vector transformed_normal_vector = calculate_normal_vector(transformed_hit_point);
+                //Ik denk dat je die dan gewoon moet transformeren
+                double[][] normal_vector_d = matrixTransformer.multiplyMatrices(this.get_transformation_matrix().get_matrix(), transformed_normal_vector.get_vector());
+                Vector normal_vector = new Vector(normal_vector_d);
+                Vector normal_vector_norm = normal_vector.normalize();
+                return new HitObject(hitPoint, normal_vector_norm,t_hit);
             }
         }
     }
+
+    abstract Vector calculate_normal_vector(Point hitPoint);
 
     abstract double sphere_hit_detec(Point S_t, Vector c_t);
 

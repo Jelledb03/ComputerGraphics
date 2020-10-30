@@ -20,6 +20,10 @@ public class InternalTransformer {
     }
 
     public double dot_product(Vector v1, Vector v2){
+        double product_x = v1.get_X() * v2.get_X();
+        double product_y = v1.get_Y() * v2.get_Y();
+        double product_z = v1.get_Z() * v2.get_Z();
+        double product = product_x + product_z + product_y;
         return v1.get_X() * v2.get_X() + v1.get_Y() * v2.get_Y() + v1.get_Z() * v2.get_Z();
     }
 
@@ -36,13 +40,6 @@ public class InternalTransformer {
         double vector_y = p1.get_Y() - p2.get_Y();
         double vector_z = p1.get_Z() - p2.get_Z();
         return new Vector(vector_x, vector_y, vector_z);
-    }
-
-    public Vector inverse_vector(Vector ray) {
-        double vector_x = -ray.get_X();
-        double vector_y = -ray.get_Y();
-        double vector_z = -ray.get_Z();
-        return new Vector(vector_x,vector_y,vector_z);
     }
 
     public Vector vector_sum(Vector v1, Vector v2) {

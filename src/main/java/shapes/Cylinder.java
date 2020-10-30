@@ -111,4 +111,9 @@ public class Cylinder extends Object {
         return new Point(x, y, z);
     }
     //F(x,y,z) = x²+y² - (1 + (s-1)z)²
+
+    @Override
+    Vector calculate_normal_vector(Point hitPoint) {
+        return new Vector(0, 0, 0);
+    }
 }

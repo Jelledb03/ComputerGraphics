@@ -18,4 +18,9 @@ public class Cube extends Object {
     Point calculate_hit_point(Point S, Vector c, double t_hit) {
         return null;
     }
+
+    @Override
+    Vector calculate_normal_vector(Point hitPoint) {
+        return null;
+    }
 }

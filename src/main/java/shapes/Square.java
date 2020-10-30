@@ -46,4 +46,9 @@ public class Square extends Object {
 
 
     }
+
+    @Override
+    Vector calculate_normal_vector(Point hitPoint) {
+        return null;
+    }
 }

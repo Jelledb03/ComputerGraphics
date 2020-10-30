@@ -23,12 +23,14 @@ public class World {
         this.camera = camera;
         this.objects = new ArrayList<>();
         this.lights = new ArrayList<>();
+        this.internalTransformer = new InternalTransformer();
     }
 
     public World() {
         this.camera = new Camera();
         this.objects = new ArrayList<>();
         this.lights = new ArrayList<>();
+        this.internalTransformer = new InternalTransformer();
     }
 
     public Camera getCamera() {
@@ -87,9 +89,13 @@ public class World {
             //normal vector m to the surface at P
             //vector v from P to the viewer's eye
             //vector s from P to the light source
-            Vector s = internalTransformer.substraction_to_vector(L, P);
-            Vector v = internalTransformer.inverse_vector(ray);
-            Vector m = internalTransformer.cross_product(v,s);
+            Vector s = internalTransformer.substraction_to_vector(L, P); // L- P
+            Vector v = internalTransformer.vector_product(ray,-1);
+            // normal vector op het object nodig
+            // vector van middelpunt bol op het hitpoint
+            // normaal is vector die loodrecht staat op object
+            /** DIT IS GEWOON FOUT**/
+            Vector m = hitObject.get_normal_vector();
             // Id is independent of the angle between m and v
             // It is dependent on the orientation of the eye relative to the point source
             // cos(phi) = the dot product between normalized versions of s and m
@@ -112,8 +118,10 @@ public class World {
             Vector r_norm = r.normalize();
             Vector v_norm = v.normalize();
             double dot_prod_specular = internalTransformer.dot_product(r_norm, v_norm);
-            double spec_coeff = light.getLight_source_intensity() * hitObject.get_specular_reflection_coeff() * Math.pow(internalTransformer.dot_product(r_norm, v_norm), dot_prod_specular);
-            total_spec_coefficient += spec_coeff;
+            if(dot_prod_specular > 0){
+                double spec_coeff = light.getLight_source_intensity() * hitObject.get_specular_reflection_coeff() * Math.pow(dot_prod_specular, hitObject.get_fallof());
+                total_spec_coefficient += spec_coeff;
+            }
             double ambient_coeff = light.getLight_source_intensity() * hitObject.get_ambient_reflection_coeff();
             total_ambient_coefficient += ambient_coeff;
         }

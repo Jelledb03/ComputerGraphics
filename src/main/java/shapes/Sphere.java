@@ -66,4 +66,13 @@ public class Sphere extends Object {
         double z = S.get_Z() + c.get_Z()*t_hit;
         return new Point(x, y, z);
     }
+
+    @Override
+    Vector calculate_normal_vector(Point hitPoint) {
+        //Ok dus hier gaan we een normal vector berekenen van de surface op hit punt hitPoint
+        //Normal vector van bol wordt berekent
+        //We gaan gewoon eerst een hitpunt berekenen met de generieke bol en dan de vector transformeren met de inverse transformatie matrix.
+        Point origin = new Point(0, 0, 0);
+        return getInternalTransformer().substraction_to_vector(hitPoint,origin);
+    }
 }

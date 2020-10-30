@@ -23,8 +23,8 @@ public class testWorld {
         camera.set_v(v);
         Ray ray = internalFactory.createRay(camera, 25, 25);
         World world = new World(camera);
-        Point lightPoint = new Point(0, 3, 1);
-        Light light = new Light(lightPoint, 150);
+        Point lightPoint = new Point(10, 10, 20);
+        Light light = new Light(lightPoint, 1);
         world.add_light(light);
 
         //objects.Sph
@@ -35,11 +35,11 @@ public class testWorld {
         Matrix object_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
         Matrix object_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
 
-        //Sphere sphere = new Sphere(object_transformation_matrix, object_inv_transformation_matrix);
-        //world.add_object(sphere);
+        Sphere sphere = new Sphere(object_transformation_matrix, object_inv_transformation_matrix);
+        world.add_object(sphere);
 
-        Cylinder cylinder = new Cylinder(object_transformation_matrix, object_inv_transformation_matrix, 0.5);
-        world.add_object(cylinder);
+        //Cylinder cylinder = new Cylinder(object_transformation_matrix, object_inv_transformation_matrix, 0.5);
+        //world.add_object(cylinder);
 
 //        //objects.Sphere Transformation matrices
 //        double m14_2 = 10;

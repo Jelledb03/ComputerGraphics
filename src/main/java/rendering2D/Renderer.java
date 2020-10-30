@@ -40,7 +40,7 @@ public class Renderer {
                 HitObject hitObject = world.calculateClosestHitObject(ray);
                 if(hitObject.is_collided())
                     counter++;
-                    System.out.println(hitObject.get_intensity());
+                    //System.out.println(hitObject.get_intensity());
                 Pixel pixel = pixelFactory.createPixel(col, row, hitObject);
                 screen.render_pixel(pixel);
             }
