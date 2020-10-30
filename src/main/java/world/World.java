@@ -64,8 +64,12 @@ public class World {
             }
         }
         if(lowest_time_hitObject.is_collided()) {
-            double intensity = calculate_intensity(ray.get_dir(), lowest_time_hitObject);
-            lowest_time_hitObject.set_intensity(intensity);
+            double r_intensity = calculate_intensity(ray.get_dir(), lowest_time_hitObject, lowest_time_hitObject.get_r_illuminationObject());
+            lowest_time_hitObject.get_r_illuminationObject().set_intensity(r_intensity);
+            double g_intensity = calculate_intensity(ray.get_dir(), lowest_time_hitObject, lowest_time_hitObject.get_g_illuminationObject());
+            lowest_time_hitObject.get_g_illuminationObject().set_intensity(g_intensity);
+            double b_intensity = calculate_intensity(ray.get_dir(), lowest_time_hitObject, lowest_time_hitObject.get_b_illuminationObject());
+            lowest_time_hitObject.get_b_illuminationObject().set_intensity(b_intensity);
         }
         //if (lowest_time_hitObject.is_collided()) {
             //System.out.println("creating hit objects");
@@ -76,7 +80,7 @@ public class World {
     }
 
     //Nog wat aanpassingen doen voor color (RGB zie p390, maar basics blijven hetzelfde)
-    public double calculate_intensity(Vector ray, HitObject hitObject){
+    public double calculate_intensity(Vector ray, HitObject hitObject, IlluminationObject illuminationObject){
         //First we will loop through all the lights
         // It is possible that more than one light shines to the eye through an object (have to sum it)
         double total_diff_coefficient = 0;
@@ -105,7 +109,7 @@ public class World {
             double total = 0;
             //Have to calculate the diffuse component for this light and eye
             if(dot_prod_diffuse > 0){
-                double diff_coeff = light.getLight_source_intensity() * hitObject.get_diffuse_reflection_coeff() * dot_prod_diffuse;
+                double diff_coeff = light.getLight_source_intensity() * illuminationObject.get_diffuse_reflection_coeff() * dot_prod_diffuse;
                 total_diff_coefficient += diff_coeff;
                 total += diff_coeff;
             }// if dot prod is negative the eye is faced away from the light
@@ -127,11 +131,11 @@ public class World {
             Vector h_norm = h.normalize();
             double dot_prod_specular = internalTransformer.dot_product(h_norm, m_norm);
             if(dot_prod_specular > 0){
-                double spec_coeff = light.getLight_source_intensity() * hitObject.get_specular_reflection_coeff() * Math.pow(dot_prod_specular, hitObject.get_fallof());
+                double spec_coeff = light.getLight_source_intensity() * illuminationObject.get_specular_reflection_coeff() * Math.pow(dot_prod_specular, illuminationObject.get_fallof());
                 total_spec_coefficient += spec_coeff;
                 total += spec_coeff;
             }
-            double ambient_coeff = light.getLight_source_intensity() * hitObject.get_ambient_reflection_coeff();
+            double ambient_coeff = light.getLight_source_intensity() * illuminationObject.get_ambient_reflection_coeff();
             total_ambient_coefficient += ambient_coeff;
             total += ambient_coeff;
         }

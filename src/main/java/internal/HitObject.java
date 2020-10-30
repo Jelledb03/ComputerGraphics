@@ -10,23 +10,18 @@ public class HitObject {
     private Color color;
     private double hit_time;
     private boolean collided;
-    private double diffuse_reflection_coeff; //p392
-    private double fallof;
-    private double specular_reflection_coeff;
-    private double ambient_reflection_coeff;
-    private double intensity;
+    private IlluminationObject r_illuminationObject;
+    private IlluminationObject g_illuminationObject;
+    private IlluminationObject b_illuminationObject;
 
     //Used for lowest hit time hitobject in world (only the collided boolean is used)
     public HitObject() {
         this.hit_point = new Point(0, 0, 0);
         this.hit_time = 0;
         this.collided = false;
-        this.diffuse_reflection_coeff = 0.4;
-        this.fallof = 76.8;
-        this.specular_reflection_coeff = 0.774597;
-        this.ambient_reflection_coeff = 0.25;
-        this.intensity = 0;
-
+        this.r_illuminationObject = new IlluminationObject();
+        this.g_illuminationObject = new IlluminationObject();
+        this.b_illuminationObject = new IlluminationObject();
     }
 
     public HitObject(Point hit_point, Vector normal_vector, Color color, double hit_time) {
@@ -35,11 +30,9 @@ public class HitObject {
         this.color = color;
         this.hit_time = hit_time;
         this.collided = true;
-        this.diffuse_reflection_coeff = 0.4;
-        this.fallof = 76.8;
-        this.specular_reflection_coeff = 0.774597;
-        this.ambient_reflection_coeff  = 0.25;
-        this.intensity = 0;
+        this.r_illuminationObject = new IlluminationObject();
+        this.g_illuminationObject = new IlluminationObject();
+        this.b_illuminationObject = new IlluminationObject();
     }
 
     public Point get_hit_point() {
@@ -66,46 +59,6 @@ public class HitObject {
         this.collided = collided;
     }
 
-    public double get_diffuse_reflection_coeff() {
-        return diffuse_reflection_coeff;
-    }
-
-    public void set_diffuse_reflection_coeff(double diffuse_reflection_coeff) {
-        this.diffuse_reflection_coeff = diffuse_reflection_coeff;
-    }
-
-    public double get_fallof() {
-        return fallof;
-    }
-
-    public void set_fallof(double fallof) {
-        this.fallof = fallof;
-    }
-
-    public double get_specular_reflection_coeff() {
-        return specular_reflection_coeff;
-    }
-
-    public void set_specular_reflection_coeff(double specular_reflection_coeff) {
-        this.specular_reflection_coeff = specular_reflection_coeff;
-    }
-
-    public double get_ambient_reflection_coeff() {
-        return ambient_reflection_coeff;
-    }
-
-    public void set_ambient_reflection_coeff(double ambient_reflection_coeff) {
-        this.ambient_reflection_coeff = ambient_reflection_coeff;
-    }
-
-    public double get_intensity() {
-        return intensity;
-    }
-
-    public void set_intensity(double intensity) {
-        this.intensity = intensity;
-    }
-
     public Vector get_normal_vector() {
         return normal_vector;
     }
@@ -120,5 +73,29 @@ public class HitObject {
 
     public void set_color(Color color) {
         this.color = color;
+    }
+
+    public IlluminationObject get_r_illuminationObject() {
+        return r_illuminationObject;
+    }
+
+    public void set_r_illuminationObject(IlluminationObject r_illuminationObject) {
+        this.r_illuminationObject = r_illuminationObject;
+    }
+
+    public IlluminationObject get_g_illuminationObject() {
+        return g_illuminationObject;
+    }
+
+    public void set_g_illuminationObject(IlluminationObject g_illuminationObject) {
+        this.g_illuminationObject = g_illuminationObject;
+    }
+
+    public IlluminationObject get_b_illuminationObject() {
+        return b_illuminationObject;
+    }
+
+    public void set_b_illuminationObject(IlluminationObject b_illuminationObject) {
+        this.b_illuminationObject = b_illuminationObject;
     }
 }
