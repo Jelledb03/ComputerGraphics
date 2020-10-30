@@ -12,7 +12,7 @@ public class testWorld {
         Matrix3DFactory matrix3DFactory = new Matrix3DFactory();
         Camera camera = new Camera();
         //afstand van camera tot de viewpoint
-        camera.set_N(1000);
+        camera.set_N(2500);
         Point eye = new Point(10, 10, 10);
         camera.set_eye(eye);
         Vector n = new Vector(1, 1, 1);

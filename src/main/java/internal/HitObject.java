@@ -19,7 +19,7 @@ public class HitObject {
         this.hit_time = 0;
         this.collided = false;
         this.diffuse_reflection_coeff = 0.4;
-        this.fallof = 30;
+        this.fallof = 76.8;
         this.specular_reflection_coeff = 0.774597;
         this.ambient_reflection_coeff = 0.25;
         this.intensity = 0;
@@ -31,7 +31,7 @@ public class HitObject {
         this.hit_time = hit_time;
         this.collided = true;
         this.diffuse_reflection_coeff = 0.4;
-        this.fallof = 30;
+        this.fallof = 76.8;
         this.specular_reflection_coeff = 0.774597;
         this.ambient_reflection_coeff  = 0.25;
         this.intensity = 0;

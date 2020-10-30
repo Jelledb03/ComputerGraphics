@@ -94,7 +94,6 @@ public class World {
             // normal vector op het object nodig
             // vector van middelpunt bol op het hitpoint
             // normaal is vector die loodrecht staat op object
-            /** DIT IS GEWOON FOUT**/
             Vector m = hitObject.get_normal_vector();
             // Id is independent of the angle between m and v
             // It is dependent on the orientation of the eye relative to the point source
@@ -103,29 +102,45 @@ public class World {
             Vector s_norm = s.normalize();
             Vector m_norm = m.normalize();
             double dot_prod_diffuse = internalTransformer.dot_product(s_norm, m_norm);
+            double total = 0;
             //Have to calculate the diffuse component for this light and eye
             if(dot_prod_diffuse > 0){
                 double diff_coeff = light.getLight_source_intensity() * hitObject.get_diffuse_reflection_coeff() * dot_prod_diffuse;
                 total_diff_coefficient += diff_coeff;
+                total += diff_coeff;
             }// if dot prod is negative the eye is faced away from the light
-            //Calculation of direction r
-            double dot_prod_s_m = internalTransformer.dot_product(s, m);
+            // Calculation of direction r
+            // PHONG
+            // De berekening van de specular component is nog verkeerd!!!!
+
+            /*double dot_prod_s_m = internalTransformer.dot_product(s, m);
             double double_m_magnitude = Math.pow(m.calculate_magnitude(), 2);
             double m_mult_factor = 2 * dot_prod_s_m / double_m_magnitude;
             Vector m_transformed = internalTransformer.vector_product(m, m_mult_factor);
             Vector s_transformed = internalTransformer.vector_product(s, -1);
-            Vector r = internalTransformer.vector_sum(m_transformed, s_transformed);
+            Vector r = internalTransformer.vector_sum(s_transformed, m_transformed);
             Vector r_norm = r.normalize();
             Vector v_norm = v.normalize();
-            double dot_prod_specular = internalTransformer.dot_product(r_norm, v_norm);
+            double dot_prod_specular = internalTransformer.dot_product(r_norm, v_norm);*/
+            //Use halfway vector calculation
+            Vector h = internalTransformer.vector_sum(s,v);
+            Vector h_norm = h.normalize();
+            double dot_prod_specular = internalTransformer.dot_product(h_norm, m_norm);
             if(dot_prod_specular > 0){
                 double spec_coeff = light.getLight_source_intensity() * hitObject.get_specular_reflection_coeff() * Math.pow(dot_prod_specular, hitObject.get_fallof());
                 total_spec_coefficient += spec_coeff;
+                total += spec_coeff;
             }
             double ambient_coeff = light.getLight_source_intensity() * hitObject.get_ambient_reflection_coeff();
             total_ambient_coefficient += ambient_coeff;
+            total += ambient_coeff;
         }
-        return total_diff_coefficient + total_spec_coefficient + total_ambient_coefficient;
+        double total = total_diff_coefficient + total_spec_coefficient + total_ambient_coefficient;
+        /** Nog eens navragen of dit correct is of hoe ik dit beter zou kunnen oplossen **/
+        if(total > 1){
+            total = 1;
+        }
+        return total;
     }
 
     public void add_object(Object object) {
