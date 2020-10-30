@@ -1,10 +1,13 @@
 package internal;
 
+import java.awt.*;
+
 public class HitObject {
     //This will create a hit object that will include the hit point in the 3D world, the hit time (when the ray hits, have to search for the lowest)
     //Later this object will also include a color and potentially a parameter that indicates reflection or refraction
     private Point hit_point;
     private Vector normal_vector;
+    private Color color;
     private double hit_time;
     private boolean collided;
     private double diffuse_reflection_coeff; //p392
@@ -23,11 +26,13 @@ public class HitObject {
         this.specular_reflection_coeff = 0.774597;
         this.ambient_reflection_coeff = 0.25;
         this.intensity = 0;
+
     }
 
-    public HitObject(Point hit_point, Vector normal_vector, double hit_time) {
+    public HitObject(Point hit_point, Vector normal_vector, Color color, double hit_time) {
         this.hit_point = hit_point;
         this.normal_vector = normal_vector;
+        this.color = color;
         this.hit_time = hit_time;
         this.collided = true;
         this.diffuse_reflection_coeff = 0.4;
@@ -107,5 +112,13 @@ public class HitObject {
 
     public void set_normal_vector(Vector normal_vector) {
         this.normal_vector = normal_vector;
+    }
+
+    public Color get_color() {
+        return color;
+    }
+
+    public void set_color(Color color) {
+        this.color = color;
     }
 }

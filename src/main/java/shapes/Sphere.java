@@ -4,7 +4,13 @@ import internal.Matrix;
 import internal.Point;
 import internal.Vector;
 
+import java.awt.*;
+
 public class Sphere extends Object {
+    public Sphere(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Color color) {
+        super(transformation_matrix, inverse_transformation_matrix, color);
+    }
+
     public Sphere(Matrix transformation_matrix, Matrix inverse_transformation_matrix) {
         super(transformation_matrix, inverse_transformation_matrix);
     }

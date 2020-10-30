@@ -4,9 +4,15 @@ import internal.Matrix;
 import internal.Point;
 import internal.Vector;
 
+import java.awt.*;
+
 public class Cube extends Object {
     public Cube(Matrix transformation_matrix, Matrix inverse_transformation_matrix) {
         super(transformation_matrix, inverse_transformation_matrix);
+    }
+
+    public Cube(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Color color) {
+        super(transformation_matrix, inverse_transformation_matrix, color);
     }
 
     @Override

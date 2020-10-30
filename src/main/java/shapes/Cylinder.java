@@ -4,8 +4,15 @@ import internal.Matrix;
 import internal.Point;
 import internal.Vector;
 
+import java.awt.*;
+
 public class Cylinder extends Object {
     private double s;
+
+    public Cylinder(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Color color, double s) {
+        super(transformation_matrix, inverse_transformation_matrix, color);
+        this.s = s;
+    }
 
     public Cylinder(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double s) {
         super(transformation_matrix, inverse_transformation_matrix);

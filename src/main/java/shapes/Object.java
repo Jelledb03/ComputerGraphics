@@ -1,8 +1,11 @@
 package shapes;
 
+import config.Config;
 import internal.*;
 import internal.MatrixTransformer;
+import internal.Point;
 
+import java.awt.*;
 import java.util.Arrays;
 
 //Wanneer we dit als abstract classificieren kunnen we hier geen objecten van initialiseren
@@ -10,11 +13,20 @@ public abstract class Object {
     private Matrix transformation_matrix;
     private Matrix inverse_transformation_matrix;
     private InternalTransformer internalTransformer;
+    private Color color;
+
+    public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Color color) {
+        this.transformation_matrix = transformation_matrix;
+        this.inverse_transformation_matrix = inverse_transformation_matrix;
+        this.internalTransformer = new InternalTransformer();
+        this.color = color;
+    }
 
     public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix) {
         this.transformation_matrix = transformation_matrix;
         this.inverse_transformation_matrix = inverse_transformation_matrix;
         this.internalTransformer = new InternalTransformer();
+        this.color = Config.DEFAULT_OBJECT_COLOR;
     }
 
     public Matrix get_transformation_matrix() {
@@ -78,7 +90,7 @@ public abstract class Object {
                 double[][] normal_vector_d = matrixTransformer.multiplyMatrices(this.get_transformation_matrix().get_matrix(), transformed_normal_vector.get_vector());
                 Vector normal_vector = new Vector(normal_vector_d);
                 Vector normal_vector_norm = normal_vector.normalize();
-                return new HitObject(hitPoint, normal_vector_norm,t_hit);
+                return new HitObject(hitPoint, normal_vector_norm, this.color, t_hit);
             }
         }
     }
@@ -88,4 +100,12 @@ public abstract class Object {
     abstract double sphere_hit_detec(Point S_t, Vector c_t);
 
     abstract Point calculate_hit_point(Point S, Vector c, double t_hit);
+
+    public Color get_color() {
+        return color;
+    }
+
+    public void set_color(Color color) {
+        this.color = color;
+    }
 }

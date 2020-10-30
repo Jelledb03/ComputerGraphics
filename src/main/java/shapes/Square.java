@@ -4,12 +4,18 @@ import internal.Matrix;
 import internal.Point;
 import internal.Vector;
 
+import java.awt.*;
+
 public class Square extends Object {
     //In boek p630 spreken ze over de hitregistratie met een square.
     //De generieke square ligt op de z=0 plane en heeft coordinaten -1 <= Px <= 1 en -1 <= Py <= 1
     //Om nu na te gaan of er een intersectie is met de square gaat er eerst gekeken worden of er een intersectie is met
     //het generieke vlak (wat de z=0 plane is). Daarna wordt er gekeken met de hittime of het hit point in de square ligt
     //Zoja is er een intersectie met de square en moet er een hit object worden aangemaakt. Zo nee is er geen intersectie.
+
+    public Square(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Color color) {
+        super(transformation_matrix, inverse_transformation_matrix, color);
+    }
 
     public Square(Matrix transformation_matrix, Matrix inverse_transformation_matrix) {
         super(transformation_matrix, inverse_transformation_matrix);

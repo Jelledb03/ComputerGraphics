@@ -12,9 +12,10 @@ public class PixelFactory {
     public Pixel createPixel(int x, int y, HitObject hitObject){
         if(hitObject.is_collided()){
             //Draws object
-            float r = 1 * (float) hitObject.get_intensity();
-            float g = 1 * (float) hitObject.get_intensity();
-            float b = 1 * (float) hitObject.get_intensity();
+            Color hit_object_color = hitObject.get_color();
+            int r = (int) (hit_object_color.getRed() * hitObject.get_intensity());
+            int g = (int) (hit_object_color.getGreen() * hitObject.get_intensity());
+            int b = (int) (hit_object_color.getBlue() * hitObject.get_intensity());
             Color color = new Color(r,g,b);
             return new Pixel(x, y, color);
         }else{

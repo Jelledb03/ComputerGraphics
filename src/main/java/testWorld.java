@@ -1,10 +1,13 @@
 import internal.*;
+import internal.Point;
 import rendering2D.Renderer;
 import shapes.Cylinder;
 import shapes.Sphere;
 import world.Camera;
 import world.Light;
 import world.World;
+
+import java.awt.*;
 
 public class testWorld {
     public static void main(String[] args) {
@@ -35,7 +38,8 @@ public class testWorld {
         Matrix object_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
         Matrix object_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
 
-        Sphere sphere = new Sphere(object_transformation_matrix, object_inv_transformation_matrix);
+        Color sphere1Color = Color.PINK;
+        Sphere sphere = new Sphere(object_transformation_matrix, object_inv_transformation_matrix, sphere1Color);
         world.add_object(sphere);
 
         //Cylinder cylinder = new Cylinder(object_transformation_matrix, object_inv_transformation_matrix, 0.5);
