@@ -64,12 +64,11 @@ public class World {
             }
         }
         if(lowest_time_hitObject.is_collided()) {
-            double r_intensity = calculate_intensity(ray.get_dir(), lowest_time_hitObject, lowest_time_hitObject.get_r_illuminationObject());
-            lowest_time_hitObject.get_r_illuminationObject().set_intensity(r_intensity);
-            double g_intensity = calculate_intensity(ray.get_dir(), lowest_time_hitObject, lowest_time_hitObject.get_g_illuminationObject());
-            lowest_time_hitObject.get_g_illuminationObject().set_intensity(g_intensity);
-            double b_intensity = calculate_intensity(ray.get_dir(), lowest_time_hitObject, lowest_time_hitObject.get_b_illuminationObject());
-            lowest_time_hitObject.get_b_illuminationObject().set_intensity(b_intensity);
+            IlluminationObject[] illuminationObjects = new IlluminationObject[]{lowest_time_hitObject.get_r_illuminationObject(), lowest_time_hitObject.get_g_illuminationObject(),lowest_time_hitObject.get_b_illuminationObject()};
+            List<Double> intensities = calculate_intensity(ray.get_dir(),lowest_time_hitObject,illuminationObjects);
+            lowest_time_hitObject.get_r_illuminationObject().set_intensity(intensities.get(0));
+            lowest_time_hitObject.get_g_illuminationObject().set_intensity(intensities.get(1));
+            lowest_time_hitObject.get_b_illuminationObject().set_intensity(intensities.get(2));
         }
         //if (lowest_time_hitObject.is_collided()) {
             //System.out.println("creating hit objects");
@@ -80,12 +79,14 @@ public class World {
     }
 
     //Nog wat aanpassingen doen voor color (RGB zie p390, maar basics blijven hetzelfde)
-    public double calculate_intensity(Vector ray, HitObject hitObject, IlluminationObject illuminationObject){
+    public List<Double> calculate_intensity(Vector ray, HitObject hitObject, IlluminationObject[] illuminationObjects){
         //First we will loop through all the lights
         // It is possible that more than one light shines to the eye through an object (have to sum it)
         double total_diff_coefficient = 0;
         double total_spec_coefficient = 0;
-        double total_ambient_coefficient = 0;
+        double total_ambient = 0;
+        double total_lambert = 0;
+        double total_phong = 0;
         for(Light light: lights){
             Point L = light.getLightPoint();
             Point P = hitObject.get_hit_point();
@@ -105,46 +106,47 @@ public class World {
             // Id = Is * rhod max(s*m/|s||m| , 0 )
             Vector s_norm = s.normalize();
             Vector m_norm = m.normalize();
-            double dot_prod_diffuse = internalTransformer.dot_product(s_norm, m_norm);
+            double lambert = internalTransformer.dot_product(s_norm, m_norm);
             double total = 0;
             //Have to calculate the diffuse component for this light and eye
-            if(dot_prod_diffuse > 0){
-                double diff_coeff = light.getLight_source_intensity() * illuminationObject.get_diffuse_reflection_coeff() * dot_prod_diffuse;
-                total_diff_coefficient += diff_coeff;
-                total += diff_coeff;
+            if(lambert > 0){
+                //Lambert will be calculated with light intensity and lambert, diffuse reflection coeff will be added later
+                total_lambert += light.getLight_source_intensity() * lambert;
+                //double diff_coeff = light.getLight_source_intensity() * illuminationObject.get_diffuse_reflection_coeff() * lambert;
+                //total_diff_coefficient += diff_coeff;
+                //total += diff_coeff;
             }// if dot prod is negative the eye is faced away from the light
             // Calculation of direction r
             // PHONG
-            // De berekening van de specular component is nog verkeerd!!!!
-
-            /*double dot_prod_s_m = internalTransformer.dot_product(s, m);
-            double double_m_magnitude = Math.pow(m.calculate_magnitude(), 2);
-            double m_mult_factor = 2 * dot_prod_s_m / double_m_magnitude;
-            Vector m_transformed = internalTransformer.vector_product(m, m_mult_factor);
-            Vector s_transformed = internalTransformer.vector_product(s, -1);
-            Vector r = internalTransformer.vector_sum(s_transformed, m_transformed);
-            Vector r_norm = r.normalize();
-            Vector v_norm = v.normalize();
-            double dot_prod_specular = internalTransformer.dot_product(r_norm, v_norm);*/
             //Use halfway vector calculation
             Vector h = internalTransformer.vector_sum(s,v);
             Vector h_norm = h.normalize();
-            double dot_prod_specular = internalTransformer.dot_product(h_norm, m_norm);
-            if(dot_prod_specular > 0){
-                double spec_coeff = light.getLight_source_intensity() * illuminationObject.get_specular_reflection_coeff() * Math.pow(dot_prod_specular, illuminationObject.get_fallof());
-                total_spec_coefficient += spec_coeff;
-                total += spec_coeff;
+            double phong = internalTransformer.dot_product(h_norm, m_norm);
+            if(phong > 0){
+                total_phong += light.getLight_source_intensity() * phong;
+                //double spec_coeff = light.getLight_source_intensity() * illuminationObject.get_specular_reflection_coeff() * Math.pow(phong, illuminationObject.get_fallof());
+                //total_spec_coefficient += spec_coeff;
+                //total += spec_coeff;
             }
-            double ambient_coeff = light.getLight_source_intensity() * illuminationObject.get_ambient_reflection_coeff();
-            total_ambient_coefficient += ambient_coeff;
+            double ambient_coeff = light.getLight_source_intensity();
+            total_ambient += ambient_coeff;
             total += ambient_coeff;
         }
-        double total = total_diff_coefficient + total_spec_coefficient + total_ambient_coefficient;
-        /** Nog eens navragen of dit correct is of hoe ik dit beter zou kunnen oplossen **/
-        if(total > 1){
-            total = 1;
+        //total lambert and phong calculated
+        List<Double> total_intensities = new ArrayList<>();
+        for (IlluminationObject illuminationObject: illuminationObjects
+             ) {
+            double total_diffuse_coeff = illuminationObject.get_diffuse_reflection_coeff() * total_lambert;
+            double total_specular_coeff = illuminationObject.get_specular_reflection_coeff() * Math.pow(total_phong, illuminationObject.get_fallof());
+            double total_ambient_coeff = illuminationObject.get_ambient_reflection_coeff() * total_ambient;
+            double total_intensity = total_diffuse_coeff + total_specular_coeff + total_ambient_coeff;
+            /** Nog eens navragen of dit correct is of hoe ik dit beter zou kunnen oplossen **/
+            if(total_intensity > 1){
+                total_intensity = 1;
+            }
+            total_intensities.add(total_intensity);
         }
-        return total;
+        return total_intensities;
     }
 
     public void add_object(Object object) {
