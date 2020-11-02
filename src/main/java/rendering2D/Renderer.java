@@ -34,18 +34,24 @@ public class Renderer {
         InternalFactory internalFactory = new InternalFactory();
         PixelFactory pixelFactory = new PixelFactory();
         int counter= 0;
+        int counter_cap=0;
         for (int col = 0; col < Config.SCREEN_WIDTH; col++) {
             for (int row = 0; row < Config.SCREEN_HEIGHT; row++) {
                 Ray ray = internalFactory.createRay(world.getCamera(),col,row);
                 HitObject hitObject = world.calculateClosestHitObject(ray);
-                if(hitObject.is_collided())
+                if(hitObject.is_collided()) {
                     counter++;
+                    if (hitObject.get_normal_vector().get_X() == 0 && hitObject.get_normal_vector().get_Y() == 0 && hitObject.get_normal_vector().get_Z() == 1) {
+                        counter_cap++;
+                    }
                     //System.out.println(hitObject.get_intensity());
+                }
                 Pixel pixel = pixelFactory.createPixel(col, row, hitObject);
                 screen.render_pixel(pixel);
             }
         }
         System.out.println(counter);
+        System.out.println("counter cap: " + counter_cap);
         //After rendering all the pixels to the screen, repaint the screen
         screen.repaint();
     }

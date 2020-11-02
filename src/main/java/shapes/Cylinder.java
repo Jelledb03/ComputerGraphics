@@ -81,7 +81,7 @@ public class Cylinder extends Object {
             t_hit1 = -(S_t.get_Z() / c_t.get_Z());
             hit_point_1 = calculate_hit_point(S_t, c_t, t_hit1);
             double x = hit_point_1.get_X();
-            double y = hit_point_2.get_Y();
+            double y = hit_point_1.get_Y();
             //Betekent dat hitpoint in de base van de cylinder ligt
             if(Math.pow(x, 2) + Math.pow(y, 2) < 1)
                 t_hit_min = Math.min(t_hit_min, t_hit1);
@@ -93,12 +93,13 @@ public class Cylinder extends Object {
         //Intersectie bepalen met z=1
         //Intersectie als x² + y² < s²
         //Oog mag niet op z=1 zitten (want dan is er al een intersectie op tijdstip 0 en er moet ook een z beweging zijn van de ray)
+        //Ik denk dat die if statement niet juist is
         if (S_t.get_Z() != 1 && c_t.get_Z() !=0) {
             //Dit berekent de hit_time wanneer er een intersectie is en returned deze
-            t_hit1 = -(S_t.get_Z() / c_t.get_Z());
+            t_hit1 = (1 - S_t.get_Z()) / c_t.get_Z();
             hit_point_1 = calculate_hit_point(S_t, c_t, t_hit1);
             double x = hit_point_1.get_X();
-            double y = hit_point_2.get_Y();
+            double y = hit_point_1.get_Y();
             //Betekent dat hitpoint in de cap van de cylinder ligt
             if(Math.pow(x, 2) + Math.pow(y, 2) < Math.pow(s, 2))
                 t_hit_min = Math.min(t_hit_min, t_hit1);
@@ -120,6 +121,16 @@ public class Cylinder extends Object {
 
     @Override
     Vector calculate_normal_vector(Point hitPoint, int surface) {
-        return new Vector(0, 0, 0);
+        switch (surface){
+            case(0)://Surface is wall
+                //origin line is the lead line in the middle of the cylinder going from z = 0 to z = 1
+                //The origin point will be (0, 0, z) with z coordinate equal to the z coordinate of the hitPoint
+                Point origin = new Point(0, 0, hitPoint.get_Z());
+                return getInternalTransformer().substraction_to_vector(hitPoint,origin);
+            case(1)://Surface is Base //Dus punt ligt op vlak z = 0
+                return new Vector(0, 0, -1);
+            default://Surface is Cap //Dus punt ligt op vlak z = 1
+                return new Vector(0, 0, 1);
+        }
     }
 }

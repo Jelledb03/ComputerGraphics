@@ -17,7 +17,7 @@ public class testWorld {
         Camera camera = new Camera();
         //afstand van camera tot de viewpoint
         camera.set_N(2000);
-        Point eye = new Point(10, 10, 10);
+        Point eye = new Point(10, 10, 15);
         camera.set_eye(eye);
         Vector n = new Vector(1, 1, 1);
         Vector u = new Vector(-1, 1, 0);
@@ -27,28 +27,27 @@ public class testWorld {
         camera.set_v(v);
         Ray ray = internalFactory.createRay(camera, 25, 25);
         World world = new World(camera);
-        Point lightPoint = new Point(10, 10, 12);
+        Point lightPoint = new Point(10, 10, 20);
         Light light = new Light(lightPoint, 0.75);
         world.add_light(light);
 
-        //objects.Sph
-        // re Transformation matrices
+        //objects Transformation matrices
         double sx = 2; //x
         double sy = 2; //y
         double sz = 2; //z
         Matrix object_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
         Matrix object_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
 
-        Color sphere1Color = Color.WHITE;
+        Color objectColor = Color.WHITE;
 
-        //Sphere sphere = new Sphere(object_transformation_matrix, object_inv_transformation_matrix, sphere1Color);
+        //Sphere sphere = new Sphere(object_transformation_matrix, object_inv_transformation_matrix, objectColor);
         //world.add_object(sphere);
 
-        //Cylinder cylinder = new Cylinder(object_transformation_matrix, object_inv_transformation_matrix, 0.5);
-        //world.add_object(cylinder);
+        Cylinder cylinder = new Cylinder(object_transformation_matrix, object_inv_transformation_matrix, objectColor, 0.5);
+        world.add_object(cylinder);
 
-        Cube cube = new Cube(object_transformation_matrix, object_inv_transformation_matrix, sphere1Color);
-        world.add_object(cube);
+        //Cube cube = new Cube(object_transformation_matrix, object_inv_transformation_matrix, objectColor);
+        //world.add_object(cube);
 
 //        //objects.Sphere Transformation matrices
 //        double m14_2 = 10;
