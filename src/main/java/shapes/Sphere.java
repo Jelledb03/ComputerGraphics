@@ -15,30 +15,6 @@ public class Sphere extends Object {
         super(transformation_matrix, inverse_transformation_matrix);
     }
 
-    //Hier gaan we dan daadwerkelijk de hitregistratie doen
-//    @Override
-//    public internal.HitObject hit_reg(internal.Ray ray) {
-//        //Kan ik hier initialiseren of meegeven als parameter (not sure wat het beste is)
-//        internal.Point S = ray.get_eye();
-//        internal.Vector c = ray.get_dir();
-//        internal.MatrixTransformer matrixTransformer = new internal.MatrixTransformer();
-//        //1. Have to transform ray with inverse transformation off sphere
-//        System.out.println(Arrays.deepToString(c.get_vector()));
-//        System.out.println(Arrays.deepToString(this.get_inverse_transformation_matrix().get_matrix()));
-//        double[][] point_s = matrixTransformer.multiplyMatrices(this.get_inverse_transformation_matrix().get_matrix(), S.get_point());
-//        double[][] vector_c = matrixTransformer.multiplyMatrices(this.get_inverse_transformation_matrix().get_matrix(), c.get_vector());
-//        System.out.println("point: " + Arrays.deepToString(point_s));
-//        System.out.println("vector: " + Arrays.deepToString(vector_c));
-//        internal.Point S_t = new internal.Point(point_s);
-//        internal.Vector c_t = new internal.Vector(vector_c);
-//
-//        //2. Calculate hit_time with transformed ray
-//        double t_hit = sphere_hit_detec(S_t, c_t);
-//        //3. Going to create a hit object here and calculate hit point with original ray
-//        internal.Point hitPoint = calculate_hit_point(S, c, t_hit);
-//        return new internal.HitObject(hitPoint, t_hit);
-//    }
-
     @Override
     double sphere_hit_detec(Point S_t, Vector c_t){
         //Hier gaan we A,B en C eerst berekenen
@@ -74,7 +50,7 @@ public class Sphere extends Object {
     }
 
     @Override
-    Vector calculate_normal_vector(Point hitPoint) {
+    Vector calculate_normal_vector(Point hitPoint, int surface) {
         //Ok dus hier gaan we een normal vector berekenen van de surface op hit punt hitPoint
         //Normal vector van bol wordt berekent
         //We gaan gewoon eerst een hitpunt berekenen met de generieke bol en dan de vector transformeren met de inverse transformatie matrix.

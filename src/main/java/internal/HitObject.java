@@ -35,6 +35,17 @@ public class HitObject {
         this.b_illuminationObject = new IlluminationObject();
     }
 
+    public HitObject(Point hit_point, Vector normal_vector, Color color, double hit_time, IlluminationObject r_illuminationObject, IlluminationObject g_illuminationObject, IlluminationObject b_illuminationObject) {
+        this.hit_point = hit_point;
+        this.normal_vector = normal_vector;
+        this.color = color;
+        this.hit_time = hit_time;
+        this.collided = true;
+        this.r_illuminationObject = r_illuminationObject;
+        this.g_illuminationObject = g_illuminationObject;
+        this.b_illuminationObject = b_illuminationObject;
+    }
+
     public Point get_hit_point() {
         return hit_point;
     }

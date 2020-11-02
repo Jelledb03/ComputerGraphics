@@ -58,7 +58,7 @@ public class World {
             if ((!lowest_time_hitObject.is_collided())) { // && tempHitPoint.getHitTime() > getCamera().getDistanceN()
                 lowest_time_hitObject = curr_hitObject;
             } else {
-                if (!lowest_time_hitObject.is_collided() && (curr_hitObject.get_hit_time() < lowest_time_hitObject.get_hit_time())) {
+                if (!lowest_time_hitObject.is_collided() && (curr_hitObject.get_hit_time() <= lowest_time_hitObject.get_hit_time())) {
                     lowest_time_hitObject = curr_hitObject;
                 }
             }
@@ -141,9 +141,10 @@ public class World {
             double total_ambient_coeff = illuminationObject.get_ambient_reflection_coeff() * total_ambient;
             double total_intensity = total_diffuse_coeff + total_specular_coeff + total_ambient_coeff;
             /** Nog eens navragen of dit correct is of hoe ik dit beter zou kunnen oplossen **/
-            if(total_intensity > 1){
+            total_intensity = total_intensity/1.5;
+            /*if(total_intensity > 1){
                 total_intensity = 1;
-            }
+            }*/
             total_intensities.add(total_intensity);
         }
         return total_intensities;

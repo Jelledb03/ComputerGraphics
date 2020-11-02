@@ -14,6 +14,7 @@ public abstract class Object {
     private Matrix inverse_transformation_matrix;
     private InternalTransformer internalTransformer;
     private Color color;
+    private int surface = 0;
 
     public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Color color) {
         this.transformation_matrix = transformation_matrix;
@@ -85,7 +86,7 @@ public abstract class Object {
             } else {
                 //Calculate normal_vector
                 Point transformed_hit_point = calculate_hit_point(S_t, c_t, t_hit);
-                Vector transformed_normal_vector = calculate_normal_vector(transformed_hit_point);
+                Vector transformed_normal_vector = calculate_normal_vector(transformed_hit_point, surface);
                 //Ik denk dat je die dan gewoon moet transformeren
                 double[][] normal_vector_d = matrixTransformer.multiplyMatrices(this.get_transformation_matrix().get_matrix(), transformed_normal_vector.get_vector());
                 Vector normal_vector = new Vector(normal_vector_d);
@@ -95,7 +96,7 @@ public abstract class Object {
         }
     }
 
-    abstract Vector calculate_normal_vector(Point hitPoint);
+    abstract Vector calculate_normal_vector(Point hitPoint, int surface);
 
     abstract double sphere_hit_detec(Point S_t, Vector c_t);
 
@@ -107,5 +108,13 @@ public abstract class Object {
 
     public void set_color(Color color) {
         this.color = color;
+    }
+
+    public int getSurface() {
+        return surface;
+    }
+
+    public void setSurface(int surface) {
+        this.surface = surface;
     }
 }

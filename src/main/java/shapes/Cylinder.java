@@ -42,7 +42,6 @@ public class Cylinder extends Object {
         double t_hit2 = 0;
         //lowest hit time;
         double t_hit_min = 0;
-        int surface = 0;
         if (Discriminant < 0) {
             //System.out.println("Geen hitpunten");
         } else if (Discriminant == 0) {
@@ -88,7 +87,7 @@ public class Cylinder extends Object {
                 t_hit_min = Math.min(t_hit_min, t_hit1);
                 //Hit zal op base eerst gebeuren
                 if(t_hit_min == t_hit1)
-                    surface = 1;
+                    this.setSurface(1);
         }
         //Cap
         //Intersectie bepalen met z=1
@@ -105,7 +104,7 @@ public class Cylinder extends Object {
                 t_hit_min = Math.min(t_hit_min, t_hit1);
             //hit zal gebeuren op cap
             if(t_hit_min == t_hit1)
-                surface = 2;
+                this.setSurface(2);
         }
         return t_hit_min;
     }
@@ -120,7 +119,7 @@ public class Cylinder extends Object {
     //F(x,y,z) = x²+y² - (1 + (s-1)z)²
 
     @Override
-    Vector calculate_normal_vector(Point hitPoint) {
+    Vector calculate_normal_vector(Point hitPoint, int surface) {
         return new Vector(0, 0, 0);
     }
 }
