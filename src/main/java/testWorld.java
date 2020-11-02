@@ -17,7 +17,7 @@ public class testWorld {
         Camera camera = new Camera();
         //afstand van camera tot de viewpoint
         camera.set_N(2000);
-        Point eye = new Point(10, 10, 15);
+        Point eye = new Point(10, 10, 10);
         camera.set_eye(eye);
         Vector n = new Vector(1, 1, 1);
         Vector u = new Vector(-1, 1, 0);

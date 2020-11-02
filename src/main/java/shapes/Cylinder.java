@@ -94,6 +94,7 @@ public class Cylinder extends Object {
         //Intersectie als x² + y² < s²
         //Oog mag niet op z=1 zitten (want dan is er al een intersectie op tijdstip 0 en er moet ook een z beweging zijn van de ray)
         //Ik denk dat die if statement niet juist is
+        //Iets is hier verkeerd mee
         if (S_t.get_Z() != 1 && c_t.get_Z() !=0) {
             //Dit berekent de hit_time wanneer er een intersectie is en returned deze
             t_hit1 = (1 - S_t.get_Z()) / c_t.get_Z();
@@ -117,16 +118,16 @@ public class Cylinder extends Object {
         double z = S.get_Z() + c.get_Z()*t_hit;
         return new Point(x, y, z);
     }
-    //F(x,y,z) = x²+y² - (1 + (s-1)z)²
 
     @Override
     Vector calculate_normal_vector(Point hitPoint, int surface) {
         switch (surface){
             case(0)://Surface is wall
-                //origin line is the lead line in the middle of the cylinder going from z = 0 to z = 1
-                //The origin point will be (0, 0, z) with z coordinate equal to the z coordinate of the hitPoint
-                Point origin = new Point(0, 0, hitPoint.get_Z());
-                return getInternalTransformer().substraction_to_vector(hitPoint,origin);
+                //normal to wall at point P(x,y,z) = (x,y,(-(s-1)(1+(s-1)z)))
+                double normal_x = hitPoint.get_X();
+                double normal_y = hitPoint.get_Y();
+                double normal_z = (-(s-1)*(1+(s-1)*hitPoint.get_Z()));
+                return new Vector(normal_x, normal_y, normal_z);
             case(1)://Surface is Base //Dus punt ligt op vlak z = 0
                 return new Vector(0, 0, -1);
             default://Surface is Cap //Dus punt ligt op vlak z = 1
