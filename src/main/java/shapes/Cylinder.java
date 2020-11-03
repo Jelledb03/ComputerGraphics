@@ -72,6 +72,9 @@ public class Cylinder extends Object {
         }else if(correct_hit_2){
             t_hit_min = t_hit2;
         }
+
+        /*
+
         //Base
         //Intersectie bepalen met z=0
         //Intersectie als x² + y² < 1
@@ -108,6 +111,9 @@ public class Cylinder extends Object {
             if(t_hit_min == t_hit1)
                 this.setSurface(2);
         }
+
+         */
+
         return t_hit_min;
     }
 
