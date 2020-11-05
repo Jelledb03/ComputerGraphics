@@ -1,6 +1,10 @@
 package internal;
 
+import world.Light;
+
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HitObject {
     //This will create a hit object that will include the hit point in the 3D world, the hit time (when the ray hits, have to search for the lowest)

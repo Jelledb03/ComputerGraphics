@@ -38,12 +38,15 @@ public class Renderer {
         for (int col = 0; col < Config.SCREEN_WIDTH; col++) {
             for (int row = 0; row < Config.SCREEN_HEIGHT; row++) {
                 Ray ray = internalFactory.createRay(world.getCamera(),col,row);
-                HitObject hitObject = world.calculateClosestHitObject(ray);
+                //Iterator will help me to keep calling calculateClosestHitObject for a number of reflections (only call it later on if iterator < 5)
+                int iterator = 0;
+                HitObject hitObject = world.calculateClosestHitObject(ray, iterator);
                 if(hitObject.is_collided()) {
                     counter++;
+                    /*
                     if (hitObject.get_normal_vector().get_X() == 0 && hitObject.get_normal_vector().get_Y() == 0 && hitObject.get_normal_vector().get_Z() == 1) {
                         counter_cap++;
-                    }
+                    }*/
                     //System.out.println(hitObject.get_intensity());
                 }
                 Pixel pixel = pixelFactory.createPixel(col, row, hitObject);
@@ -51,7 +54,7 @@ public class Renderer {
             }
         }
         System.out.println(counter);
-        System.out.println("counter cap: " + counter_cap);
+        //System.out.println("counter cap: " + counter_cap);
         //After rendering all the pixels to the screen, repaint the screen
         screen.repaint();
     }

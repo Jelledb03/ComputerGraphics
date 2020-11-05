@@ -49,7 +49,7 @@ public class World {
         this.objects = objects;
     }
 
-    public HitObject calculateClosestHitObject(Ray ray) {
+    public HitObject calculateClosestHitObject(Ray ray, int iterator) {
         //Hierin gaan we de dichstbijzijnde hitobject vinden en teruggeven
         //Zullen met een ray over alle objecten in de list gaan en elke keer de hittime nakijken en het hitobject met kleinste hittime bijhouden
         HitObject lowest_time_hitObject = new HitObject();
@@ -65,7 +65,31 @@ public class World {
         }
         if(lowest_time_hitObject.is_collided()) {
             IlluminationObject[] illuminationObjects = new IlluminationObject[]{lowest_time_hitObject.get_r_illuminationObject(), lowest_time_hitObject.get_g_illuminationObject(),lowest_time_hitObject.get_b_illuminationObject()};
-            List<Double> intensities = calculate_intensity(ray.get_dir(),lowest_time_hitObject,illuminationObjects);
+            List<Double> intensities = calculate_local_intensity(ray.get_dir(),lowest_time_hitObject,illuminationObjects, iterator);
+            if(iterator < 1){
+                //Calculate reflection by calling recursive calculateClosestHitObject function
+                //First calculate reflection ray
+                //r = dir - 2 * (dir * m) * m
+                //eye point is hitPoint
+                Point eye = lowest_time_hitObject.get_hit_point();
+                Vector dir = ray.get_dir();
+                Vector m = lowest_time_hitObject.get_normal_vector();
+                double dot_product = -2 * internalTransformer.dot_product(dir, m);
+                Vector second_vector = internalTransformer.vector_product(m, dot_product);
+                Vector r = internalTransformer.vector_sum(dir, second_vector);
+                Ray reflection_ray = new Ray(eye, r);
+                //Second calculate the next hit object and its intensity parameters
+                iterator++;
+                HitObject reflected_hitObject = calculateClosestHitObject(reflection_ray, iterator);
+                if(reflected_hitObject.is_collided()) {
+                    double reflected_intensity_r = reflected_hitObject.get_r_illuminationObject().get_intensity();
+                    double reflected_intensity_g = reflected_hitObject.get_g_illuminationObject().get_intensity();
+                    double reflected_intensity_b = reflected_hitObject.get_b_illuminationObject().get_intensity();
+                    intensities.set(0, (intensities.get(0) + reflected_intensity_r) / 2);
+                    intensities.set(1, (intensities.get(1) + reflected_intensity_g) / 2);
+                    intensities.set(2, (intensities.get(2) + reflected_intensity_b) / 2);
+                }
+            }
             lowest_time_hitObject.get_r_illuminationObject().set_intensity(intensities.get(0));
             lowest_time_hitObject.get_g_illuminationObject().set_intensity(intensities.get(1));
             lowest_time_hitObject.get_b_illuminationObject().set_intensity(intensities.get(2));
@@ -79,7 +103,7 @@ public class World {
     }
 
     //Nog wat aanpassingen doen voor color (RGB zie p390, maar basics blijven hetzelfde)
-    public List<Double> calculate_intensity(Vector ray, HitObject hitObject, IlluminationObject[] illuminationObjects){
+    public List<Double> calculate_local_intensity(Vector ray, HitObject hitObject, IlluminationObject[] illuminationObjects, int iterator){
         //First we will loop through all the lights
         // It is possible that more than one light shines to the eye through an object (have to sum it)
         double total_diff_coefficient = 0;
@@ -139,13 +163,13 @@ public class World {
             double total_diffuse_coeff = illuminationObject.get_diffuse_reflection_coeff() * total_lambert;
             double total_specular_coeff = illuminationObject.get_specular_reflection_coeff() * Math.pow(total_phong, illuminationObject.get_fallof());
             double total_ambient_coeff = illuminationObject.get_ambient_reflection_coeff() * total_ambient;
-            double total_intensity = total_diffuse_coeff + total_specular_coeff + total_ambient_coeff;
+            double total_local_intensity = total_diffuse_coeff + total_specular_coeff + total_ambient_coeff;
             /** Nog eens navragen of dit correct is of hoe ik dit beter zou kunnen oplossen **/
-            total_intensity = total_intensity/1.5;
-            /*if(total_intensity > 1){
-                total_intensity = 1;
+            total_local_intensity = total_local_intensity/1.5;
+            /*if(total_local_intensity > 1){
+                total_local_intensity = 1;
             }*/
-            total_intensities.add(total_intensity);
+            total_intensities.add(total_local_intensity);
         }
         return total_intensities;
     }
