@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import config.Config;
 import internal.*;
 import internal.Point;
 import shapes.Object;
@@ -77,12 +78,13 @@ public class World {
             local_colors.add((int)(lowest_time_hitObject.get_color().getRed()*local_intensities.get(0)));
             local_colors.add((int)(lowest_time_hitObject.get_color().getGreen()*local_intensities.get(1)));
             local_colors.add((int)(lowest_time_hitObject.get_color().getBlue()*local_intensities.get(2)));
-            if(iterator < 3){
+            if(iterator < Config.MAX_ITERATION){
                 //verhoudingen som moet 1 zijn, nog vergeten!!!!
                 //Met kleur werken
                 //som van kleur met shading, reflectie en refractie
                 //shading met intensiteit
 
+                //REFLECTION
                 //Calculate reflection by calling recursive calculateClosestHitObject function
                 //First calculate reflection ray
                 //r = dir - 2 * (dir * m) * m
@@ -101,18 +103,22 @@ public class World {
                 HitObject reflected_hitObject = calculateClosestHitObject(reflection_ray, iterator);
                 List<Double> reflected_intensities = new ArrayList<>();
                 if(reflected_hitObject.is_collided()) {
-                    reflected_intensities.add(reflected_hitObject.get_r_illuminationObject().get_intensity());
-                    reflected_intensities.add(reflected_hitObject.get_g_illuminationObject().get_intensity());
-                    reflected_intensities.add(reflected_hitObject.get_b_illuminationObject().get_intensity());
+                    //reflected_intensities.add(reflected_hitObject.get_r_illuminationObject().get_intensity());
+                    //reflected_intensities.add(reflected_hitObject.get_g_illuminationObject().get_intensity());
+                    //reflected_intensities.add(reflected_hitObject.get_b_illuminationObject().get_intensity());
                     //Calculated reflected colors
-                    reflected_colors.set(0,(int)(reflected_hitObject.get_color().getRed()*reflected_intensities.get(0)));
-                    reflected_colors.set(1,(int)(reflected_hitObject.get_color().getGreen()*reflected_intensities.get(1)));
-                    reflected_colors.set(2,(int)(reflected_hitObject.get_color().getBlue()*reflected_intensities.get(2)));
+                    reflected_colors.set(0,reflected_hitObject.get_color().getRed());
+                    reflected_colors.set(1,reflected_hitObject.get_color().getGreen());
+                    reflected_colors.set(2,reflected_hitObject.get_color().getBlue());
                     Color reflected_hitObject_color = new Color(reflected_colors.get(0), reflected_colors.get(1), reflected_colors.get(2));
-                    if(reflected_colors.get(0) != 0 || reflected_colors.get(1) != 0 || reflected_colors.get(2) != 0){
+                    /*if(reflected_colors.get(0) != 0 || reflected_colors.get(1) != 0 || reflected_colors.get(2) != 0){
                         System.out.println(reflected_hitObject_color);
-                    }
+                    }*/
                 }
+
+                //REFRACTION
+
+
             }
             //Will calculated the actual color of the hitObject (sum of local_color + reflected_color + refracted_color
 

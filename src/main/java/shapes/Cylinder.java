@@ -19,6 +19,11 @@ public class Cylinder extends Object {
         this.s = s;
     }
 
+    public Cylinder(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, Color color, double s) {
+        super(transformation_matrix, inverse_transformation_matrix, local_coeff, reflection_coeff, refraction_coeff, color);
+        this.s = s;
+    }
+
     @Override
     double sphere_hit_detec(Point S_t, Vector c_t) {
         //Wall Check
@@ -31,7 +36,7 @@ public class Cylinder extends Object {
         double d = (s - 1) * c_t.get_Z();
         double F = 1 + (s - 1) * S_t.get_Z();
         double A = Math.pow(c_t.get_X(), 2) + Math.pow(c_t.get_Y(), 2) - Math.pow(d, 2);
-        double B = c_t.get_X() * S_t.get_X() + c_t.get_Y() * S_t.get_Y() - F*d;
+        double B = c_t.get_X() * S_t.get_X() + c_t.get_Y() * S_t.get_Y() - F * d;
         double C = Math.pow(S_t.get_X(), 2) + Math.pow(S_t.get_Y(), 2) - Math.pow(F, 2);
         double Discriminant = Math.pow(B, 2) - A * C;
 //        System.out.println(A);
@@ -58,18 +63,18 @@ public class Cylinder extends Object {
         boolean correct_hit_1 = false;
         boolean correct_hit_2 = false;
         //betekent dat de hitpoint in de cylinder ligt
-        if(hit_point_1.get_Z() > 0 && hit_point_1.get_Z() < 1)
+        if (hit_point_1.get_Z() > 0 && hit_point_1.get_Z() < 1)
             correct_hit_1 = true;
-        if(hit_point_2.get_Z() > 0 && hit_point_2.get_Z() < 1)
+        if (hit_point_2.get_Z() > 0 && hit_point_2.get_Z() < 1)
             correct_hit_2 = true;
-        if(correct_hit_1 && correct_hit_2){
+        if (correct_hit_1 && correct_hit_2) {
             //Uiteindelijk willen we hier enkel de kleinste hit time returnen
             //Surface is hier 0
             //Misschien hier nog nakijken of hit_time groter is dan 0. Wel nog eens navragen
             t_hit_min = Math.min(t_hit1, t_hit2);
-        }else if(correct_hit_1){
+        } else if (correct_hit_1) {
             t_hit_min = t_hit1;
-        }else if(correct_hit_2){
+        } else if (correct_hit_2) {
             t_hit_min = t_hit2;
         }
 
@@ -119,22 +124,22 @@ public class Cylinder extends Object {
 
     @Override
     Point calculate_hit_point(Point S, Vector c, double t_hit) {
-        double x = S.get_X() + c.get_X()*t_hit;
-        double y = S.get_Y() + c.get_Y()*t_hit;
-        double z = S.get_Z() + c.get_Z()*t_hit;
+        double x = S.get_X() + c.get_X() * t_hit;
+        double y = S.get_Y() + c.get_Y() * t_hit;
+        double z = S.get_Z() + c.get_Z() * t_hit;
         return new Point(x, y, z);
     }
 
     @Override
     Vector calculate_normal_vector(Point hitPoint, int surface) {
-        switch (surface){
-            case(0)://Surface is wall
+        switch (surface) {
+            case (0)://Surface is wall
                 //normal to wall at point P(x,y,z) = (x,y,(-(s-1)(1+(s-1)z)))
                 double normal_x = hitPoint.get_X();
                 double normal_y = hitPoint.get_Y();
-                double normal_z = (-(s-1)*(1+(s-1)*hitPoint.get_Z()));
+                double normal_z = (-(s - 1) * (1 + (s - 1) * hitPoint.get_Z()));
                 return new Vector(normal_x, normal_y, normal_z);
-            case(1)://Surface is Base //Dus punt ligt op vlak z = 0
+            case (1)://Surface is Base //Dus punt ligt op vlak z = 0
                 return new Vector(0, 0, -1);
             default://Surface is Cap //Dus punt ligt op vlak z = 1
                 return new Vector(0, 0, 1);

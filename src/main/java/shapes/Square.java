@@ -21,6 +21,10 @@ public class Square extends Object {
         super(transformation_matrix, inverse_transformation_matrix);
     }
 
+    public Square(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff,double reflection_coeff,double refraction_coeff,Color color) {
+        super(transformation_matrix, inverse_transformation_matrix,local_coeff,reflection_coeff,refraction_coeff, color);
+    }
+
     @Override
     double sphere_hit_detec(Point S_t, Vector c_t) {
         //Hier krijgen we al de invers getransformeerde ray binnen (dus stap 1 is completed)

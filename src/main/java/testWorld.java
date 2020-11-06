@@ -29,7 +29,7 @@ public class testWorld {
         camera.set_v(v);
         Ray ray = internalFactory.createRay(camera, 25, 25);
         World world = new World(camera);
-        Point lightPoint = new Point(9, 9, 10);
+        Point lightPoint = new Point(9, 9, 5);
         //Licht niet zo sterk zetten, mag veel lager
         //Maximaal 0.99
         Light light = new Light(lightPoint, 0.99);
@@ -43,15 +43,15 @@ public class testWorld {
         Matrix object_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
         Matrix object_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
         //Translation
-        double m14 = 0; //x
+        double m14 = 10; //x
         double m24 = 0; //y
-        double m34 = 5; //z
+        double m34 = 0; //z
         Matrix object_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
         Matrix object_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
         //Cube Scaling (wordt de grote omvangende kubus waarin de wereld zit)
-        double cube_sx = 20; //x
-        double cube_sy = 20; //y
-        double cube_sz = 20; //z
+        double cube_sx = 10; //x
+        double cube_sy = 10; //y
+        double cube_sz = 10; //z
         Matrix cube_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(cube_sx, cube_sy, cube_sz);
         Matrix cube_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(cube_sx, cube_sy, cube_sz);
 
@@ -61,13 +61,13 @@ public class testWorld {
         Matrix sphere2_matrix = new Matrix(object_matrix);
         Matrix sphere2_inv_matrix = new Matrix(object_inv_matrix);
 
-        Color objectColor = Color.WHITE;
+        Color objectColor = Color.GREEN;
         Color objectColor_2 = Color.PINK;
 
-        Sphere sphere = new Sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, objectColor);
+        Sphere sphere = new Sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 0, 1, 0, objectColor_2);
         world.add_object(sphere);
 
-        Sphere sphere_2 = new Sphere(object_translation_transformation_matrix, object_translation_inv_transformation_matrix, objectColor_2);
+        Sphere sphere_2 = new Sphere(object_translation_transformation_matrix, object_translation_inv_transformation_matrix, 1, 0, 0, objectColor);
         world.add_object(sphere_2);
         //Sphere sphere_2 = new Sphere(sphere2_matrix, sphere2_inv_matrix, objectColor_2);
         //world.add_object(sphere_2);
@@ -78,7 +78,7 @@ public class testWorld {
         //Cube cube = new Cube(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, objectColor);
         //world.add_object(cube);
 
-        Cube world_cube = new Cube(cube_scaling_transformation_matrix, cube_scaling_inv_transformation_matrix, Config.DEFAULT_BACKGROUND_COLOR);
+        Cube world_cube = new Cube(cube_scaling_transformation_matrix, cube_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_BACKGROUND_COLOR);
         world.add_object(world_cube);
 
         Renderer renderer = new Renderer();
