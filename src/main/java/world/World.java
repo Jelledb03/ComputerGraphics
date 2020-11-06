@@ -109,7 +109,9 @@ public class World {
                     reflected_colors.set(1,(int)(reflected_hitObject.get_color().getGreen()*reflected_intensities.get(1)));
                     reflected_colors.set(2,(int)(reflected_hitObject.get_color().getBlue()*reflected_intensities.get(2)));
                     Color reflected_hitObject_color = new Color(reflected_colors.get(0), reflected_colors.get(1), reflected_colors.get(2));
-                    System.out.println(reflected_hitObject_color);
+                    if(reflected_colors.get(0) != 0 || reflected_colors.get(1) != 0 || reflected_colors.get(2) != 0){
+                        System.out.println(reflected_hitObject_color);
+                    }
                 }
             }
             //Will calculated the actual color of the hitObject (sum of local_color + reflected_color + refracted_color
