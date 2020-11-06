@@ -1,9 +1,11 @@
 package world;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import internal.*;
+import internal.Point;
 import shapes.Object;
 
 public class World {
@@ -58,41 +60,68 @@ public class World {
             if ((!lowest_time_hitObject.is_collided())) { // && tempHitPoint.getHitTime() > getCamera().getDistanceN()
                 lowest_time_hitObject = curr_hitObject;
             } else {
-                if (!lowest_time_hitObject.is_collided() && (curr_hitObject.get_hit_time() <= lowest_time_hitObject.get_hit_time())) {
+                if (!lowest_time_hitObject.is_collided() && (curr_hitObject.get_hit_time() < lowest_time_hitObject.get_hit_time())) {
                     lowest_time_hitObject = curr_hitObject;
                 }
             }
         }
+        List<Integer> reflected_colors = new ArrayList<>();
+        //reflection colors are zero when lowest_time_hitobject is not collided
+        reflected_colors.add(0);
+        reflected_colors.add(0);
+        reflected_colors.add(0);
         if(lowest_time_hitObject.is_collided()) {
             IlluminationObject[] illuminationObjects = new IlluminationObject[]{lowest_time_hitObject.get_r_illuminationObject(), lowest_time_hitObject.get_g_illuminationObject(),lowest_time_hitObject.get_b_illuminationObject()};
-            List<Double> intensities = calculate_local_intensity(ray.get_dir(),lowest_time_hitObject,illuminationObjects, iterator);
-            if(iterator < 1){
+            List<Double> local_intensities = calculate_local_intensity(ray.get_dir(),lowest_time_hitObject,illuminationObjects, iterator);
+            List<Integer> local_colors = new ArrayList<>();
+            local_colors.add((int)(lowest_time_hitObject.get_color().getRed()*local_intensities.get(0)));
+            local_colors.add((int)(lowest_time_hitObject.get_color().getGreen()*local_intensities.get(1)));
+            local_colors.add((int)(lowest_time_hitObject.get_color().getBlue()*local_intensities.get(2)));
+            if(iterator < 3){
+                //verhoudingen som moet 1 zijn, nog vergeten!!!!
+                //Met kleur werken
+                //som van kleur met shading, reflectie en refractie
+                //shading met intensiteit
+
                 //Calculate reflection by calling recursive calculateClosestHitObject function
                 //First calculate reflection ray
                 //r = dir - 2 * (dir * m) * m
-                //eye point is hitPoint
-                Point eye = lowest_time_hitObject.get_hit_point();
+                //Ph point is hitPoint
+                Point Ph = lowest_time_hitObject.get_hit_point();
                 Vector dir = ray.get_dir();
+                Vector dir_norm = dir.normalize();
                 Vector m = lowest_time_hitObject.get_normal_vector();
-                double dot_product = -2 * internalTransformer.dot_product(dir, m);
-                Vector second_vector = internalTransformer.vector_product(m, dot_product);
-                Vector r = internalTransformer.vector_sum(dir, second_vector);
-                Ray reflection_ray = new Ray(eye, r);
+                Vector m_norm = m.normalize();
+                double dot_product = -2 * internalTransformer.dot_product(dir_norm, m_norm);
+                Vector second_vector = internalTransformer.vector_product(m_norm, dot_product);
+                Vector r = internalTransformer.vector_sum(dir_norm, second_vector);
+                Ray reflection_ray = new Ray(Ph, r);
                 //Second calculate the next hit object and its intensity parameters
                 iterator++;
                 HitObject reflected_hitObject = calculateClosestHitObject(reflection_ray, iterator);
+                List<Double> reflected_intensities = new ArrayList<>();
                 if(reflected_hitObject.is_collided()) {
-                    double reflected_intensity_r = reflected_hitObject.get_r_illuminationObject().get_intensity();
-                    double reflected_intensity_g = reflected_hitObject.get_g_illuminationObject().get_intensity();
-                    double reflected_intensity_b = reflected_hitObject.get_b_illuminationObject().get_intensity();
-                    intensities.set(0, (intensities.get(0) + reflected_intensity_r) / 2);
-                    intensities.set(1, (intensities.get(1) + reflected_intensity_g) / 2);
-                    intensities.set(2, (intensities.get(2) + reflected_intensity_b) / 2);
+                    reflected_intensities.add(reflected_hitObject.get_r_illuminationObject().get_intensity());
+                    reflected_intensities.add(reflected_hitObject.get_g_illuminationObject().get_intensity());
+                    reflected_intensities.add(reflected_hitObject.get_b_illuminationObject().get_intensity());
+                    //Calculated reflected colors
+                    reflected_colors.set(0,(int)(reflected_hitObject.get_color().getRed()*reflected_intensities.get(0)));
+                    reflected_colors.set(1,(int)(reflected_hitObject.get_color().getGreen()*reflected_intensities.get(1)));
+                    reflected_colors.set(2,(int)(reflected_hitObject.get_color().getBlue()*reflected_intensities.get(2)));
+                    Color reflected_hitObject_color = new Color(reflected_colors.get(0), reflected_colors.get(1), reflected_colors.get(2));
+                    System.out.println(reflected_hitObject_color);
                 }
             }
-            lowest_time_hitObject.get_r_illuminationObject().set_intensity(intensities.get(0));
-            lowest_time_hitObject.get_g_illuminationObject().set_intensity(intensities.get(1));
-            lowest_time_hitObject.get_b_illuminationObject().set_intensity(intensities.get(2));
+            //Will calculated the actual color of the hitObject (sum of local_color + reflected_color + refracted_color
+
+            int total_r_color = (int)(lowest_time_hitObject.get_local_coeff() * local_colors.get(0)) + (int)(lowest_time_hitObject.get_reflection_coeff() * reflected_colors.get(0));
+            int total_g_color = (int)(lowest_time_hitObject.get_local_coeff() * local_colors.get(1)) + (int)(lowest_time_hitObject.get_reflection_coeff() * reflected_colors.get(1));
+            int total_b_color = (int)(lowest_time_hitObject.get_local_coeff() * local_colors.get(2)) + (int)(lowest_time_hitObject.get_reflection_coeff() * reflected_colors.get(2));
+            Color lowest_time_hitObject_color = new Color(total_r_color, total_g_color, total_b_color);
+            lowest_time_hitObject.set_color(lowest_time_hitObject_color);
+            //lowest_time_hitObject.get_r_illuminationObject().set_intensity(local_intensities.get(0));
+            //lowest_time_hitObject.get_g_illuminationObject().set_intensity(local_intensities.get(1));
+            //lowest_time_hitObject.get_b_illuminationObject().set_intensity(local_intensities.get(2));
         }
         //if (lowest_time_hitObject.is_collided()) {
             //System.out.println("creating hit objects");
@@ -165,10 +194,6 @@ public class World {
             double total_ambient_coeff = illuminationObject.get_ambient_reflection_coeff() * total_ambient;
             double total_local_intensity = total_diffuse_coeff + total_specular_coeff + total_ambient_coeff;
             /** Nog eens navragen of dit correct is of hoe ik dit beter zou kunnen oplossen **/
-            total_local_intensity = total_local_intensity/1.5;
-            /*if(total_local_intensity > 1){
-                total_local_intensity = 1;
-            }*/
             total_intensities.add(total_local_intensity);
         }
         return total_intensities;

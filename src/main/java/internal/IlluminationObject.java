@@ -1,6 +1,8 @@
 package internal;
 
 
+import config.Config;
+
 //This will contain all parameters needed for every illumination object
 //Will create a R, G and B object for every hitObject
 public class IlluminationObject {
@@ -11,10 +13,10 @@ public class IlluminationObject {
     private double intensity;
 
     public IlluminationObject(){
-        this.diffuse_reflection_coeff = 0.4;
-        this.fallof = 76.8;
-        this.specular_reflection_coeff = 0.774597;
-        this.ambient_reflection_coeff = 0.25;
+        this.diffuse_reflection_coeff = Config.DEFAULT_DIFFUSE_REFLECTION_COEFF;
+        this.fallof = Config.DEFAULT_FALLOF;
+        this.specular_reflection_coeff = Config.DEFAULT_SPECULAR_REFLECTION_COEFF;
+        this.ambient_reflection_coeff = Config.DEFAULT_AMBIENT_REFLECTION_COEFF;
         this.intensity = 0;
     }
 

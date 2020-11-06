@@ -14,12 +14,28 @@ public abstract class Object {
     private Matrix inverse_transformation_matrix;
     private InternalTransformer internalTransformer;
     private Color color;
+    private double local_coeff;
+    private double refraction_coeff;
+    private double reflection_coeff;
     private int surface = 0;
+
+    public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff,Color color) {
+        this.transformation_matrix = transformation_matrix;
+        this.inverse_transformation_matrix = inverse_transformation_matrix;
+        this.internalTransformer = new InternalTransformer();
+        this.local_coeff = local_coeff;
+        this.reflection_coeff = reflection_coeff;
+        this.refraction_coeff = refraction_coeff;
+        this.color = color;
+    }
 
     public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Color color) {
         this.transformation_matrix = transformation_matrix;
         this.inverse_transformation_matrix = inverse_transformation_matrix;
         this.internalTransformer = new InternalTransformer();
+        this.local_coeff = Config.DEFAULT_LOCAL_COEFF;
+        this.reflection_coeff = Config.DEFAULT_REFLECTION_COEFF;
+        this.refraction_coeff = Config.DEFAULT_REFRACTION_COEFF;
         this.color = color;
     }
 
@@ -27,6 +43,9 @@ public abstract class Object {
         this.transformation_matrix = transformation_matrix;
         this.inverse_transformation_matrix = inverse_transformation_matrix;
         this.internalTransformer = new InternalTransformer();
+        this.local_coeff = Config.DEFAULT_LOCAL_COEFF;
+        this.reflection_coeff = Config.DEFAULT_REFLECTION_COEFF;
+        this.refraction_coeff = Config.DEFAULT_REFRACTION_COEFF;
         this.color = Config.DEFAULT_OBJECT_COLOR;
     }
 
@@ -91,7 +110,11 @@ public abstract class Object {
                 double[][] normal_vector_d = matrixTransformer.multiplyMatrices(this.get_transformation_matrix().get_matrix(), transformed_normal_vector.get_vector());
                 Vector normal_vector = new Vector(normal_vector_d);
                 Vector normal_vector_norm = normal_vector.normalize();
-                return new HitObject(hitPoint, normal_vector_norm, this.color, t_hit);
+                IlluminationObject r_illumination_object = new IlluminationObject(0.7038,12.8,0.256777,0.19125);
+                IlluminationObject g_illumination_object = new IlluminationObject(0.27048,12.8,0.137622,0.0735);
+                IlluminationObject b_illumination_object = new IlluminationObject(0.0828,12.8,0.086014,0.0225);
+                //return new HitObject(hitPoint, normal_vector_norm, this.color, t_hit,r_illumination_object,g_illumination_object,b_illumination_object);
+                return new HitObject(hitPoint, normal_vector_norm, this.color, t_hit, local_coeff, reflection_coeff, refraction_coeff);
             }
         }
     }
