@@ -43,18 +43,18 @@ public class testWorld {
         Matrix object_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
         Matrix object_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
         //Translation
-        double m14 = -2; //x
-        double m24 = 0; //y
-        double m34 = -1; //z
-        Matrix object_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
-        Matrix object_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
+        double m14_cube = -2; //x
+        double m24_cube = 0; //y
+        double m34_cube = -1; //z
+        Matrix cube_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14_cube, m24_cube, m34_cube);
+        Matrix cube_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14_cube, m24_cube, m34_cube);
 
         //Translation
-        double m14_sphere = -1.5; //x
-        double m24_sphere = -1.5; //y
-        double m34_sphere = -2; //z
-        Matrix sphere_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14_sphere, m24_sphere, m34_sphere);
-        Matrix sphere_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14_sphere, m24_sphere, m34_sphere);
+        double m14 = -1.5; //x
+        double m24 = -1.5; //y
+        double m34 = -2; //z
+        Matrix object_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
+        Matrix object_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
 
         //Rotation Matrix
 
@@ -79,14 +79,14 @@ public class testWorld {
         Matrix object_y_roll_transformation_matrix = matrix3DFactory.create_y_roll_matrix(alpha);
         Matrix object_y_roll_inv_transformation_matrix = matrix3DFactory.create_inv_y_roll_matrix(alpha);
 
-        double[][] full_cube_matrix_array = matrixTransformer.multiplyMatrices(object_translation_transformation_matrix.get_matrix(), object_z_roll_transformation_matrix.get_matrix());
-        double[][] full_cube_inv_matrix_array = matrixTransformer.multiplyMatrices(object_translation_inv_transformation_matrix.get_matrix(), object_z_roll_inv_transformation_matrix.get_matrix());
+        double[][] full_cube_matrix_array = matrixTransformer.multiplyMatrices(cube_translation_transformation_matrix.get_matrix(), object_z_roll_transformation_matrix.get_matrix());
+        double[][] full_cube_inv_matrix_array = matrixTransformer.multiplyMatrices(cube_translation_inv_transformation_matrix.get_matrix(), object_z_roll_inv_transformation_matrix.get_matrix());
 
         Matrix full_cube_matrix = new Matrix(full_cube_matrix_array);
         Matrix full_cube_inv_matrix = new Matrix(full_cube_inv_matrix_array);
 
-        double[][] object_matrix = matrixTransformer.multiplyMatrices(object_translation_transformation_matrix.get_matrix(), object_scaling_transformation_matrix.get_matrix());
-        double[][] object_inv_matrix = matrixTransformer.multiplyMatrices(object_translation_inv_transformation_matrix.get_matrix(), object_scaling_inv_transformation_matrix.get_matrix());
+        double[][] object_matrix = matrixTransformer.multiplyMatrices(cube_translation_transformation_matrix.get_matrix(), object_scaling_transformation_matrix.get_matrix());
+        double[][] object_inv_matrix = matrixTransformer.multiplyMatrices(cube_translation_inv_transformation_matrix.get_matrix(), object_scaling_inv_transformation_matrix.get_matrix());
 
         Matrix sphere2_matrix = new Matrix(object_matrix);
         Matrix sphere2_inv_matrix = new Matrix(object_inv_matrix);
@@ -97,7 +97,7 @@ public class testWorld {
         Sphere sphere = new Sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 0, 0, 1, Config.DEFAULT_GLASS_SPEED, objectColor_2);
         world.add_object(sphere);
 
-        Sphere sphere_2 = new Sphere(sphere_translation_transformation_matrix, sphere_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
+        Sphere sphere_2 = new Sphere(object_translation_transformation_matrix, object_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
         world.add_object(sphere_2);
 
         //Cube cube = new Cube(object_translation_transformation_matrix, object_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
