@@ -29,7 +29,7 @@ public class testWorld {
         camera.set_v(v);
         Ray ray = internalFactory.createRay(camera,Config.DEFAULT_AIR_SPEED, 25, 25);
         World world = new World(camera);
-        Point lightPoint = new Point(9, 9, 5);
+        Point lightPoint = new Point(10, 10, 10);
         //Licht niet zo sterk zetten, mag veel lager
         //Maximaal 0.99
         Light light = new Light(lightPoint, 0.99);
@@ -64,7 +64,7 @@ public class testWorld {
         Color objectColor = Color.GREEN;
         Color objectColor_2 = Color.PINK;
 
-        Sphere sphere = new Sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 0, 1, 0, Config.DEFAULT_GLASS_SPEED, objectColor_2);
+        Sphere sphere = new Sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 0, 0, 1, Config.DEFAULT_GLASS_SPEED, objectColor_2);
         world.add_object(sphere);
 
         Sphere sphere_2 = new Sphere(object_translation_transformation_matrix, object_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
