@@ -11,12 +11,12 @@ public class Cube extends Object {
         super(transformation_matrix, inverse_transformation_matrix);
     }
 
-    public Cube(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Color color) {
-        super(transformation_matrix, inverse_transformation_matrix, color);
+    public Cube(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double c, Color color) {
+        super(transformation_matrix, inverse_transformation_matrix, c, color);
     }
 
-    public Cube(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, Color color) {
-        super(transformation_matrix, inverse_transformation_matrix, local_coeff, reflection_coeff, refraction_coeff, color);
+    public Cube(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color) {
+        super(transformation_matrix, inverse_transformation_matrix, local_coeff, reflection_coeff, refraction_coeff, c, color);
     }
 
     @Override

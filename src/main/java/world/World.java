@@ -94,10 +94,13 @@ public class World {
                 Vector dir_norm = dir.normalize();
                 Vector m = lowest_time_hitObject.get_normal_vector();
                 Vector m_norm = m.normalize();
-                double dot_product = -2 * internalTransformer.dot_product(dir_norm, m_norm);
-                Vector second_vector = internalTransformer.vector_product(m_norm, dot_product);
+                double dot_product_dir_m = internalTransformer.dot_product(dir_norm, m_norm);
+                double second_vector_mult_term = -2 * dot_product_dir_m;
+                Vector second_vector = internalTransformer.vector_product(m_norm, second_vector_mult_term);
                 Vector r = internalTransformer.vector_sum(dir_norm, second_vector);
-                Ray reflection_ray = new Ray(Ph, r);
+                //This means that whenever we start in a big cube (in our world), the speed in that cube will be equal to air speed
+                double c = ray.get_c();
+                Ray reflection_ray = new Ray(Ph, r, c);
                 //Second calculate the next hit object and its intensity parameters
                 iterator++;
                 HitObject reflected_hitObject = calculateClosestHitObject(reflection_ray, iterator);
@@ -117,7 +120,13 @@ public class World {
                 }
 
                 //REFRACTION
+                //We are first going to calculate cos(phi2)
+                //If this cos is lower or equal to 0, phi2 angle is equal to 90 or bigger we are in the critical angle range and there will be total reflection (zero refraction)
+                //If that occurs we don't have to focus on calculating direction t and a new ray, because there will be no refraction
 
+                //cos(phi2)
+
+                
 
             }
             //Will calculated the actual color of the hitObject (sum of local_color + reflected_color + refracted_color

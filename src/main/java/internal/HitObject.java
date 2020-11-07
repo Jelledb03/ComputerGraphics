@@ -20,6 +20,7 @@ public class HitObject {
     private double local_coeff;
     private double refraction_coeff;
     private double reflection_coeff;
+    private double c;
 
     //Used for lowest hit time hitobject in world (only the collided boolean is used)
     public HitObject() {
@@ -31,7 +32,7 @@ public class HitObject {
         this.b_illuminationObject = new IlluminationObject();
     }
 
-    public HitObject(Point hit_point, Vector normal_vector, Color color, double hit_time, double local_coeff, double reflection_coeff, double refraction_coeff) {
+    public HitObject(Point hit_point, Vector normal_vector, Color color, double hit_time, double local_coeff, double reflection_coeff, double refraction_coeff, double c) {
         this.hit_point = hit_point;
         this.normal_vector = normal_vector;
         this.color = color;
@@ -43,9 +44,10 @@ public class HitObject {
         this.local_coeff = local_coeff;
         this.reflection_coeff = reflection_coeff;
         this.refraction_coeff = refraction_coeff;
+        this.c = c;
     }
 
-    public HitObject(Point hit_point, Vector normal_vector, Color color, double hit_time, IlluminationObject r_illuminationObject, IlluminationObject g_illuminationObject, IlluminationObject b_illuminationObject,double local_coeff, double reflection_coeff, double refraction_coeff) {
+    public HitObject(Point hit_point, Vector normal_vector, Color color, double hit_time, IlluminationObject r_illuminationObject, IlluminationObject g_illuminationObject, IlluminationObject b_illuminationObject,double local_coeff, double reflection_coeff, double refraction_coeff, double c) {
         this.hit_point = hit_point;
         this.normal_vector = normal_vector;
         this.color = color;
@@ -57,6 +59,7 @@ public class HitObject {
         this.local_coeff = local_coeff;
         this.reflection_coeff = reflection_coeff;
         this.refraction_coeff = refraction_coeff;
+        this.c = c;
     }
 
     public Point get_hit_point() {
@@ -145,5 +148,13 @@ public class HitObject {
 
     public void set_reflection_coeff(double reflection_coeff) {
         this.reflection_coeff = reflection_coeff;
+    }
+
+    public double get_c() {
+        return c;
+    }
+
+    public void set_c(double c) {
+        this.c = c;
     }
 }

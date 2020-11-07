@@ -9,8 +9,8 @@ import java.awt.*;
 public class Cylinder extends Object {
     private double s;
 
-    public Cylinder(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Color color, double s) {
-        super(transformation_matrix, inverse_transformation_matrix, color);
+    public Cylinder(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double c, Color color, double s) {
+        super(transformation_matrix, inverse_transformation_matrix, c, color);
         this.s = s;
     }
 
@@ -19,8 +19,8 @@ public class Cylinder extends Object {
         this.s = s;
     }
 
-    public Cylinder(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, Color color, double s) {
-        super(transformation_matrix, inverse_transformation_matrix, local_coeff, reflection_coeff, refraction_coeff, color);
+    public Cylinder(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color, double s) {
+        super(transformation_matrix, inverse_transformation_matrix, local_coeff, reflection_coeff, refraction_coeff, c, color);
         this.s = s;
     }
 

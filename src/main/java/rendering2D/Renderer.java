@@ -37,7 +37,7 @@ public class Renderer {
         int counter_cap=0;
         for (int col = 0; col < Config.SCREEN_WIDTH; col++) {
             for (int row = 0; row < Config.SCREEN_HEIGHT; row++) {
-                Ray ray = internalFactory.createRay(world.getCamera(),col,row);
+                Ray ray = internalFactory.createRay(world.getCamera(), Config.DEFAULT_AIR_SPEED, col,row);
                 //Iterator will help me to keep calling calculateClosestHitObject for a number of reflections (only call it later on if iterator < 5)
                 int iterator = 0;
                 HitObject hitObject = world.calculateClosestHitObject(ray, iterator);

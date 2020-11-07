@@ -9,7 +9,7 @@ public class InternalFactory {
         internalTransformer = new InternalTransformer();
     }
     //creates ray from the eye of the camera and
-    public Ray createRay(Camera camera, int col, int row){
+    public Ray createRay(Camera camera, double c, int col, int row){
         //p615 12.6
         //dir_rc_n = -N*n
         Vector dir_rc_n = internalTransformer.vector_product(camera.get_n(), -camera.get_N());
@@ -29,6 +29,6 @@ public class InternalFactory {
 //        create ray met camera eye en dir vector
 //        System.out.println(camera.get_eye());
 //        System.out.println(dir_rc.get_X() + " " + dir_rc.get_Y() + " " + dir_rc.get_Z());
-        return new Ray(camera.get_eye(), dir_rc);
+        return new Ray(camera.get_eye(), dir_rc, c);
     }
 }

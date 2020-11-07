@@ -17,25 +17,28 @@ public abstract class Object {
     private double local_coeff;
     private double refraction_coeff;
     private double reflection_coeff;
+    private double c; //holds the relative speed of the ray compared to the speed of light
     private int surface = 0;
 
-    public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, Color color) {
+    public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color) {
         this.transformation_matrix = transformation_matrix;
         this.inverse_transformation_matrix = inverse_transformation_matrix;
         this.internalTransformer = new InternalTransformer();
         this.local_coeff = local_coeff;
         this.reflection_coeff = reflection_coeff;
         this.refraction_coeff = refraction_coeff;
+        this.c = c;
         this.color = color;
     }
 
-    public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Color color) {
+    public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double c, Color color) {
         this.transformation_matrix = transformation_matrix;
         this.inverse_transformation_matrix = inverse_transformation_matrix;
         this.internalTransformer = new InternalTransformer();
         this.local_coeff = Config.DEFAULT_LOCAL_COEFF;
         this.reflection_coeff = Config.DEFAULT_REFLECTION_COEFF;
         this.refraction_coeff = Config.DEFAULT_REFRACTION_COEFF;
+        this.c = c;
         this.color = color;
     }
 
@@ -113,8 +116,8 @@ public abstract class Object {
                 IlluminationObject r_illumination_object = new IlluminationObject(0.7038, 12.8, 0.256777, 0.19125);
                 IlluminationObject g_illumination_object = new IlluminationObject(0.27048, 12.8, 0.137622, 0.0735);
                 IlluminationObject b_illumination_object = new IlluminationObject(0.0828, 12.8, 0.086014, 0.0225);
-                //return new HitObject(hitPoint, normal_vector_norm, this.color, t_hit,r_illumination_object,g_illumination_object,b_illumination_object);
-                return new HitObject(hitPoint, normal_vector_norm, this.color, t_hit, local_coeff, reflection_coeff, refraction_coeff);
+                //return new HitObject(hitPoint, normal_vector_norm, this.color, t_hit,r_illumination_object,g_illumination_object,b_illumination_object,local_coeff, reflection_coeff, refraction_coeff, this.c);
+                return new HitObject(hitPoint, normal_vector_norm, this.color, t_hit, local_coeff, reflection_coeff, refraction_coeff, this.c);
             }
         }
     }
@@ -139,5 +142,13 @@ public abstract class Object {
 
     public void setSurface(int surface) {
         this.surface = surface;
+    }
+
+    public double get_c() {
+        return c;
+    }
+
+    public void set_c(double c) {
+        this.c = c;
     }
 }

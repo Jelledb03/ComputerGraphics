@@ -1,3 +1,4 @@
+import config.Config;
 import internal.*;
 import internal.Matrix3DFactory;
 import shapes.Cylinder;
@@ -11,7 +12,7 @@ public class TestHitPoint {
         //internal.Ray parameters
         Point eye = new Point(0.5, -0.5, 0.5);
         Vector direction = new Vector(-0.5, 0.5, 0);
-        Ray ray = new Ray(eye, direction);
+        Ray ray = new Ray(eye, direction, Config.DEFAULT_AIR_SPEED);
 
         //objects.Sphere Transformation matrices
         double m14 = 0;
