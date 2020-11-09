@@ -2,7 +2,7 @@ package rendering2D;
 
 import config.Config;
 import internal.HitObject;
-import internal.InternalFactory;
+import factory.ObjectFactory;
 import internal.Ray;
 import world.World;
 
@@ -31,13 +31,13 @@ public class Renderer {
     //Voor elke pixel in het 2D screen gaan we een ray creeren vanuit de camera
     //Nadat alle berekening gedaan zijn moet het scherm gerepaint worden
     public void render_screen(World world){
-        InternalFactory internalFactory = new InternalFactory();
+        ObjectFactory objectFactory = new ObjectFactory();
         PixelFactory pixelFactory = new PixelFactory();
         int counter= 0;
         int counter_cap=0;
         for (int col = 0; col < Config.SCREEN_WIDTH; col++) {
             for (int row = 0; row < Config.SCREEN_HEIGHT; row++) {
-                Ray ray = internalFactory.createRay(world.getCamera(), Config.DEFAULT_AIR_SPEED, col,row);
+                Ray ray = objectFactory.create_ray(world.getCamera(), Config.DEFAULT_AIR_SPEED, col,row);
                 //Iterator will help me to keep calling calculateClosestHitObject for a number of reflections (only call it later on if iterator < 5)
                 int iterator = 0;
                 HitObject hitObject = world.calculateClosestHitObject(ray, iterator);

@@ -1,6 +1,6 @@
 import internal.Matrix;
 import internal.Point;
-import depricated.Matrix2DFactory;
+import factory.Matrix2DFactory;
 import internal.MatrixTransformer;
 
 import java.awt.*;

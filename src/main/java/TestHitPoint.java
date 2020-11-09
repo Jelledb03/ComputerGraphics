@@ -1,6 +1,6 @@
 import config.Config;
 import internal.*;
-import internal.Matrix3DFactory;
+import factory.Matrix3DFactory;
 import shapes.Cylinder;
 import shapes.Sphere;
 import shapes.Square;

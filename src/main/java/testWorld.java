@@ -1,4 +1,6 @@
 import config.Config;
+import factory.ObjectFactory;
+import factory.Matrix3DFactory;
 import internal.*;
 import internal.Point;
 import rendering2D.Renderer;
@@ -13,26 +15,23 @@ import java.awt.*;
 
 public class testWorld {
     public static void main(String[] args) {
-        InternalFactory internalFactory = new InternalFactory();
+        ObjectFactory objectFactory = new ObjectFactory();
         Matrix3DFactory matrix3DFactory = new Matrix3DFactory();
         MatrixTransformer matrixTransformer = new MatrixTransformer();
-        Camera camera = new Camera();
+
         //afstand van camera tot de viewpoint
-        camera.set_N(1000);
-        Point eye = new Point(10, 10, 10);
-        camera.set_eye(eye);
-        Vector n = new Vector(1, 1, 1);
-        Vector u = new Vector(-1, 1, 0);
-        Vector v = new Vector(1, 1, -1);
-        camera.set_n(n);
-        camera.set_u(u);
-        camera.set_v(v);
-        Ray ray = internalFactory.createRay(camera,Config.DEFAULT_AIR_SPEED, 25, 25);
-        World world = new World(camera);
-        Point lightPoint = new Point(10, 10, 10);
+        double N = 1000;
+        Point eye = objectFactory.create_point(10, 10, 10);
+        Vector n = objectFactory.create_vector(1, 1, 1);
+        Vector u = objectFactory.create_vector(-1, 1, 0);
+        Vector v = objectFactory.create_vector(1, 1, -1);
+        Camera camera = objectFactory.create_camera(eye, u, v, n, N);
+        Ray ray = objectFactory.create_ray(camera, Config.DEFAULT_AIR_SPEED, 25, 25);
+        World world = objectFactory.create_world(camera);
+        Point lightPoint = objectFactory.create_point(10, 10, 10);
         //Licht niet zo sterk zetten, mag veel lager
         //Maximaal 0.99
-        Light light = new Light(lightPoint, 0.99);
+        Light light = objectFactory.create_light(lightPoint, 0.99);
         world.add_light(light);
 
         //objects Transformation matrices
@@ -66,12 +65,12 @@ public class testWorld {
         Matrix cube_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(cube_sx, cube_sy, cube_sz);
 
         //Rotation Matrix (z-roll) om vlak naar oog te draaien (en niet hoek)
-        double beta = Math.PI/4;
+        double beta = Math.PI / 4;
         Matrix object_z_roll_transformation_matrix = matrix3DFactory.create_z_roll_matrix(beta);
         Matrix object_z_roll_inv_transformation_matrix = matrix3DFactory.create_inv_z_roll_matrix(beta);
 
         //Rotation Matrix (x-roll) om vlak naar oog te draaien (en niet hoek)
-        double alpha = Math.PI/2;
+        double alpha = Math.PI / 2;
         Matrix object_x_roll_transformation_matrix = matrix3DFactory.create_x_roll_matrix(alpha);
         Matrix object_x_roll_inv_transformation_matrix = matrix3DFactory.create_inv_x_roll_matrix(alpha);
 
@@ -94,31 +93,31 @@ public class testWorld {
         Color objectColor = Color.GREEN;
         Color objectColor_2 = Color.PINK;
 
-        Sphere sphere = new Sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 0, 0, 1, Config.DEFAULT_GLASS_SPEED, objectColor_2);
+        Sphere sphere = objectFactory.create_sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 0, 0, 1, Config.DEFAULT_AIR_SPEED, objectColor_2);
         world.add_object(sphere);
 
-        Sphere sphere_2 = new Sphere(object_translation_transformation_matrix, object_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
+        Sphere sphere_2 = objectFactory.create_sphere(object_translation_transformation_matrix, object_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
         world.add_object(sphere_2);
 
-        //Cube cube = new Cube(object_translation_transformation_matrix, object_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
+        //Cube cube = objectFactory.create_cube(object_translation_transformation_matrix, object_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
         //world.add_object(cube);
 
-        //Cube cube = new Cube(full_cube_matrix, full_cube_inv_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
+        //Cube cube = objectFactory.create_cube(full_cube_matrix, full_cube_inv_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
         //world.add_object(cube);
 
-        //Sphere sphere_2 = new Sphere(sphere2_matrix, sphere2_inv_matrix, objectColor_2);
+        //Sphere sphere_2 = objectFactory.create_sphere(sphere2_matrix, sphere2_inv_matrix, objectColor_2);
         //world.add_object(sphere_2);
 
-        //Cylinder cylinder = new Cylinder(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, objectColor, 0.5);
+        //Cylinder cylinder = objectFactory.create_cylinder(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix,1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor, 0.5);
         //world.add_object(cylinder);
 
-        //Cube cube = new Cube(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, objectColor);
+        //Cube cube = objectFactory.create_cube(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor);
         //world.add_object(cube);
 
-        Cube world_cube = new Cube(cube_scaling_transformation_matrix, cube_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.DEFAULT_BACKGROUND_COLOR);
+        Cube world_cube = objectFactory.create_cube(cube_scaling_transformation_matrix, cube_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.DEFAULT_BACKGROUND_COLOR);
         world.add_object(world_cube);
 
-        Renderer renderer = new Renderer();
+        Renderer renderer = objectFactory.create_renderer();
         renderer.render_screen(world);
         System.out.println("rendered");
     }

@@ -1,4 +1,4 @@
-package depricated;
+package factory;
 
 import internal.Matrix;
 

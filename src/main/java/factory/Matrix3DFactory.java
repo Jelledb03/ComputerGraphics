@@ -1,4 +1,4 @@
-package internal;
+package factory;
 
 import internal.Matrix;
 
