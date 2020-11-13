@@ -9,7 +9,7 @@ public class Config {
 
     public static int MAX_ITERATION = 5;
 
-    public static Color DEFAULT_BACKGROUND_COLOR = Color.BLUE;
+    public static Color DEFAULT_BACKGROUND_COLOR = Color.pink;
     public static Color DEFAULT_OBJECT_COLOR = Color.WHITE;
 
     public static double DEFAULT_DIFFUSE_REFLECTION_COEFF = 0.2775;

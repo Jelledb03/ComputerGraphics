@@ -83,12 +83,14 @@ public class World {
             local_colors.add((int) (lowest_time_hitObject.get_color().getRed() * local_intensities.get(0)));
             local_colors.add((int) (lowest_time_hitObject.get_color().getGreen() * local_intensities.get(1)));
             local_colors.add((int) (lowest_time_hitObject.get_color().getBlue() * local_intensities.get(2)));
+            Color local_color = new Color(local_colors.get(0),local_colors.get(1),local_colors.get(2));
+            if(local_color.getRed() == 0 && local_color.getGreen() == 0 && local_color.getBlue() == 0){
+                System.out.println(local_color);
+            }
             if (iterator < Config.MAX_ITERATION) {
-                //verhoudingen som moet 1 zijn, nog vergeten!!!!
                 //Met kleur werken
                 //som van kleur met shading, reflectie en refractie
                 //shading met intensiteit
-
                 //REFLECTION
                 //Calculate reflection by calling recursive calculateClosestHitObject function
                 //First calculate reflection ray
@@ -109,17 +111,26 @@ public class World {
                 //Second calculate the next hit object and its intensity parameters
                 iterator++;
                 HitObject reflected_hitObject = calculateClosestHitObject(reflection_ray, iterator);
-                List<Double> reflected_intensities = new ArrayList<>();
                 if (reflected_hitObject.is_collided()) {
                     reflected_colors = find_colors(reflected_hitObject);
-                }
-
+                    Color reflected_color = new Color(reflected_colors.get(0),reflected_colors.get(1),reflected_colors.get(2));
+                    if(reflected_color.getRed() == 0 && reflected_color.getGreen() == 0 && reflected_color.getBlue() == 0){
+                        int hello = 0;
+                    }
+            }
                 //REFRACTION
                 //We are first going to calculate cos(phi2)
                 //If this cos is lower or equal to 0, phi2 angle is equal to 90 or bigger we are in the critical angle range and there will be total reflection (zero refraction)
                 //If that occurs we don't have to focus on calculating direction t and a new ray, because there will be no refraction
 
                 //cos(phi2)
+                /*
+                    Point Ph = lowest_time_hitObject.get_hit_point();
+                    Vector dir = ray.get_dir();
+                    Vector dir_norm = dir.normalize();
+                    Vector m = lowest_time_hitObject.get_normal_vector();
+                    Vector m_norm = m.normalize();
+                    double dot_product_dir_m = internalTransformer.dot_product(dir_norm, m_norm);*/
                 double c1 = ray.get_c();
                 double c2 = lowest_time_hitObject.get_c();
                 double deviation_term = c2 / c1;
@@ -134,11 +145,15 @@ public class World {
                     double second_vector_term_refr = (deviation_term * dot_product_dir_m) - cos_phi_2;
                     Vector second_vector_refr = internalTransformer.vector_product(m_norm, second_vector_term_refr);
                     Vector t = internalTransformer.vector_sum(first_vector_refr, second_vector_refr);
-                    Ray refraction_ray = new Ray(lowest_time_hitObject.get_hit_point(), t, c2);
+                    Ray refraction_ray = new Ray(Ph, t, c2);
                     //Calculates refracted hit object
                     HitObject refracted_hitObject = calculateClosestHitObject(refraction_ray, iterator);
                     if (refracted_hitObject.is_collided()) {
                         refracted_colors = find_colors(refracted_hitObject);
+                        Color refracted_color = new Color(refracted_colors.get(0),refracted_colors.get(1),refracted_colors.get(2));
+                        if(refracted_color.getRed() == 0 && refracted_color.getGreen() == 0 && refracted_color.getBlue() == 0){
+                            int hello = 0;
+                        }
                     }
                 }
             }

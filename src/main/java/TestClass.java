@@ -1,3 +1,4 @@
+import factory.Matrix3DFactory;
 import internal.Matrix;
 import internal.Point;
 import factory.Matrix2DFactory;
@@ -7,74 +8,26 @@ import java.util.Arrays;
 
 public class TestClass {
     public static void main(String[] args) {
-        double pi = Math.PI;
-        Matrix2DFactory matrixFactory = new Matrix2DFactory();
+        //Scaling
+        double sx = 2; //x
+        double sy = 2; //y
+        double sz = 2; //z
+        Matrix3DFactory matrix3DFactory = new Matrix3DFactory();
         MatrixTransformer matrixTransformer = new MatrixTransformer();
+        Matrix object_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
+        Matrix object_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
+        //Translation
+        double m14_cube = -2; //x
+        double m24_cube = 0; //y
+        double m34_cube = -1; //z
+        Matrix cube_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14_cube, m24_cube, m34_cube);
+        Matrix cube_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14_cube, m24_cube, m34_cube);
 
-        int[][] matrixA = {
-                new int[]{1, 15, 20, 50},
-                new int[]{-12, 7, -9, 20},
-                new int[]{3, 5, -8, 30}
-        };
+        double[][] matrix = matrixTransformer.multiplyMatrices(cube_translation_transformation_matrix.get_matrix(),object_scaling_transformation_matrix.get_matrix());
+        System.out.println(Arrays.deepToString(matrix));
 
-        double[][] matrixTest = {
-                new double[]{1, 15, 20, 50},
-                new double[]{-12, 7, -9, 20},
-                new double[]{3, 5, -8, 30}
-        };
-
-        int[][] matrixB = {
-                new int[]{12, -7, 13},
-                new int[]{2, 11, 10},
-                new int[]{-6, 17, 3}
-        };
-
-        Matrix matrix = new Matrix(matrixTest);
-
-        System.out.println("Row size: " + matrix.get_row_size());
-        System.out.println("Column size: " + matrix.get_column_size());
-
-        //matrix factory tests
-
-        //double m13 = 2;
-        //double m23 = 5;
-        //internal.Matrix transformed_matrix = matrixFactory.create_transl_matrix(m13, m23);
-
-        //System.out.println(Arrays.deepToString(transformed_matrix.get_matrix()));
-
-        double phi = pi/6;
-        Matrix transformed_matrix = matrixFactory.create_rot_matrix(phi);
-        System.out.println(Arrays.deepToString(transformed_matrix.get_matrix()));
-        System.out.println(transformed_matrix.get_column_size());
-        System.out.println(transformed_matrix.get_row_size());
-
-        double sx = 1;
-        double sy = 2;
-        transformed_matrix = matrixFactory.create_scal_matrix(sx,sy);
-        System.out.println(Arrays.deepToString(transformed_matrix.get_matrix()));
-
-        transformed_matrix = matrixFactory.create_inv_scal_matrix(sx,sy);
-        System.out.println(Arrays.deepToString(transformed_matrix.get_matrix()));
-
-        //internal.Matrix transformer test with internal.Point and MatrixFactory
-        //PointA coordinates
-        double x = 50;
-        double y = 50;
-
-        //Transformation Parameters
-        double m13 = 50;
-        double m23 = 0;
-
-        Point pointA = new Point(x,y);
-        Matrix translationMatrix = matrixFactory.create_transl_matrix(m13, m23);
-        System.out.println(Arrays.deepToString(pointA.get_point()));
-        System.out.println(Arrays.deepToString(translationMatrix.get_matrix()));
-
-        double[][] transformedMatrix = matrixTransformer.multiplyMatrices(translationMatrix.get_matrix(), pointA.get_point());
-
-        System.out.println(Arrays.deepToString(transformedMatrix));
-
-        GUI gui = new GUI(500,500);
-        gui.setVisible(true);
+        Point point = new Point(1, 1, 1);
+        double[][] transformed_point = matrixTransformer.multiplyMatrices(matrix, point.get_point());
+        System.out.println(Arrays.deepToString(transformed_point));
     }
 }
