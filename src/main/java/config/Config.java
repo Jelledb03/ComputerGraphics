@@ -7,7 +7,7 @@ public class Config {
     public static int SCREEN_WIDTH = 1920;
     public static int SCREEN_HEIGHT = 1080;
 
-    public static int MAX_ITERATION = 5;
+    public static int MAX_ITERATION = 1;
 
     public static Color DEFAULT_BACKGROUND_COLOR = Color.pink;
     public static Color DEFAULT_OBJECT_COLOR = Color.WHITE;

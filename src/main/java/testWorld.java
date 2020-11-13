@@ -19,16 +19,15 @@ public class testWorld {
         Matrix3DFactory matrix3DFactory = new Matrix3DFactory();
         MatrixTransformer matrixTransformer = new MatrixTransformer();
 
-        //afstand van camera tot de viewpoint
         double N = 1000;
-        Point eye = objectFactory.create_point(10, 10, 10);
+        Point eye = objectFactory.create_point(8, 8, 8);
         Vector n = objectFactory.create_vector(1, 1, 1);
         Vector u = objectFactory.create_vector(-1, 1, 0);
         Vector v = objectFactory.create_vector(1, 1, -1);
         Camera camera = objectFactory.create_camera(eye, u, v, n, N);
         Ray ray = objectFactory.create_ray(camera, Config.DEFAULT_AIR_SPEED, 25, 25);
         World world = objectFactory.create_world(camera);
-        Point lightPoint = objectFactory.create_point(15, 15, 15);
+        Point lightPoint = objectFactory.create_point(15, 15, -15);
         //Licht niet zo sterk zetten, mag veel lager
         //Maximaal 0.99
         Light light = objectFactory.create_light(lightPoint, 0.99);
@@ -113,11 +112,11 @@ public class testWorld {
         //Sphere sphere = objectFactory.create_sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 0, 1, 0, Config.DEFAULT_AIR_SPEED, objectColor_2);
         //world.add_object(sphere);
 
-        Cube cube = objectFactory.create_cube(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 0, 1, 0, Config.DEFAULT_AIR_SPEED, objectColor_2);
+        Cube cube = objectFactory.create_cube(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor_2);
         world.add_object(cube);
 
-        Sphere sphere_2 = objectFactory.create_sphere(reflection_translation_transformation_matrix, reflection_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
-        world.add_object(sphere_2);
+        //Sphere sphere_2 = objectFactory.create_sphere(reflection_translation_transformation_matrix, reflection_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
+        //world.add_object(sphere_2);
 
         //REFRACTION CUBE
 

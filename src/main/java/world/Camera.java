@@ -1,6 +1,7 @@
 package world;
 
 import config.Config;
+import internal.InternalTransformer;
 import internal.Point;
 import internal.Vector;
 
@@ -19,6 +20,7 @@ public class Camera {
 
     //N slaat op de afstand dat de camera zich van de viewport bevindt
     private double N;
+    private InternalTransformer internalTransformer = new InternalTransformer();
 
     public Camera() {
         this.eye = new Point(1, 1, 1);
@@ -37,6 +39,16 @@ public class Camera {
         this.n = n;
         this.W = W;
         this.H = H;
+        this.N = N;
+    }
+
+    public Camera(Point eye, Point look, Vector up, double N){
+        this.eye = eye;
+        this.n = internalTransformer.substraction_to_vector(eye, look);
+        this.u = internalTransformer.cross_product(up, this.n);
+        this.v = internalTransformer.cross_product(this.n, this.u);
+        this.W = Config.SCREEN_WIDTH/2;
+        this.H = Config.SCREEN_HEIGHT/2;
         this.N = N;
     }
 

@@ -37,6 +37,9 @@ public class ObjectFactory {
         camera.set_v(v);
         return camera;
     }
+    public Camera create_camera(Point eye, Point look, Vector up, double N){
+        return new Camera(eye,look,up,N);
+    }
     public Light create_light(Point lightPoint, double light_intensity){
         return new Light(lightPoint, light_intensity);
     }
