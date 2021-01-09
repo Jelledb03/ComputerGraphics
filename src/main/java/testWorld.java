@@ -18,16 +18,20 @@ public class testWorld {
         ObjectFactory objectFactory = new ObjectFactory();
         Matrix3DFactory matrix3DFactory = new Matrix3DFactory();
         MatrixTransformer matrixTransformer = new MatrixTransformer();
+        InternalTransformer internalTransformer = new InternalTransformer();
 
         double N = 1000;
-        Point eye = objectFactory.create_point(8, 8, 8);
-        Vector n = objectFactory.create_vector(1, 1, 1);
-        Vector u = objectFactory.create_vector(-1, 1, 0);
-        Vector v = objectFactory.create_vector(1, 1, -1);
+        //We kijken op het moment vanboven (positief y) het object.
+        //Aanpassen van z brengt het object van links naar rechts wat klopt
+        Point eye = objectFactory.create_point(-1, 10, 5);
+        Vector n = objectFactory.create_vector(0, 1, 0);
+        Vector u = objectFactory.create_vector(0, 0, 1);
+        //Vector v = internalTransformer.cross_product(n, u);
+        Vector v = objectFactory.create_vector(1, 1, 0);
         Camera camera = objectFactory.create_camera(eye, u, v, n, N);
-        Ray ray = objectFactory.create_ray(camera, Config.DEFAULT_AIR_SPEED, 25, 25);
+        //Ray ray = objectFactory.create_ray(camera, Config.DEFAULT_AIR_SPEED, 25, 25);
         World world = objectFactory.create_world(camera);
-        Point lightPoint = objectFactory.create_point(15, 15, -15);
+        Point lightPoint = objectFactory.create_point(1, 1, 1);
         //Licht niet zo sterk zetten, mag veel lager
         //Maximaal 0.99
         Light light = objectFactory.create_light(lightPoint, 0.99);
@@ -35,9 +39,9 @@ public class testWorld {
 
         //objects Transformation matrices
         //Scaling
-        double sx = 2; //x
-        double sy = 2; //y
-        double sz = 2; //z
+        double sx = 1; //x
+        double sy = 1; //y
+        double sz = 1; //z
         Matrix object_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
         Matrix object_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
         //Translation cube
@@ -55,8 +59,8 @@ public class testWorld {
         Matrix refraction_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
 
         //Translation Reflection
-        double m14_refl = 8; //x
-        double m24_refl = 0; //y
+        double m14_refl = 4; //x
+        double m24_refl = 8; //y
         double m34_refl = 0; //z
         Matrix reflection_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14_refl, m24_refl, m34_refl);
         Matrix reflection_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14_refl, m24_refl, m34_refl);
@@ -64,9 +68,9 @@ public class testWorld {
         //Rotation Matrix
 
         //Cube Scaling (wordt de grote omvangende kubus waarin de wereld zit)
-        double cube_sx = 20; //x
-        double cube_sy = 20; //y
-        double cube_sz = 20; //z
+        double cube_sx = 50; //x
+        double cube_sy = 50; //y
+        double cube_sz = 50; //z
         Matrix cube_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(cube_sx, cube_sy, cube_sz);
         Matrix cube_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(cube_sx, cube_sy, cube_sz);
 
@@ -109,13 +113,16 @@ public class testWorld {
 
         //REFLECTION
 
-        //Sphere sphere = objectFactory.create_sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 0, 1, 0, Config.DEFAULT_AIR_SPEED, objectColor_2);
+        //Sphere sphere = objectFactory.create_sphere(reflection_translation_transformation_matrix, reflection_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor_2);
         //world.add_object(sphere);
 
-        Cube cube = objectFactory.create_cube(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor_2);
-        world.add_object(cube);
+        //Cube cube = objectFactory.create_cube(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor_2);
+        //world.add_object(cube);
 
-        //Sphere sphere_2 = objectFactory.create_sphere(reflection_translation_transformation_matrix, reflection_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
+        Cylinder cylinder = objectFactory.create_cylinder(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix,1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor, 0.5);
+        world.add_object(cylinder);
+
+        //Sphere sphere_2 = objectFactory.create_sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 0, 1, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
         //world.add_object(sphere_2);
 
         //REFRACTION CUBE
@@ -129,8 +136,7 @@ public class testWorld {
         //Cube cube = objectFactory.create_cube(full_cube_matrix, full_cube_inv_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
         //world.add_object(cube);
 
-        //Cylinder cylinder = objectFactory.create_cylinder(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix,1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor, 0.5);
-        //world.add_object(cylinder);
+
 
         Cube world_cube = objectFactory.create_cube(cube_scaling_transformation_matrix, cube_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.DEFAULT_BACKGROUND_COLOR);
         world.add_object(world_cube);
