@@ -1,10 +1,12 @@
 package shapes;
 
+import internal.Intersection;
 import internal.Matrix;
 import internal.Point;
 import internal.Vector;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Cylinder extends Object {
     private double s;
@@ -25,7 +27,7 @@ public class Cylinder extends Object {
     }
 
     @Override
-    double object_hit_detec(Point S_t, Vector c_t) {
+    ArrayList<Double> object_hit_detec(Point S_t, Vector c_t, Intersection intersection) {
         //Wall Check
         //A = c²x + c²y - d²
         //B = Sx*cx + Sy*cy - F*d
@@ -33,6 +35,7 @@ public class Cylinder extends Object {
         //
         //d = (s-1)cz
         //F = 1 + (s-1)Sz
+        ArrayList<Double> hit_times = new ArrayList<>();
         double d = (s - 1) * c_t.get_Z();
         double F = 1 + (s - 1) * S_t.get_Z();
         double A = Math.pow(c_t.get_X(), 2) + Math.pow(c_t.get_Y(), 2) - Math.pow(d, 2);
@@ -70,14 +73,17 @@ public class Cylinder extends Object {
         if (correct_hit_1 && correct_hit_2) {
             //Uiteindelijk willen we hier enkel de kleinste hit time returnen
             //Surface is hier 0
-            //Misschien hier nog nakijken of hit_time groter is dan 0. Wel nog eens navragen
-            t_hit_min = Math.min(t_hit1, t_hit2);
+            //Moet de hit time min hier niet meer zoeken.
+            //t_hit_min = Math.min(t_hit1, t_hit2);
+            hit_times.add(t_hit1);
+            hit_times.add(t_hit2);
         } else if (correct_hit_1) {
             t_hit_min = t_hit1;
+            hit_times.add(t_hit1);
         } else if (correct_hit_2) {
             t_hit_min = t_hit2;
+            hit_times.add(t_hit2);
         }
-
         /*
 
         //Base
@@ -119,7 +125,7 @@ public class Cylinder extends Object {
 
          */
 
-        return t_hit_min;
+        return hit_times;
     }
 
     @Override

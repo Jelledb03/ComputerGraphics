@@ -1,10 +1,12 @@
 package shapes;
 
+import internal.Intersection;
 import internal.Matrix;
 import internal.Point;
 import internal.Vector;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Cube extends Object {
     public Cube(Matrix transformation_matrix, Matrix inverse_transformation_matrix) {
@@ -20,10 +22,11 @@ public class Cube extends Object {
     }
 
     @Override
-    double object_hit_detec(Point S_t, Vector c_t) {
+    ArrayList<Double> object_hit_detec(Point S_t, Vector c_t, Intersection intersection) {
         //Going through all surfaces and find the inner and outer hit time in the cube
+        ArrayList<Double> hit_times = new ArrayList<>();
         double t_hit, numer, denom;
-        double t_in = -100000.0, t_out = 100000.0;
+        double t_in = Double.NEGATIVE_INFINITY, t_out = Double.POSITIVE_INFINITY;
         int surf_in = 0, surf_out = 0;
         //Will loop through all surfaces and detect lowest exit and highest entry hit time
         for (int i = 0; i < 6; i++) {
@@ -62,7 +65,8 @@ public class Cube extends Object {
             //find t_in and t_out for each surface and compare
             if (Math.abs(denom) < 0.00001) {//ray is parallel
                 if (numer < 0) { //ray is out
-                    return 0; //Ray is out, so no hit_time
+                    //No hit_time means there wasn't a hit so no new hits are added
+                    return hit_times; //Ray is out, so no hit_time
                 }
             } else {//ray is not parallel
                 t_hit = numer / denom;
@@ -79,26 +83,33 @@ public class Cube extends Object {
                 }
             }
             if (t_in >= t_out) { // a miss
-                return 0;
+                return hit_times;
             }
         }
         //end of for loop
+        //First need to check if t_in & t_out are not infinity
+        if(t_in == Double.NEGATIVE_INFINITY && t_out == Double.POSITIVE_INFINITY){
+            //There were no hits
+            return hit_times;
+        }
         int num_hits = 0;
         if (t_in > 0.00001) {
             //p635 doet hier nog veel meer, not sure if necessary
-            num_hits++;
+            hit_times.add(t_in);
         }
         if (t_out > 0.00001) {
-            num_hits++;
+            hit_times.add(t_out);
         }
         //Check which of the two values is lowest and return
-        if (t_in < t_out) {
-            this.setSurface(surf_in);
-            return t_in;
-        } else {
-            this.setSurface(surf_out);
-            return t_out;
-        }
+        //Don't care anymore about the lowest hit time here, we are collecting all hit times.
+//        if (t_in < t_out) {
+//            this.setSurface(surf_in);
+//            return t_in;
+//        } else {
+//            this.setSurface(surf_out);
+//            return t_out;
+//        }
+        return hit_times;
     }
 
     @Override

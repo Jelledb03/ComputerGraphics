@@ -57,16 +57,19 @@ public class World {
         //Zullen met een ray over alle objecten in de list gaan en elke keer de hittime nakijken en het hitobject met kleinste hittime bijhouden
 
         //Gaan we toch anders doen, we gaan eerst alle intersecties vinden (met hun timing)
-        HitObject lowest_time_hitObject = new HitObject();
+        //Hiervoor moeten we dus een Intersection object aanmaken
+        Intersection intersection = new Intersection();
+        HitObject lowest_time_hitObject = new HitObject(); //Deze kunnen we er dan later uithalen (uit de list van intersection)
         for (Object object : objects) {
-            HitObject curr_hitObject = object.hit_reg(ray);
-            if ((!lowest_time_hitObject.is_collided())) { // && tempHitPoint.getHitTime() > getCamera().getDistanceN()
-                lowest_time_hitObject = curr_hitObject;
-            } else {
-                if (!lowest_time_hitObject.is_collided() && (curr_hitObject.get_hit_time() < lowest_time_hitObject.get_hit_time())) {
-                    lowest_time_hitObject = curr_hitObject;
-                }
-            }
+            object.hit_reg(ray, intersection);
+            //HitObject curr_hitObject = object.hit_reg(ray);
+//            if ((!lowest_time_hitObject.is_collided())) { // && tempHitPoint.getHitTime() > getCamera().getDistanceN()
+//                lowest_time_hitObject = curr_hitObject;
+//            } else {
+//                if (!lowest_time_hitObject.is_collided() && (curr_hitObject.get_hit_time() < lowest_time_hitObject.get_hit_time())) {
+//                    lowest_time_hitObject = curr_hitObject;
+//                }
+//            }
         }
         List<Integer> reflected_colors = new ArrayList<>();
         //reflection colors are zero when lowest_time_hitobject is not collided
@@ -79,6 +82,7 @@ public class World {
         refracted_colors.add(0);
         refracted_colors.add(0);
         //Step 5
+        //Check for emptiness of hits arraylist (empty means zero collisions)!!! afterwards check if the hitObject is collided (Dont think this is necessary but can't be a wrong thing to do)
         if (lowest_time_hitObject.is_collided()) {
             IlluminationObject[] illuminationObjects = new IlluminationObject[]{lowest_time_hitObject.get_r_illuminationObject(), lowest_time_hitObject.get_g_illuminationObject(), lowest_time_hitObject.get_b_illuminationObject()};
             List<Double> local_intensities = calculate_local_intensity(ray.get_dir(), lowest_time_hitObject, illuminationObjects, iterator);

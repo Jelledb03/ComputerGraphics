@@ -6,6 +6,7 @@ import internal.MatrixTransformer;
 import internal.Point;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 //Wanneer we dit als abstract classificieren kunnen we hier geen objecten van initialiseren
 public abstract class Object {
@@ -79,7 +80,7 @@ public abstract class Object {
     //Nadat dit voor alle objecten gebeurd is zal er moeten nagekeken worden wat de laagste hit time is en hiermee het hitpoint berekenen
     //Want in dit hitpoint zal de ray daadwerkelijk komen en raken. De andere hitpoints kunnen mogelijk zijn van objecten achter dit object (zijn we niet in geintresseerd)
     //Verder uitwerken in de overgeerfde klassen
-    public HitObject hit_reg(Ray ray) {
+    public void hit_reg(Ray ray, Intersection intersection) {
         //Kan ik hier initialiseren of meegeven als parameter (not sure wat het beste is)
         Point S = ray.get_eye();
         Vector c = ray.get_dir();
@@ -87,20 +88,31 @@ public abstract class Object {
         //1. Have to transform ray with inverse transformation off sphere
         //System.out.println(Arrays.deepToString(c.get_vector()));
         //System.out.println(Arrays.deepToString(this.get_inverse_transformation_matrix().get_matrix()));
-        double[][] point_s = matrixTransformer.multiplyMatrices(this.get_inverse_transformation_matrix().get_matrix(), S.get_point());
-        double[][] vector_c = matrixTransformer.multiplyMatrices(this.get_inverse_transformation_matrix().get_matrix(), c.get_vector());
+        double[][] point_s_t = matrixTransformer.multiplyMatrices(this.get_inverse_transformation_matrix().get_matrix(), S.get_point());
+        double[][] vector_c_t = matrixTransformer.multiplyMatrices(this.get_inverse_transformation_matrix().get_matrix(), c.get_vector());
         //System.out.println("point: " + Arrays.deepToString(point_s));
         //System.out.println("vector: " + Arrays.deepToString(vector_c));
-        Point S_t = new Point(point_s);
-        Vector c_t = new Vector(vector_c);
+        Point S_t = new Point(point_s_t);
+        Vector c_t = new Vector(vector_c_t);
 
         //2. Calculate hit_time with transformed ray
         //Step 2
-        double t_hit = object_hit_detec(S_t, c_t);
+        //Zou ipv hier de smallest hit time te vinden alle hit times registreren
+        //Geef die hier alle t_hits terug
+        ArrayList<Double> hit_times = object_hit_detec(S_t, c_t, intersection);
+        if(!hit_times.isEmpty()){
+            //There were hitpoints, so loop through!
+            for(double t_hit: hit_times){
+                //Going to calculate hit point and normal vector for every hit time!
+            }
+        }
+        //Now we have every hit time of the object, we will loop through them to create the hitobjects for every .
         if (t_hit == 0) {
+            //Geen hit, dus
             return new HitObject();
         } else {
             //3. Going to create a hit object here and calculate hit point with original ray
+            //Going to replace this with finding the lowest hit time and set the variable lowest_hit_time_index
             Point hitPoint = calculate_hit_point(S, c, t_hit);
             if (hitPoint == null) {
                 //This can happen, for example when looking for an intersection with a square
@@ -124,7 +136,7 @@ public abstract class Object {
 
     abstract Vector calculate_normal_vector(Point hitPoint, int surface);
 
-    abstract double object_hit_detec(Point S_t, Vector c_t);
+    abstract ArrayList<Double> object_hit_detec(Point S_t, Vector c_t, Intersection intersection);
 
     abstract Point calculate_hit_point(Point S, Vector c, double t_hit);
 

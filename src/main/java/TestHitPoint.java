@@ -39,10 +39,10 @@ public class TestHitPoint {
 //
 //        System.out.println(hit_Square.get_hit_point().get_X() + " " + hit_Square.get_hit_point().get_Y() + " " + hit_Square.get_hit_point().get_Z());
 
-        HitObject hit_Cylinder = genericCylinder.hit_reg(ray);
-        System.out.println(hit_Cylinder.get_hit_time());
+        //HitObject hit_Cylinder = genericCylinder.hit_reg(ray);
+        //System.out.println(hit_Cylinder.get_hit_time());
 
-        System.out.println(hit_Cylinder.get_hit_point().get_X() + " " + hit_Cylinder.get_hit_point().get_Y() + " " + hit_Cylinder.get_hit_point().get_Z());
+        //System.out.println(hit_Cylinder.get_hit_point().get_X() + " " + hit_Cylinder.get_hit_point().get_Y() + " " + hit_Cylinder.get_hit_point().get_Z());
 
     }
 }

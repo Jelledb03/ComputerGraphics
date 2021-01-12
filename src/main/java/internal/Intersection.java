@@ -1,14 +1,18 @@
 package internal;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Intersection {
     private List<HitObject> hitobjects;
     private int hits;
+    private int lowest_hit_time_index;
 
-    public Intersection(List<HitObject> hitobjects, int hits) {
-        this.hitobjects = hitobjects;
-        this.hits = hits;
+    public Intersection() {
+        this.hitobjects = new ArrayList<>();
+        this.hits = 0;
+        lowest_hit_time_index = 0;
     }
 
     public List<HitObject> get_hitobjects() {
@@ -25,5 +29,13 @@ public class Intersection {
 
     public void set_hits(int hits) {
         this.hits = hits;
+    }
+
+    public int get_lowest_hit_time_index() {
+        return lowest_hit_time_index;
+    }
+
+    public void set_lowest_hit_time_index(int lowest_hit_time_index) {
+        this.lowest_hit_time_index = lowest_hit_time_index;
     }
 }

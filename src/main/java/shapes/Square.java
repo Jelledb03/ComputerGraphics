@@ -1,10 +1,12 @@
 package shapes;
 
+import internal.Intersection;
 import internal.Matrix;
 import internal.Point;
 import internal.Vector;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Square extends Object {
     //In boek p630 spreken ze over de hitregistratie met een square.
@@ -26,17 +28,16 @@ public class Square extends Object {
     }
 
     @Override
-    double object_hit_detec(Point S_t, Vector c_t) {
+    ArrayList<Double> object_hit_detec(Point S_t, Vector c_t, Intersection intersection) {
+        ArrayList<Double> hit_times = new ArrayList<>();
         //Hier krijgen we al de invers getransformeerde ray binnen (dus stap 1 is completed)
         //Nu moeten we de hit_time vinden en deze terug geven.
-        if (S_t.get_Z() == 0) {
-            //Geen intersectie
-            // hit_time 0 teruggeven
-            return 0;
-        } else {
+        if (S_t.get_Z() != 0) {
             //Dit berekent de hit_time wanneer er een intersectie is en returned deze
-            return -(S_t.get_Z() / c_t.get_Z());
-        }
+            double hit_time = -(S_t.get_Z() / c_t.get_Z());
+            hit_times.add(hit_time);
+        }  //else: Geen intersectie
+        return hit_times;
     }
 
     @Override

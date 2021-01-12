@@ -1,10 +1,13 @@
 package shapes;
 
+import internal.Intersection;
 import internal.Matrix;
 import internal.Point;
 import internal.Vector;
+import org.graalvm.compiler.hotspot.stubs.DivisionByZeroExceptionStub;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Sphere extends Object {
     public Sphere(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double c, Color color) {
@@ -20,8 +23,9 @@ public class Sphere extends Object {
     }
 
     @Override
-    double object_hit_detec(Point S_t, Vector c_t) {
+    ArrayList<Double> object_hit_detec(Point S_t, Vector c_t, Intersection intersection) {
         //Hier gaan we A,B en C eerst berekenen
+        ArrayList<Double> hit_times = new ArrayList<>();
         double A = Math.pow(c_t.get_X(), 2) + Math.pow(c_t.get_Y(), 2) + Math.pow(c_t.get_Z(), 2);
         double B = c_t.get_X() * S_t.get_X() + c_t.get_Y() * S_t.get_Y() + c_t.get_Z() * S_t.get_Z();
         double C = Math.pow(S_t.get_X(), 2) + Math.pow(S_t.get_Y(), 2) + Math.pow(S_t.get_Z(), 2) - 1;
@@ -29,20 +33,23 @@ public class Sphere extends Object {
 //        System.out.println(A);
 //        System.out.println(B);
 //        System.out.println(C);
-        double t_hit = 0;
+        //double t_hit = 0;
         if (Discriminant < 0) {
             //System.out.println("Geen hitpunten");
         } else if (Discriminant == 0) {
-            t_hit = (-B) / A;
+            double t_hit = (-B) / A;
+            hit_times.add(t_hit);
             //System.out.println("hit");
         } else {
             double t_hit1 = (-B) / A + Math.sqrt(Discriminant) / A;
             double t_hit2 = (-B) / A - Math.sqrt(Discriminant) / A;
             //Find lowest hit time
-            t_hit = Math.min(t_hit1, t_hit2);
+            hit_times.add(t_hit1);
+            hit_times.add(t_hit2);
+            //t_hit = Math.min(t_hit1, t_hit2);
             //System.out.println("hit");
         }
-        return t_hit;
+        return hit_times;
     }
 
     @Override
