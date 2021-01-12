@@ -4,7 +4,6 @@ import internal.Intersection;
 import internal.Matrix;
 import internal.Point;
 import internal.Vector;
-import org.graalvm.compiler.hotspot.stubs.DivisionByZeroExceptionStub;
 
 import java.awt.*;
 import java.util.ArrayList;

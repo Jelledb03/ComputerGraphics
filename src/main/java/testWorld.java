@@ -121,8 +121,8 @@ public class testWorld {
         Sphere sphere = objectFactory.create_sphere(reflection_translation_transformation_matrix, reflection_translation_inv_transformation_matrix, 0, 1, 0, Config.DEFAULT_AIR_SPEED, objectColor_2);
         world.add_object(sphere);
 
-        Cube cube = objectFactory.create_cube(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor);
-        world.add_object(cube);
+        //Cube cube = objectFactory.create_cube(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor);
+        //world.add_object(cube);
 
         //Cylinder cylinder = objectFactory.create_cylinder(object_transformation_matrix, object_inv_transformation_matrix,1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor, 1);
         //world.add_object(cylinder);
