@@ -26,7 +26,7 @@ public class Square extends Object {
     }
 
     @Override
-    double sphere_hit_detec(Point S_t, Vector c_t) {
+    double object_hit_detec(Point S_t, Vector c_t) {
         //Hier krijgen we al de invers getransformeerde ray binnen (dus stap 1 is completed)
         //Nu moeten we de hit_time vinden en deze terug geven.
         if (S_t.get_Z() == 0) {

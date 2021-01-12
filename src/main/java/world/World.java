@@ -55,6 +55,8 @@ public class World {
     public HitObject calculateClosestHitObject(Ray ray, int iterator) {
         //Hierin gaan we de dichstbijzijnde hitobject vinden en teruggeven
         //Zullen met een ray over alle objecten in de list gaan en elke keer de hittime nakijken en het hitobject met kleinste hittime bijhouden
+
+        //Gaan we toch anders doen, we gaan eerst alle intersecties vinden (met hun timing)
         HitObject lowest_time_hitObject = new HitObject();
         for (Object object : objects) {
             HitObject curr_hitObject = object.hit_reg(ray);
@@ -76,6 +78,7 @@ public class World {
         refracted_colors.add(0);
         refracted_colors.add(0);
         refracted_colors.add(0);
+        //Step 5
         if (lowest_time_hitObject.is_collided()) {
             IlluminationObject[] illuminationObjects = new IlluminationObject[]{lowest_time_hitObject.get_r_illuminationObject(), lowest_time_hitObject.get_g_illuminationObject(), lowest_time_hitObject.get_b_illuminationObject()};
             List<Double> local_intensities = calculate_local_intensity(ray.get_dir(), lowest_time_hitObject, illuminationObjects, iterator);

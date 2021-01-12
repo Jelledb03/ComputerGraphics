@@ -6,7 +6,7 @@ import internal.Matrix;
 import internal.Point;
 import internal.Ray;
 import internal.Vector;
-import rendering2D.Renderer;
+import render.Renderer;
 import shapes.Cube;
 import shapes.Cylinder;
 import shapes.Sphere;

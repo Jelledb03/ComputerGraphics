@@ -1,4 +1,4 @@
-package rendering2D;
+package render;
 
 import config.Config;
 import internal.HitObject;
@@ -37,9 +37,11 @@ public class Renderer {
         int counter_cap=0;
         for (int col = 0; col < Config.SCREEN_WIDTH; col++) {
             for (int row = 0; row < Config.SCREEN_HEIGHT; row++) {
+                //Step 1
                 Ray ray = objectFactory.create_ray(world.getCamera(), Config.DEFAULT_AIR_SPEED, col,row);
                 //Iterator will help me to keep calling calculateClosestHitObject for a number of reflections (only call it later on if iterator < 5)
                 int iterator = 0;
+                //Start of step 2
                 HitObject hitObject = world.calculateClosestHitObject(ray, iterator);
                 if(hitObject.is_collided()) {
                     counter++;
@@ -50,6 +52,7 @@ public class Renderer {
                     //System.out.println(hitObject.get_intensity());
                 }
                 Pixel pixel = pixelFactory.createPixel(col, row, hitObject);
+                //Step 6
                 screen.render_pixel(pixel);
             }
         }

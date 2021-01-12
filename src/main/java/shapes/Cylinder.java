@@ -25,7 +25,7 @@ public class Cylinder extends Object {
     }
 
     @Override
-    double sphere_hit_detec(Point S_t, Vector c_t) {
+    double object_hit_detec(Point S_t, Vector c_t) {
         //Wall Check
         //A = c²x + c²y - d²
         //B = Sx*cx + Sy*cy - F*d

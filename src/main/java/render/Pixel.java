@@ -1,4 +1,4 @@
-package rendering2D;
+package render;
 
 import config.Config;
 

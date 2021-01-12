@@ -20,7 +20,7 @@ public class Cube extends Object {
     }
 
     @Override
-    double sphere_hit_detec(Point S_t, Vector c_t) {
+    double object_hit_detec(Point S_t, Vector c_t) {
         //Going through all surfaces and find the inner and outer hit time in the cube
         double t_hit, numer, denom;
         double t_in = -100000.0, t_out = 100000.0;

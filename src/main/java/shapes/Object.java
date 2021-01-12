@@ -6,7 +6,6 @@ import internal.MatrixTransformer;
 import internal.Point;
 
 import java.awt.*;
-import java.util.Arrays;
 
 //Wanneer we dit als abstract classificieren kunnen we hier geen objecten van initialiseren
 public abstract class Object {
@@ -96,7 +95,8 @@ public abstract class Object {
         Vector c_t = new Vector(vector_c);
 
         //2. Calculate hit_time with transformed ray
-        double t_hit = sphere_hit_detec(S_t, c_t);
+        //Step 2
+        double t_hit = object_hit_detec(S_t, c_t);
         if (t_hit == 0) {
             return new HitObject();
         } else {
@@ -124,7 +124,7 @@ public abstract class Object {
 
     abstract Vector calculate_normal_vector(Point hitPoint, int surface);
 
-    abstract double sphere_hit_detec(Point S_t, Vector c_t);
+    abstract double object_hit_detec(Point S_t, Vector c_t);
 
     abstract Point calculate_hit_point(Point S, Vector c, double t_hit);
 

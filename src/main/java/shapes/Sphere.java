@@ -20,7 +20,7 @@ public class Sphere extends Object {
     }
 
     @Override
-    double sphere_hit_detec(Point S_t, Vector c_t) {
+    double object_hit_detec(Point S_t, Vector c_t) {
         //Hier gaan we A,B en C eerst berekenen
         double A = Math.pow(c_t.get_X(), 2) + Math.pow(c_t.get_Y(), 2) + Math.pow(c_t.get_Z(), 2);
         double B = c_t.get_X() * S_t.get_X() + c_t.get_Y() * S_t.get_Y() + c_t.get_Z() * S_t.get_Z();
