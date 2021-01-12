@@ -108,7 +108,9 @@ public abstract class Object {
                 if (hitPoint == null) {
                     //This can happen, for example when looking for an intersection with a square
                     HitObject hitObject = new HitObject();
-                    intersection.get_hitobjects().add(hitObject);
+                    intersection.get_hit_objects().add(hitObject);
+                    // Kunnen dit ook naar infinity brengen, zodat het duidelijker is dat er geen intersectie was.
+                    intersection.get_hit_times().add((double) 0);
                 } else {
                     //Calculate normal_vector
                     //p 640!
@@ -123,7 +125,8 @@ public abstract class Object {
                     //IlluminationObject b_illumination_object = new IlluminationObject(0.0828, 12.8, 0.086014, 0.0225);
                     //return new HitObject(hitPoint, normal_vector_norm, this.color, t_hit,r_illumination_object,g_illumination_object,b_illumination_object,local_coeff, reflection_coeff, refraction_coeff, this.c);
                     HitObject hitObject = new HitObject(hitPoint, normal_vector_norm, this.color, t_hit, local_coeff, reflection_coeff, refraction_coeff, this.c);
-                    intersection.get_hitobjects().add(hitObject);
+                    intersection.get_hit_objects().add(hitObject);
+                    intersection.get_hit_times().add(t_hit);
                 }
             }
         }

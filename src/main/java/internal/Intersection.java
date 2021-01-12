@@ -16,19 +16,19 @@ public class Intersection {
         lowest_hit_time_index = 0;
     }
 
-    public List<HitObject> get_hitobjects() {
+    public List<HitObject> get_hit_objects() {
         return hit_objects;
     }
 
-    public void set_hitobjects(List<HitObject> hitobjects) {
+    public void set_hit_objects(List<HitObject> hitobjects) {
         this.hit_objects = hitobjects;
     }
 
-    public List<Double> getHit_times() {
+    public List<Double> get_hit_times() {
         return hit_times;
     }
 
-    public void setHit_times(List<Double> hit_times) {
+    public void set_hit_times(List<Double> hit_times) {
         this.hit_times = hit_times;
     }
 
