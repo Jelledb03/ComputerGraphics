@@ -102,34 +102,29 @@ public abstract class Object {
         ArrayList<Double> hit_times = object_hit_detec(S_t, c_t, intersection);
         if(!hit_times.isEmpty()){
             //There were hitpoints, so loop through!
-            for(double t_hit: hit_times){
+            for(double t_hit: hit_times) {
                 //Going to calculate hit point and normal vector for every hit time!
-            }
-        }
-        //Now we have every hit time of the object, we will loop through them to create the hitobjects for every .
-        if (t_hit == 0) {
-            //Geen hit, dus
-            return new HitObject();
-        } else {
-            //3. Going to create a hit object here and calculate hit point with original ray
-            //Going to replace this with finding the lowest hit time and set the variable lowest_hit_time_index
-            Point hitPoint = calculate_hit_point(S, c, t_hit);
-            if (hitPoint == null) {
-                //This can happen, for example when looking for an intersection with a square
-                return new HitObject();
-            } else {
-                //Calculate normal_vector
-                Point transformed_hit_point = calculate_hit_point(S_t, c_t, t_hit);
-                Vector transformed_normal_vector = calculate_normal_vector(transformed_hit_point, surface);
-                //Ik denk dat je die dan gewoon moet transformeren
-                double[][] normal_vector_d = matrixTransformer.multiplyMatrices(this.get_transformation_matrix().get_matrix(), transformed_normal_vector.get_vector());
-                Vector normal_vector = new Vector(normal_vector_d);
-                Vector normal_vector_norm = normal_vector.normalize();
-                //IlluminationObject r_illumination_object = new IlluminationObject(0.7038, 12.8, 0.256777, 0.19125);
-                //IlluminationObject g_illumination_object = new IlluminationObject(0.27048, 12.8, 0.137622, 0.0735);
-                //IlluminationObject b_illumination_object = new IlluminationObject(0.0828, 12.8, 0.086014, 0.0225);
-                //return new HitObject(hitPoint, normal_vector_norm, this.color, t_hit,r_illumination_object,g_illumination_object,b_illumination_object,local_coeff, reflection_coeff, refraction_coeff, this.c);
-                return new HitObject(hitPoint, normal_vector_norm, this.color, t_hit, local_coeff, reflection_coeff, refraction_coeff, this.c);
+                Point hitPoint = calculate_hit_point(S, c, t_hit);
+                if (hitPoint == null) {
+                    //This can happen, for example when looking for an intersection with a square
+                    HitObject hitObject = new HitObject();
+                    intersection.get_hitobjects().add(hitObject);
+                } else {
+                    //Calculate normal_vector
+                    //p 640!
+                    Point transformed_hit_point = calculate_hit_point(S_t, c_t, t_hit);
+                    Vector transformed_normal_vector = calculate_normal_vector(transformed_hit_point, surface);
+                    //Ik denk dat je die dan gewoon moet transformeren met de inverse transformatie matrix als beschreven in 640
+                    double[][] normal_vector_d = matrixTransformer.multiplyMatrices(this.get_inverse_transformation_matrix().get_matrix(), transformed_normal_vector.get_vector());
+                    Vector normal_vector = new Vector(normal_vector_d);
+                    Vector normal_vector_norm = normal_vector.normalize();
+                    //IlluminationObject r_illumination_object = new IlluminationObject(0.7038, 12.8, 0.256777, 0.19125);
+                    //IlluminationObject g_illumination_object = new IlluminationObject(0.27048, 12.8, 0.137622, 0.0735);
+                    //IlluminationObject b_illumination_object = new IlluminationObject(0.0828, 12.8, 0.086014, 0.0225);
+                    //return new HitObject(hitPoint, normal_vector_norm, this.color, t_hit,r_illumination_object,g_illumination_object,b_illumination_object,local_coeff, reflection_coeff, refraction_coeff, this.c);
+                    HitObject hitObject = new HitObject(hitPoint, normal_vector_norm, this.color, t_hit, local_coeff, reflection_coeff, refraction_coeff, this.c);
+                    intersection.get_hitobjects().add(hitObject);
+                }
             }
         }
     }

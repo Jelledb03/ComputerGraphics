@@ -1,26 +1,35 @@
 package internal;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Intersection {
-    private List<HitObject> hitobjects;
+    private List<HitObject> hit_objects;
+    private List<Double> hit_times;
     private int hits;
     private int lowest_hit_time_index;
 
     public Intersection() {
-        this.hitobjects = new ArrayList<>();
+        this.hit_objects = new ArrayList<>();
+        this.hit_times = new ArrayList<>();
         this.hits = 0;
         lowest_hit_time_index = 0;
     }
 
     public List<HitObject> get_hitobjects() {
-        return hitobjects;
+        return hit_objects;
     }
 
     public void set_hitobjects(List<HitObject> hitobjects) {
-        this.hitobjects = hitobjects;
+        this.hit_objects = hitobjects;
+    }
+
+    public List<Double> getHit_times() {
+        return hit_times;
+    }
+
+    public void setHit_times(List<Double> hit_times) {
+        this.hit_times = hit_times;
     }
 
     public int get_hits() {

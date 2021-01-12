@@ -71,6 +71,9 @@ public class World {
 //                }
 //            }
         }
+        //We now have calculated all the hitobjects for this ray over every object
+        //Now we have to find the lowest hit time
+
         List<Integer> reflected_colors = new ArrayList<>();
         //reflection colors are zero when lowest_time_hitobject is not collided
         reflected_colors.add(0);
