@@ -59,7 +59,7 @@ public class World {
         //Gaan we toch anders doen, we gaan eerst alle intersecties vinden (met hun timing)
         //Hiervoor moeten we dus een Intersection object aanmaken
         Intersection intersection = new Intersection();
-        HitObject lowest_time_hitObject = new HitObject(); //Deze kunnen we er dan later uithalen (uit de list van intersection)
+
         for (Object object : objects) {
             object.hit_reg(ray, intersection);
             //HitObject curr_hitObject = object.hit_reg(ray);
@@ -73,7 +73,18 @@ public class World {
         }
         //We now have calculated all the hitobjects for this ray over every object
         //Now we have to find the lowest hit time
-
+        int lowest_hit_time_index = -1;
+        double lowest_t_hit = Double.POSITIVE_INFINITY;
+        for(double t_hit: intersection.get_hit_times()){
+            if(t_hit < lowest_t_hit){
+                lowest_t_hit = t_hit;
+            }
+        }
+        lowest_hit_time_index = intersection.get_hit_times().indexOf(lowest_t_hit);
+        HitObject lowest_time_hitObject = new HitObject();
+        if(lowest_hit_time_index > -1){
+            lowest_time_hitObject = intersection.get_hit_objects().get(lowest_hit_time_index);
+        }
         List<Integer> reflected_colors = new ArrayList<>();
         //reflection colors are zero when lowest_time_hitobject is not collided
         reflected_colors.add(0);
