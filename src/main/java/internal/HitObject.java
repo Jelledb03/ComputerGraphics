@@ -1,5 +1,7 @@
 package internal;
 
+import texture.Texture;
+import texture.WoodTexture;
 import world.Light;
 
 import java.awt.*;
@@ -27,20 +29,20 @@ public class HitObject {
         this.hit_point = new Point(0, 0, 0);
         this.hit_time = 0;
         this.collided = false;
-        this.r_illuminationObject = new IlluminationObject();
-        this.g_illuminationObject = new IlluminationObject();
-        this.b_illuminationObject = new IlluminationObject();
+        this.r_illuminationObject = new IlluminationObject(new WoodTexture());
+        this.g_illuminationObject = new IlluminationObject(new WoodTexture());
+        this.b_illuminationObject = new IlluminationObject(new WoodTexture());
     }
 
-    public HitObject(Point hit_point, Vector normal_vector, Color color, double hit_time, double local_coeff, double reflection_coeff, double refraction_coeff, double c) {
+    public HitObject(Point hit_point, Vector normal_vector, Color color, double hit_time, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Texture texture) {
         this.hit_point = hit_point;
         this.normal_vector = normal_vector;
         this.color = color;
         this.hit_time = hit_time;
         this.collided = true;
-        this.r_illuminationObject = new IlluminationObject();
-        this.g_illuminationObject = new IlluminationObject();
-        this.b_illuminationObject = new IlluminationObject();
+        this.r_illuminationObject = new IlluminationObject(texture);
+        this.g_illuminationObject = new IlluminationObject(texture);
+        this.b_illuminationObject = new IlluminationObject(texture);
         this.local_coeff = local_coeff;
         this.reflection_coeff = reflection_coeff;
         this.refraction_coeff = refraction_coeff;

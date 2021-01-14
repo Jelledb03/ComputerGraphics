@@ -4,6 +4,7 @@ import internal.Intersection;
 import internal.Matrix;
 import internal.Point;
 import internal.Vector;
+import texture.Texture;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,6 +20,10 @@ public class Cube extends Object {
 
     public Cube(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color) {
         super(transformation_matrix, inverse_transformation_matrix, local_coeff, reflection_coeff, refraction_coeff, c, color);
+    }
+
+    public Cube(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color, Texture texture) {
+        super(transformation_matrix, inverse_transformation_matrix, local_coeff, reflection_coeff, refraction_coeff, c, color, texture);
     }
 
     @Override
@@ -96,19 +101,18 @@ public class Cube extends Object {
         if (t_in > 0.00001) {
             //p635 doet hier nog veel meer, not sure if necessary
             hit_times.add(t_in);
+
         }
         if (t_out > 0.00001) {
             hit_times.add(t_out);
         }
         //Check which of the two values is lowest and return
         //Don't care anymore about the lowest hit time here, we are collecting all hit times.
-//        if (t_in < t_out) {
-//            this.setSurface(surf_in);
-//            return t_in;
-//        } else {
-//            this.setSurface(surf_out);
-//            return t_out;
-//        }
+        if (t_in < t_out) {
+            this.setSurface(surf_in);
+        } else {
+            this.setSurface(surf_out);
+        }
         return hit_times;
     }
 

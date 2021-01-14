@@ -10,6 +10,18 @@ import world.Camera;
 import java.util.Arrays;
 
 public class TestClass {
+
+    static double texture(double x, double y, double z) {
+        double r = Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
+        int rings = rings(3);
+        return 5 + 1 * rings;
+    }
+
+    static int rings(double prod){
+        int r = (int) Math.round(prod);
+        return Math.floorMod(r,2);
+    }
+
     public static void main(String[] args) {
         //Scaling
         double sx = 2; //x
@@ -46,5 +58,8 @@ public class TestClass {
         Vector up = objectFactory.create_vector(0, 1, 0);
         Camera camera = objectFactory.create_camera(eye, look, up, N);
         int ze = 2;
+
+        System.out.println(Math.floorMod(0,2));
+        System.out.println(texture(1, 2, 3));
     }
 }

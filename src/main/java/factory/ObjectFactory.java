@@ -11,6 +11,8 @@ import shapes.Cube;
 import shapes.Cylinder;
 import shapes.Sphere;
 import shapes.Square;
+import texture.Texture;
+import texture.WoodTexture;
 import world.Camera;
 import world.Light;
 import world.World;
@@ -72,6 +74,10 @@ public class ObjectFactory {
         return new Ray(camera.get_eye(), dir_rc, medium);
     }
 
+    public WoodTexture create_wood_texture(double D, double A, double M){
+        return new WoodTexture(D,A,M);
+    }
+
     public World create_world(Camera camera){
         return new World(camera);
     }
@@ -94,5 +100,15 @@ public class ObjectFactory {
     //creates cube
     public Cube create_cube(Matrix transform_matrix, Matrix inv_transform_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double medium, Color color){
         return new Cube(transform_matrix, inv_transform_matrix, local_coeff, reflection_coeff, refraction_coeff, medium, color);
+    }
+
+    //creates sphere wood texture
+    public Sphere create_sphere(Matrix transform_matrix, Matrix inv_transform_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double medium, Color color, Texture wood_texture){
+        return new Sphere(transform_matrix, inv_transform_matrix, local_coeff, reflection_coeff, refraction_coeff, medium, color, wood_texture);
+    }
+
+    //creates cube wood texture
+    public Cube create_cube(Matrix transform_matrix, Matrix inv_transform_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double medium, Color color, Texture wood_texture){
+        return new Cube(transform_matrix, inv_transform_matrix, local_coeff, reflection_coeff, refraction_coeff, medium, color, wood_texture);
     }
 }

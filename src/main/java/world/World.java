@@ -219,9 +219,9 @@ public class World {
         double total_ambient = 0;
         double total_lambert = 0;
         double total_phong = 0;
+        Point P = hitObject.get_hit_point();
         for (Light light : lights) {
             Point L = light.getLightPoint();
-            Point P = hitObject.get_hit_point();
             //Need three vectors
             //normal vector m to the surface at P
             //vector v from P to the viewer's eye
@@ -230,7 +230,7 @@ public class World {
             Vector v = internalTransformer.vector_product(ray, -1);
             // normal vector op het object nodig
             // vector van middelpunt bol op het hitpoint
-            // normaal is vector die loodrecht staat op object
+            // normaal is vector die loodrecht staat op hitpoint
             Vector m = hitObject.get_normal_vector();
             // Id is independent of the angle between m and v
             // It is dependent on the orientation of the eye relative to the point source
@@ -268,10 +268,24 @@ public class World {
         List<Double> total_intensities = new ArrayList<>();
         for (IlluminationObject illuminationObject : illuminationObjects
         ) {
-            double total_diffuse_coeff = illuminationObject.get_diffuse_reflection_coeff() * total_lambert;
-            double total_specular_coeff = illuminationObject.get_specular_reflection_coeff() * Math.pow(total_phong, illuminationObject.get_fallof());
-            double total_ambient_coeff = illuminationObject.get_ambient_reflection_coeff() * total_ambient;
-            double total_local_intensity = total_diffuse_coeff + total_specular_coeff + total_ambient_coeff;
+            //Check invoeren of we met een texture zitten
+            //If yes moeten we de juiste texture functie uitvoeren
+            double total_local_intensity = 0;
+            if(illuminationObject.get_texture().isTexture()){
+                double x = P.get_X();
+                double y = P.get_Y();
+                double z = P.get_Z();
+                double texture_param = illuminationObject.get_texture().texture(x,y,z);
+                double total_diffuse_coeff = illuminationObject.get_diffuse_reflection_coeff() * total_lambert;
+                double total_specular_coeff = illuminationObject.get_specular_reflection_coeff() * Math.pow(total_phong, illuminationObject.get_fallof());
+                double total_ambient_coeff = illuminationObject.get_ambient_reflection_coeff() * total_ambient;
+                total_local_intensity = texture_param * ( total_ambient_coeff + total_diffuse_coeff ) + total_specular_coeff;
+            }else {
+                double total_diffuse_coeff = illuminationObject.get_diffuse_reflection_coeff() * total_lambert;
+                double total_specular_coeff = illuminationObject.get_specular_reflection_coeff() * Math.pow(total_phong, illuminationObject.get_fallof());
+                double total_ambient_coeff = illuminationObject.get_ambient_reflection_coeff() * total_ambient;
+                total_local_intensity = total_diffuse_coeff + total_specular_coeff + total_ambient_coeff;
+            }
             /** Nog eens navragen of dit correct is of hoe ik dit beter zou kunnen oplossen **/
             total_intensities.add(total_local_intensity);
         }

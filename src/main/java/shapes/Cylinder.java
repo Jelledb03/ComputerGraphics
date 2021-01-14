@@ -4,6 +4,7 @@ import internal.Intersection;
 import internal.Matrix;
 import internal.Point;
 import internal.Vector;
+import texture.Texture;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -23,6 +24,11 @@ public class Cylinder extends Object {
 
     public Cylinder(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color, double s) {
         super(transformation_matrix, inverse_transformation_matrix, local_coeff, reflection_coeff, refraction_coeff, c, color);
+        this.s = s;
+    }
+
+    public Cylinder(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color, Texture texture, double s) {
+        super(transformation_matrix, inverse_transformation_matrix, local_coeff, reflection_coeff, refraction_coeff, c, color, texture);
         this.s = s;
     }
 

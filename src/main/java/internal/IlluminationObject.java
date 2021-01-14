@@ -2,6 +2,8 @@ package internal;
 
 
 import config.Config;
+import org.w3c.dom.Text;
+import texture.Texture;
 
 //This will contain all parameters needed for every illumination object
 //Will create a R, G and B object for every hitObject
@@ -11,6 +13,7 @@ public class IlluminationObject {
     private double specular_reflection_coeff;
     private double ambient_reflection_coeff;
     private double intensity;
+    private Texture texture;
 
     public IlluminationObject(){
         this.diffuse_reflection_coeff = Config.DEFAULT_DIFFUSE_REFLECTION_COEFF;
@@ -18,6 +21,15 @@ public class IlluminationObject {
         this.specular_reflection_coeff = Config.DEFAULT_SPECULAR_REFLECTION_COEFF;
         this.ambient_reflection_coeff = Config.DEFAULT_AMBIENT_REFLECTION_COEFF;
         this.intensity = 0;
+    }
+
+    public IlluminationObject(Texture texture){
+        this.diffuse_reflection_coeff = Config.DEFAULT_DIFFUSE_REFLECTION_COEFF;
+        this.fallof = Config.DEFAULT_FALLOF;
+        this.specular_reflection_coeff = Config.DEFAULT_SPECULAR_REFLECTION_COEFF;
+        this.ambient_reflection_coeff = Config.DEFAULT_AMBIENT_REFLECTION_COEFF;
+        this.intensity = 0;
+        this.texture = texture;
     }
 
     public IlluminationObject(double diffuse_reflection_coeff, double fallof, double specular_reflection_coeff, double ambient_reflection_coeff) {
@@ -66,5 +78,13 @@ public class IlluminationObject {
 
     public void set_intensity(double intensity) {
         this.intensity = intensity;
+    }
+
+    public Texture get_texture() {
+        return texture;
+    }
+
+    public void set_texture(Texture texture) {
+        this.texture = texture;
     }
 }

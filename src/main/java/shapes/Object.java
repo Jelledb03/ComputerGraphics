@@ -4,6 +4,8 @@ import config.Config;
 import internal.*;
 import internal.MatrixTransformer;
 import internal.Point;
+import texture.Texture;
+import texture.WoodTexture;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,6 +21,19 @@ public abstract class Object {
     private double reflection_coeff;
     private double c; //holds the relative speed of the ray compared to the speed of light
     private int surface = 0;
+    private Texture texture;
+
+    public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color, Texture texture) {
+        this.transformation_matrix = transformation_matrix;
+        this.inverse_transformation_matrix = inverse_transformation_matrix;
+        this.internalTransformer = new InternalTransformer();
+        this.local_coeff = local_coeff;
+        this.reflection_coeff = reflection_coeff;
+        this.refraction_coeff = refraction_coeff;
+        this.c = c;
+        this.color = color;
+        this.texture = texture;
+    }
 
     public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color) {
         this.transformation_matrix = transformation_matrix;
@@ -29,6 +44,7 @@ public abstract class Object {
         this.refraction_coeff = refraction_coeff;
         this.c = c;
         this.color = color;
+        this.texture = new WoodTexture();
     }
 
     public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double c, Color color) {
@@ -116,15 +132,17 @@ public abstract class Object {
                     //p 640!
                     Point transformed_hit_point = calculate_hit_point(S_t, c_t, t_hit);
                     Vector transformed_normal_vector = calculate_normal_vector(transformed_hit_point, surface);
-                    //Ik denk dat je die dan gewoon moet transformeren met de inverse transformatie matrix als beschreven in 640
-                    double[][] normal_vector_d = matrixTransformer.multiplyMatrices(this.get_inverse_transformation_matrix().get_matrix(), transformed_normal_vector.get_vector());
+                    //Ik denk dat je die dan gewoon moet transformeren met de transformatie matrix als beschreven in 640
+                    //Hier hebben we echter een inverse transformatie gedaan om naar het generieke object te gaan
+                    //Dus we doen een gewone transformatie hier
+                    double[][] normal_vector_d = matrixTransformer.multiplyMatrices(this.get_transformation_matrix().get_matrix(), transformed_normal_vector.get_vector());
                     Vector normal_vector = new Vector(normal_vector_d);
                     Vector normal_vector_norm = normal_vector.normalize();
                     //IlluminationObject r_illumination_object = new IlluminationObject(0.7038, 12.8, 0.256777, 0.19125);
                     //IlluminationObject g_illumination_object = new IlluminationObject(0.27048, 12.8, 0.137622, 0.0735);
                     //IlluminationObject b_illumination_object = new IlluminationObject(0.0828, 12.8, 0.086014, 0.0225);
                     //return new HitObject(hitPoint, normal_vector_norm, this.color, t_hit,r_illumination_object,g_illumination_object,b_illumination_object,local_coeff, reflection_coeff, refraction_coeff, this.c);
-                    HitObject hitObject = new HitObject(hitPoint, normal_vector_norm, this.color, t_hit, local_coeff, reflection_coeff, refraction_coeff, this.c);
+                    HitObject hitObject = new HitObject(hitPoint, normal_vector_norm, this.color, t_hit, local_coeff, reflection_coeff, refraction_coeff, this.c, this.texture);
                     intersection.get_hit_objects().add(hitObject);
                     intersection.get_hit_times().add(t_hit);
                 }

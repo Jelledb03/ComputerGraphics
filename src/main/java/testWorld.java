@@ -6,6 +6,7 @@ import internal.Point;
 import render.Renderer;
 import shapes.Cube;
 import shapes.Sphere;
+import texture.Texture;
 import world.Camera;
 import world.Light;
 import world.World;
@@ -22,7 +23,7 @@ public class testWorld {
         double N = 1000;
         //We kijken op het moment vanboven (positief y) het object.
         //Aanpassen van z brengt het object van links naar rechts wat klopt
-        Point eye = objectFactory.create_point(-2, 15, 1);
+        Point eye = objectFactory.create_point(-2, 20, 1);
         Vector n = objectFactory.create_vector(-0, 1, 0);
         Vector u = objectFactory.create_vector(0, 0, 1);
         //Vector v = internalTransformer.cross_product(n, u);
@@ -30,11 +31,14 @@ public class testWorld {
         Camera camera = objectFactory.create_camera(eye, u, v, n, N);
         //Ray ray = objectFactory.create_ray(camera, Config.DEFAULT_AIR_SPEED, 25, 25);
         World world = objectFactory.create_world(camera);
-        Point lightPoint = objectFactory.create_point(15, 10, 10);
+        Point lightPoint = objectFactory.create_point(10, 15, 10);
         //Licht niet zo sterk zetten, mag veel lager
         //Maximaal 0.99
         Light light = objectFactory.create_light(lightPoint, 0.99);
         world.add_light(light);
+
+        //Create textures
+        Texture wood_texture = objectFactory.create_wood_texture(0.5, 0.5, 0.2);
 
         //objects Transformation matrices
         //object test matrix
@@ -44,9 +48,9 @@ public class testWorld {
         Matrix object_transformation_matrix = matrix3DFactory.create_scal_matrix(tx, ty, tz);
         Matrix object_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(tx, ty, tz);
         //Scaling
-        double sx = 1; //x
-        double sy = 1; //y
-        double sz = 1; //z
+        double sx = 3; //x
+        double sy = 3; //y
+        double sz = 3; //z
         Matrix object_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
         Matrix object_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
         //Translation cube
@@ -64,8 +68,8 @@ public class testWorld {
         Matrix refraction_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
 
         //Translation Reflection
-        double m14_refl = -2; //x
-        double m24_refl = 2; //y
+        double m14_refl = 3; //x
+        double m24_refl = -4; //y
         double m34_refl = 0; //z
         Matrix reflection_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14_refl, m24_refl, m34_refl);
         Matrix reflection_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14_refl, m24_refl, m34_refl);
@@ -106,7 +110,7 @@ public class testWorld {
         Matrix sphere2_inv_matrix = new Matrix(object_inv_matrix);
 
         Color objectColor = Color.GREEN;
-        Color objectColor_2 = Color.BLUE;
+        Color objectColor_2 = Color.RED;
 
         //REFRACTION
 
@@ -118,11 +122,14 @@ public class testWorld {
 
         //REFLECTION
 
-        Sphere sphere = objectFactory.create_sphere(reflection_translation_transformation_matrix, reflection_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor_2);
+//        Sphere sphere = objectFactory.create_sphere(reflection_translation_transformation_matrix, reflection_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor_2, wood_texture);
+//        world.add_object(sphere);
+
+        Sphere sphere = objectFactory.create_sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor_2, wood_texture);
         world.add_object(sphere);
 
-        //Cube cube = objectFactory.create_cube(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor);
-        //world.add_object(cube);
+//        Cube cube = objectFactory.create_cube(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor);
+//        world.add_object(cube);
 
         //Cylinder cylinder = objectFactory.create_cylinder(object_transformation_matrix, object_inv_transformation_matrix,1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor, 1);
         //world.add_object(cylinder);

@@ -4,6 +4,7 @@ import internal.Intersection;
 import internal.Matrix;
 import internal.Point;
 import internal.Vector;
+import texture.Texture;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,6 +20,10 @@ public class Sphere extends Object {
 
     public Sphere(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color) {
         super(transformation_matrix, inverse_transformation_matrix, local_coeff, reflection_coeff, refraction_coeff, c, color);
+    }
+
+    public Sphere(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color, Texture texture) {
+        super(transformation_matrix, inverse_transformation_matrix, local_coeff, reflection_coeff, refraction_coeff, c, color, texture);
     }
 
     @Override
