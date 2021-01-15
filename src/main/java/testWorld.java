@@ -23,7 +23,7 @@ public class testWorld {
         double N = 1000;
         //We kijken op het moment vanboven (positief y) het object.
         //Aanpassen van z brengt het object van links naar rechts wat klopt
-        Point eye = objectFactory.create_point(-2, 20, 1);
+        Point eye = objectFactory.create_point(-2, 20, 2);
         Vector n = objectFactory.create_vector(-0, 1, 0);
         Vector u = objectFactory.create_vector(0, 0, 1);
         //Vector v = internalTransformer.cross_product(n, u);
@@ -48,8 +48,8 @@ public class testWorld {
         Matrix object_transformation_matrix = matrix3DFactory.create_scal_matrix(tx, ty, tz);
         Matrix object_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(tx, ty, tz);
         //Scaling
-        double sx = 3; //x
-        double sy = 3; //y
+        double sx = 2; //x
+        double sy = 1; //y
         double sz = 3; //z
         Matrix object_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
         Matrix object_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
@@ -125,11 +125,11 @@ public class testWorld {
 //        Sphere sphere = objectFactory.create_sphere(reflection_translation_transformation_matrix, reflection_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor_2, wood_texture);
 //        world.add_object(sphere);
 
-        Sphere sphere = objectFactory.create_sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor_2, wood_texture);
-        world.add_object(sphere);
+//        Sphere sphere = objectFactory.create_sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor_2, wood_texture);
+//        world.add_object(sphere);
 
-//        Cube cube = objectFactory.create_cube(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor);
-//        world.add_object(cube);
+        Cube cube = objectFactory.create_cube(object_transformation_matrix,object_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor, wood_texture);
+        world.add_object(cube);
 
         //Cylinder cylinder = objectFactory.create_cylinder(object_transformation_matrix, object_inv_transformation_matrix,1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor, 1);
         //world.add_object(cylinder);
