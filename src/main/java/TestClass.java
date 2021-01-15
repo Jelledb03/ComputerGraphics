@@ -61,5 +61,8 @@ public class TestClass {
 
         System.out.println(Math.floorMod(0,2));
         System.out.println(texture(1, 2, 3));
+
+        System.out.println("a&b = " + (264596 & 255));
+
     }
 }
