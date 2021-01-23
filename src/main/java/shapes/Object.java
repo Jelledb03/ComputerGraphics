@@ -122,6 +122,9 @@ public abstract class Object {
         //Zou ipv hier de smallest hit time te vinden alle hit times registreren
         //Geef die hier alle t_hits terug
         ArrayList<Hit> hit_times = object_hit_detec(S_t, c_t, intersection);
+        if(hit_times.size() > 1){
+            //System.out.println("et");
+        }
         set_hit_times(hit_times);
         if(!hit_times.isEmpty()){
             //There were hitpoints, so loop through!
