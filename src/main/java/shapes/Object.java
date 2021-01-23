@@ -9,6 +9,7 @@ import texture.WoodTexture;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 //Wanneer we dit als abstract classificieren kunnen we hier geen objecten van initialiseren
 public abstract class Object {
@@ -22,6 +23,7 @@ public abstract class Object {
     private double c; //holds the relative speed of the ray compared to the speed of light
     private int surface = 0;
     private Texture texture;
+    private ArrayList<Double> hit_times;
 
     public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color, Texture texture) {
         this.transformation_matrix = transformation_matrix;
@@ -33,6 +35,7 @@ public abstract class Object {
         this.c = c;
         this.color = color;
         this.texture = texture;
+        this.hit_times = new ArrayList<>();
     }
 
     public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color) {
@@ -45,6 +48,7 @@ public abstract class Object {
         this.c = c;
         this.color = color;
         this.texture = new WoodTexture();
+        this.hit_times = new ArrayList<>();
     }
 
     public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double c, Color color) {
@@ -56,6 +60,7 @@ public abstract class Object {
         this.refraction_coeff = Config.DEFAULT_REFRACTION_COEFF;
         this.c = c;
         this.color = color;
+        this.hit_times = new ArrayList<>();
     }
 
     public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix) {
@@ -66,6 +71,7 @@ public abstract class Object {
         this.reflection_coeff = Config.DEFAULT_REFLECTION_COEFF;
         this.refraction_coeff = Config.DEFAULT_REFRACTION_COEFF;
         this.color = Config.DEFAULT_OBJECT_COLOR;
+        this.hit_times = new ArrayList<>();
     }
 
     public Matrix get_transformation_matrix() {
@@ -116,6 +122,10 @@ public abstract class Object {
         //Zou ipv hier de smallest hit time te vinden alle hit times registreren
         //Geef die hier alle t_hits terug
         ArrayList<Double> hit_times = object_hit_detec(S_t, c_t, intersection);
+        if(hit_times.size() > 1){
+            System.out.println("et");
+        }
+        set_hit_times(hit_times);
         if(!hit_times.isEmpty()){
             //There were hitpoints, so loop through!
             for(double t_hit: hit_times) {
@@ -178,5 +188,14 @@ public abstract class Object {
 
     public void set_c(double c) {
         this.c = c;
+    }
+
+    public ArrayList<Double> get_hit_times() {
+        return hit_times;
+    }
+
+    public void set_hit_times(ArrayList<Double> hit_times) {
+        this.hit_times = hit_times;
+        Collections.sort(this.hit_times);
     }
 }

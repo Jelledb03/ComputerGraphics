@@ -72,12 +72,16 @@ public class World {
 //            }
         }
         //We now have calculated all the hitobjects for this ray over every object
+        //order hit_times_array
+
         //Now we have to find the lowest hit time
         int lowest_hit_time_index = -1;
         double lowest_t_hit = Double.POSITIVE_INFINITY;
-        for(double t_hit: intersection.get_hit_times()){
-            if(t_hit < lowest_t_hit){
-                lowest_t_hit = t_hit;
+        for(Object object: objects){
+            for(double t_hit: object.get_hit_times()){
+                if(t_hit < lowest_t_hit){
+                    lowest_t_hit = t_hit;
+                }
             }
         }
         lowest_hit_time_index = intersection.get_hit_times().indexOf(lowest_t_hit);
@@ -106,7 +110,7 @@ public class World {
             local_colors.add((int) (lowest_time_hitObject.get_color().getBlue() * local_intensities.get(2)));
             Color local_color = new Color(local_colors.get(0),local_colors.get(1),local_colors.get(2));
             if(local_color.getRed() == 0 && local_color.getGreen() == 0 && local_color.getBlue() == 0){
-                System.out.println(local_color);
+                //System.out.println(local_color);
             }
             if (iterator < Config.MAX_ITERATION) {
                 //Met kleur werken

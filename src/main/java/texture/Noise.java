@@ -77,8 +77,12 @@ public class Noise extends Texture {
         return lerp(tz, y0, y1);
     }
 
+    public double turb(double scale, double x, double y, double z){
+        return (0.5)*noise(scale,x,y,z) + (0.25)*noise(2*scale,x,y,z) + (0.125)*noise(4*scale,x,y,z);
+    }
+
     @Override
     public double texture(double x, double y, double z) {
-        return noise(scale, x, y, z);
+        return turb(scale, x, y, 0);
     }
 }
