@@ -4,6 +4,7 @@ import factory.Matrix3DFactory;
 import internal.*;
 import internal.Point;
 import render.Renderer;
+import shapes.BooleanObject;
 import shapes.Cube;
 import shapes.Sphere;
 import texture.Texture;
@@ -47,7 +48,7 @@ public class testWorld {
         double standard_sy = 30; //y
         double standard_sz = 30; //z
         Matrix object_standard_scaling_matrix = matrix3DFactory.create_scal_matrix(standard_sx, standard_sy, standard_sz);
-        Matrix object_standard_scaling_inv_matrix = matrix3DFactory.create_inv_scal_matrix(standard_sx, standard_sy, standard_sz);
+        Matrix object_standard_inv_scaling_matrix = matrix3DFactory.create_inv_scal_matrix(standard_sx, standard_sy, standard_sz);
         //Scaling
         double sx = 1; //x
         double sy = 1; //y
@@ -56,30 +57,27 @@ public class testWorld {
         Matrix object_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
 
         Matrix transformed_scaling_matrix = multiply_matrices(matrixTransformer, object_scaling_transformation_matrix, object_standard_scaling_matrix);
-        Matrix transformed_scaling_inv_matrix = multiply_matrices(matrixTransformer, object_scaling_inv_transformation_matrix, object_standard_scaling_inv_matrix);
+        Matrix transformed_scaling_inv_matrix = multiply_matrices(matrixTransformer, object_scaling_inv_transformation_matrix, object_standard_inv_scaling_matrix);
 
-        //Translation cube
-        double m14_cube = 0; //x
-        double m24_cube = 0; //y
-        double m34_cube = -4; //z
-        Matrix cube_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14_cube, m24_cube, m34_cube);
-        Matrix cube_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14_cube, m24_cube, m34_cube);
+        //Scaling sphere
+        sx = 1.5; //x
+        sy = 1.5; //y
+        sz = 1.5; //z
+        object_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
+        object_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
 
-        //Translation Refraction
-        double m14 = -1.5; //x
-        double m24 = -1.5; //y
-        double m34 = -2; //z
-        Matrix refraction_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
-        Matrix refraction_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
+        Matrix transformed_translated_sphere_matrix = multiply_matrices(matrixTransformer, object_scaling_transformation_matrix, object_standard_scaling_matrix);
+        Matrix transformed_translated_sphere_inv_matrix = multiply_matrices(matrixTransformer, object_scaling_inv_transformation_matrix, object_standard_inv_scaling_matrix);
 
-        //Translation Reflection
-        double m14_refl = 3; //x
-        double m24_refl = -4; //y
-        double m34_refl = 0; //z
-        Matrix reflection_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14_refl, m24_refl, m34_refl);
-        Matrix reflection_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14_refl, m24_refl, m34_refl);
+        //Translation sphere
+        double m14 = 0; //x
+        double m24 = 0; //y
+        double m34 = 0; //z
+        Matrix translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
+        Matrix translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
 
-        //Rotation Matrix
+        transformed_translated_sphere_matrix = multiply_matrices(matrixTransformer, translation_transformation_matrix, transformed_translated_sphere_matrix);
+        transformed_translated_sphere_inv_matrix = multiply_matrices(matrixTransformer, translation_inv_transformation_matrix, transformed_translated_sphere_inv_matrix);
 
         //Cube Scaling (wordt de grote omvangende kubus waarin de wereld zit)
         double cube_sx = 300; //x
@@ -102,18 +100,6 @@ public class testWorld {
         Matrix object_y_roll_transformation_matrix = matrix3DFactory.create_y_roll_matrix(alpha);
         Matrix object_y_roll_inv_transformation_matrix = matrix3DFactory.create_inv_y_roll_matrix(alpha);
 
-        double[][] full_cube_matrix_array = matrixTransformer.multiplyMatrices(cube_translation_transformation_matrix.get_matrix(), object_z_roll_transformation_matrix.get_matrix());
-        double[][] full_cube_inv_matrix_array = matrixTransformer.multiplyMatrices(cube_translation_inv_transformation_matrix.get_matrix(), object_z_roll_inv_transformation_matrix.get_matrix());
-
-        Matrix full_cube_matrix = new Matrix(full_cube_matrix_array);
-        Matrix full_cube_inv_matrix = new Matrix(full_cube_inv_matrix_array);
-
-        double[][] object_matrix = matrixTransformer.multiplyMatrices(cube_translation_transformation_matrix.get_matrix(), object_scaling_transformation_matrix.get_matrix());
-        double[][] object_inv_matrix = matrixTransformer.multiplyMatrices(cube_translation_inv_transformation_matrix.get_matrix(), object_scaling_inv_transformation_matrix.get_matrix());
-
-        Matrix sphere2_matrix = new Matrix(object_matrix);
-        Matrix sphere2_inv_matrix = new Matrix(object_inv_matrix);
-
         Color objectColor = Color.GRAY;
         Color objectColor_2 = Color.RED;
         Color woodColor = new Color(156,124,86);
@@ -131,8 +117,8 @@ public class testWorld {
 //        Sphere sphere = objectFactory.create_sphere(reflection_translation_transformation_matrix, reflection_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor_2, wood_texture);
 //        world.add_object(sphere);
 
-//        Sphere sphere = objectFactory.create_sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor_2, noise);
-//        world.add_object(sphere);
+        Sphere sphere = objectFactory.create_sphere(transformed_translated_sphere_matrix,transformed_translated_sphere_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor_2);
+        world.add_object(sphere);
 
         Cube cube = objectFactory.create_cube(transformed_scaling_matrix, transformed_scaling_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, woodColor, noise);
         world.add_object(cube);
@@ -154,7 +140,9 @@ public class testWorld {
         //Cube cube = objectFactory.create_cube(full_cube_matrix, full_cube_inv_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
         //world.add_object(cube);
 
-
+        //Boolean objects
+        BooleanObject booleanObject1 = new BooleanObject(cube, sphere,BooleanObjectType.DIFFERENCE);
+        world.add_boolean_object(booleanObject1);
 
         Cube world_cube = objectFactory.create_cube(cube_scaling_transformation_matrix, cube_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.DEFAULT_BACKGROUND_COLOR);
         world.add_object(world_cube);

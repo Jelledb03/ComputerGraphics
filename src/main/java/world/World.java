@@ -7,6 +7,7 @@ import java.util.List;
 import config.Config;
 import internal.*;
 import internal.Point;
+import shapes.BooleanObject;
 import shapes.Object;
 
 public class World {
@@ -14,10 +15,12 @@ public class World {
     private List<Object> objects;
     private List<Light> lights;
     private InternalTransformer internalTransformer;
+    private List<BooleanObject> booleanObjects;
 
-    public World(Camera camera, List<Object> objects) {
+    public World(Camera camera, List<Object> objects, List<BooleanObject> booleanObjects) {
         this.camera = camera;
         this.objects = objects;
+        this.booleanObjects = booleanObjects;
         this.internalTransformer = new InternalTransformer();
         this.lights = new ArrayList<>();
     }
@@ -25,6 +28,7 @@ public class World {
     public World(Camera camera) {
         this.camera = camera;
         this.objects = new ArrayList<>();
+        this.booleanObjects = new ArrayList<>();
         this.lights = new ArrayList<>();
         this.internalTransformer = new InternalTransformer();
     }
@@ -36,20 +40,28 @@ public class World {
         this.internalTransformer = new InternalTransformer();
     }
 
-    public Camera getCamera() {
+    public Camera get_camera() {
         return camera;
     }
 
-    public void setCamera(Camera camera) {
+    public void set_camera(Camera camera) {
         this.camera = camera;
     }
 
-    public List<Object> getObjects() {
+    public List<Object> get_objects() {
         return objects;
     }
 
-    public void setObjects(List<Object> objects) {
+    public void set_objects(List<Object> objects) {
         this.objects = objects;
+    }
+
+    public List<BooleanObject> get_booleanObjects() {
+        return booleanObjects;
+    }
+
+    public void set_booleanObjects(List<BooleanObject> booleanObjects) {
+        this.booleanObjects = booleanObjects;
     }
 
     public HitObject calculateClosestHitObject(Ray ray, int iterator) {
@@ -62,23 +74,28 @@ public class World {
 
         for (Object object : objects) {
             object.hit_reg(ray, intersection);
-            //HitObject curr_hitObject = object.hit_reg(ray);
-//            if ((!lowest_time_hitObject.is_collided())) { // && tempHitPoint.getHitTime() > getCamera().getDistanceN()
-//                lowest_time_hitObject = curr_hitObject;
-//            } else {
-//                if (!lowest_time_hitObject.is_collided() && (curr_hitObject.get_hit_time() < lowest_time_hitObject.get_hit_time())) {
-//                    lowest_time_hitObject = curr_hitObject;
-//                }
-//            }
         }
         //We now have calculated all the hitobjects for this ray over every object
-        //order hit_times_array
+        //update boolean objects
+        for(BooleanObject booleanObject : booleanObjects){
+            booleanObject.update_boolean_object();
+        }
 
         //Now we have to find the lowest hit time
         int lowest_hit_time_index = -1;
         double lowest_t_hit = Double.POSITIVE_INFINITY;
+        //Check standard objects
         for(Object object: objects){
             for(Hit hit: object.get_hit_times()){
+                double t_hit = hit.get_t_hit();
+                if(t_hit < lowest_t_hit){
+                    lowest_t_hit = t_hit;
+                }
+            }
+        }
+        //Check boolean objects
+        for(BooleanObject booleanObject: booleanObjects){
+            for(Hit hit: booleanObject.get_hit_times()){
                 double t_hit = hit.get_t_hit();
                 if(t_hit < lowest_t_hit){
                     lowest_t_hit = t_hit;
@@ -303,5 +320,9 @@ public class World {
 
     public void add_light(Light light) {
         this.lights.add(light);
+    }
+
+    public void add_boolean_object(BooleanObject booleanObject){
+        this.booleanObjects.add(booleanObject);
     }
 }

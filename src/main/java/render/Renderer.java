@@ -4,9 +4,11 @@ import config.Config;
 import internal.HitObject;
 import factory.ObjectFactory;
 import internal.Ray;
+import shapes.BooleanObject;
 import world.World;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 //Gaat voor elke pixel een ray creeren en zoeken voor een hitobject
 public class Renderer {
@@ -38,11 +40,15 @@ public class Renderer {
         for (int col = 0; col < Config.SCREEN_WIDTH; col++) {
             for (int row = 0; row < Config.SCREEN_HEIGHT; row++) {
                 //Step 1
-                Ray ray = objectFactory.create_ray(world.getCamera(), Config.DEFAULT_AIR_SPEED, col,row);
+                Ray ray = objectFactory.create_ray(world.get_camera(), Config.DEFAULT_AIR_SPEED, col,row);
                 //Iterator will help me to keep calling calculateClosestHitObject for a number of reflections (only call it later on if iterator < 5)
                 int iterator = 0;
                 //Start of step 2
                 HitObject hitObject = world.calculateClosestHitObject(ray, iterator);
+                //Clean hit times of the boolean objects
+                for(BooleanObject booleanObject: world.get_booleanObjects()){
+                    booleanObject.set_hit_times(new ArrayList<>());
+                }
                 if(hitObject.is_collided()) {
                     counter++;
                     /*
