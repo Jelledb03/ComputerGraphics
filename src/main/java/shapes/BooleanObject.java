@@ -1,9 +1,7 @@
 package shapes;
 
-import internal.Intersection;
-import internal.Matrix;
+import internal.*;
 import internal.Point;
-import internal.Vector;
 import texture.Texture;
 
 import java.awt.*;
@@ -40,7 +38,7 @@ public class BooleanObject extends Object{
     }
 
     @Override
-    ArrayList<Double> object_hit_detec(Point S_t, Vector c_t, Intersection intersection) {
+    ArrayList<Hit> object_hit_detec(Point S_t, Vector c_t, Intersection intersection) {
         return null;
     }
 

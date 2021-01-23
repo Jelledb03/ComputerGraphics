@@ -1,9 +1,7 @@
 package shapes;
 
-import internal.Intersection;
-import internal.Matrix;
+import internal.*;
 import internal.Point;
-import internal.Vector;
 import texture.Texture;
 
 import java.awt.*;
@@ -27,9 +25,9 @@ public class Cube extends Object {
     }
 
     @Override
-    ArrayList<Double> object_hit_detec(Point S_t, Vector c_t, Intersection intersection) {
+    ArrayList<Hit> object_hit_detec(Point S_t, Vector c_t, Intersection intersection) {
         //Going through all surfaces and find the inner and outer hit time in the cube
-        ArrayList<Double> hit_times = new ArrayList<>();
+        ArrayList<Hit> hit_times = new ArrayList<>();
         double t_hit, numer, denom;
         double t_in = Double.NEGATIVE_INFINITY, t_out = Double.POSITIVE_INFINITY;
         int surf_in = 0, surf_out = 0;
@@ -100,11 +98,13 @@ public class Cube extends Object {
         int num_hits = 0;
         if (t_in > 0.00001) {
             //p635 doet hier nog veel meer, not sure if necessary
-            hit_times.add(t_in);
+            Hit hit_in = new Hit(t_in, true);
+            hit_times.add(hit_in);
 
         }
         if (t_out > 0.00001) {
-            hit_times.add(t_out);
+            Hit hit_out = new Hit(t_out, false);
+            hit_times.add(hit_out);
         }
         //Check which of the two values is lowest and return
         //Don't care anymore about the lowest hit time here, we are collecting all hit times.

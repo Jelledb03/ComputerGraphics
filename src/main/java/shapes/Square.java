@@ -1,9 +1,7 @@
 package shapes;
 
-import internal.Intersection;
-import internal.Matrix;
+import internal.*;
 import internal.Point;
-import internal.Vector;
 import texture.Texture;
 
 import java.awt.*;
@@ -33,14 +31,15 @@ public class Square extends Object {
     }
 
     @Override
-    ArrayList<Double> object_hit_detec(Point S_t, Vector c_t, Intersection intersection) {
-        ArrayList<Double> hit_times = new ArrayList<>();
+    ArrayList<Hit> object_hit_detec(Point S_t, Vector c_t, Intersection intersection) {
+        ArrayList<Hit> hit_times = new ArrayList<>();
         //Hier krijgen we al de invers getransformeerde ray binnen (dus stap 1 is completed)
         //Nu moeten we de hit_time vinden en deze terug geven.
         if (S_t.get_Z() != 0) {
             //Dit berekent de hit_time wanneer er een intersectie is en returned deze
             double hit_time = -(S_t.get_Z() / c_t.get_Z());
-            hit_times.add(hit_time);
+            Hit hit = new Hit(hit_time, false);
+            hit_times.add(hit);
         }  //else: Geen intersectie
         return hit_times;
     }

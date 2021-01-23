@@ -1,9 +1,7 @@
 package shapes;
 
-import internal.Intersection;
-import internal.Matrix;
+import internal.*;
 import internal.Point;
-import internal.Vector;
 import texture.Texture;
 
 import java.awt.*;
@@ -27,9 +25,9 @@ public class Sphere extends Object {
     }
 
     @Override
-    ArrayList<Double> object_hit_detec(Point S_t, Vector c_t, Intersection intersection) {
+    ArrayList<Hit> object_hit_detec(Point S_t, Vector c_t, Intersection intersection) {
         //Hier gaan we A,B en C eerst berekenen
-        ArrayList<Double> hit_times = new ArrayList<>();
+        ArrayList<Hit> hit_times = new ArrayList<>();
         double A = Math.pow(c_t.get_X(), 2) + Math.pow(c_t.get_Y(), 2) + Math.pow(c_t.get_Z(), 2);
         double B = c_t.get_X() * S_t.get_X() + c_t.get_Y() * S_t.get_Y() + c_t.get_Z() * S_t.get_Z();
         double C = Math.pow(S_t.get_X(), 2) + Math.pow(S_t.get_Y(), 2) + Math.pow(S_t.get_Z(), 2) - 1;
@@ -42,14 +40,18 @@ public class Sphere extends Object {
             //System.out.println("Geen hitpunten");
         } else if (Discriminant == 0) {
             double t_hit = (-B) / A;
-            hit_times.add(t_hit);
+            Hit hit = new Hit(t_hit, false);
             //System.out.println("hit");
         } else {
             double t_hit1 = (-B) / A + Math.sqrt(Discriminant) / A;
             double t_hit2 = (-B) / A - Math.sqrt(Discriminant) / A;
-            //Find lowest hit time
-            hit_times.add(t_hit1);
-            hit_times.add(t_hit2);
+            //Find lowest hit time (for entering hit time)
+            double t_in = Math.min(t_hit1, t_hit2);
+            double t_out = Math.max(t_hit1, t_hit2);
+            Hit hit_in = new Hit(t_in, true);
+            hit_times.add(hit_in);
+            Hit hit_out = new Hit(t_out, false);
+            hit_times.add(hit_out);
             //t_hit = Math.min(t_hit1, t_hit2);
             //System.out.println("hit");
         }

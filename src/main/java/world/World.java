@@ -78,7 +78,8 @@ public class World {
         int lowest_hit_time_index = -1;
         double lowest_t_hit = Double.POSITIVE_INFINITY;
         for(Object object: objects){
-            for(double t_hit: object.get_hit_times()){
+            for(Hit hit: object.get_hit_times()){
+                double t_hit = hit.get_t_hit();
                 if(t_hit < lowest_t_hit){
                     lowest_t_hit = t_hit;
                 }

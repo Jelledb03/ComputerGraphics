@@ -49,8 +49,8 @@ public class testWorld {
         Matrix object_standard_scaling_matrix = matrix3DFactory.create_scal_matrix(standard_sx, standard_sy, standard_sz);
         Matrix object_standard_scaling_inv_matrix = matrix3DFactory.create_inv_scal_matrix(standard_sx, standard_sy, standard_sz);
         //Scaling
-        double sx = 0.5; //x
-        double sy = 0.5; //y
+        double sx = 1; //x
+        double sy = 1; //y
         double sz = 1.5; //z
         Matrix object_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
         Matrix object_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);

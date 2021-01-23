@@ -23,7 +23,7 @@ public abstract class Object {
     private double c; //holds the relative speed of the ray compared to the speed of light
     private int surface = 0;
     private Texture texture;
-    private ArrayList<Double> hit_times;
+    private ArrayList<Hit> hit_times;
 
     public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color, Texture texture) {
         this.transformation_matrix = transformation_matrix;
@@ -121,14 +121,12 @@ public abstract class Object {
         //Step 2
         //Zou ipv hier de smallest hit time te vinden alle hit times registreren
         //Geef die hier alle t_hits terug
-        ArrayList<Double> hit_times = object_hit_detec(S_t, c_t, intersection);
-        if(hit_times.size() > 1){
-            System.out.println("et");
-        }
+        ArrayList<Hit> hit_times = object_hit_detec(S_t, c_t, intersection);
         set_hit_times(hit_times);
         if(!hit_times.isEmpty()){
             //There were hitpoints, so loop through!
-            for(double t_hit: hit_times) {
+            for(Hit hit: hit_times) {
+                double t_hit = hit.get_t_hit();
                 //Going to calculate hit point and normal vector for every hit time!
                 Point hitPoint = calculate_hit_point(S, c, t_hit);
                 if (hitPoint == null) {
@@ -162,7 +160,7 @@ public abstract class Object {
 
     abstract Vector calculate_normal_vector(Point hitPoint, int surface);
 
-    abstract ArrayList<Double> object_hit_detec(Point S_t, Vector c_t, Intersection intersection);
+    abstract ArrayList<Hit> object_hit_detec(Point S_t, Vector c_t, Intersection intersection);
 
     abstract Point calculate_hit_point(Point S, Vector c, double t_hit);
 
@@ -190,12 +188,11 @@ public abstract class Object {
         this.c = c;
     }
 
-    public ArrayList<Double> get_hit_times() {
+    public ArrayList<Hit> get_hit_times() {
         return hit_times;
     }
 
-    public void set_hit_times(ArrayList<Double> hit_times) {
+    public void set_hit_times(ArrayList<Hit> hit_times) {
         this.hit_times = hit_times;
-        Collections.sort(this.hit_times);
     }
 }
