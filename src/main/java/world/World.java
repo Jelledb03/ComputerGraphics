@@ -88,7 +88,7 @@ public class World {
         for(Object object: objects){
             for(Hit hit: object.get_hit_times()){
                 double t_hit = hit.get_t_hit();
-                if(t_hit < lowest_t_hit){
+                if(t_hit < lowest_t_hit && t_hit > 0){
                     lowest_t_hit = t_hit;
                 }
             }
@@ -97,7 +97,7 @@ public class World {
         for(BooleanObject booleanObject: booleanObjects){
             for(Hit hit: booleanObject.get_hit_times()){
                 double t_hit = hit.get_t_hit();
-                if(t_hit < lowest_t_hit){
+                if(t_hit < lowest_t_hit && t_hit > 0){
                     lowest_t_hit = t_hit;
                 }
             }

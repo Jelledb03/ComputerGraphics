@@ -143,9 +143,9 @@ public class BooleanObject {
                             left_inside = lowest_left_hit.isEntering();
                             //With union the comb_inside is left_inside || right_inside
                             //After assigning check if comb inside changes if so add it to hit_times
-                            boolean temp_comb_inside = left_inside || right_inside;
+                            boolean temp_comb_inside = left_inside && right_inside;
                             if (comb_inside != temp_comb_inside) {
-                                hit_times.add(lowest_left_hit);
+                                //hit_times.add(lowest_left_hit);
                                 comb_inside = temp_comb_inside;
                             }
                             left.get_hit_times().remove(0);
@@ -154,9 +154,9 @@ public class BooleanObject {
                             right_inside = lowest_right_hit.isEntering();
                             //With union the comb_inside is left_inside || right_inside
                             //After assigning check if comb inside changes if so add it to hit_times
-                            boolean temp_comb_inside = left_inside || right_inside;
+                            boolean temp_comb_inside = left_inside && right_inside;
                             if (comb_inside != temp_comb_inside) {
-                                //hit_times.add(lowest_right_hit);
+                                hit_times.add(lowest_right_hit);
                                 comb_inside = temp_comb_inside;
                             }
                             right.get_hit_times().remove(0);
@@ -164,13 +164,13 @@ public class BooleanObject {
                     } else if (right.get_hit_times().size() != 0) {
                         //left hit times list is consumed
                         //add remaining of right hit times to the boolean object
-                        //hit_times.addAll(right.get_hit_times());
+                        hit_times.addAll(right.get_hit_times());
                         right.get_hit_times().clear();
                         finished = true;
                     } else if (left.get_hit_times().size() != 0) {
                         //right hit times list is consumed
                         //add remaining of left hit times to the boolean object
-                        hit_times.addAll(left.get_hit_times());
+                        //hit_times.addAll(left.get_hit_times());
                         left.get_hit_times().clear();
                         finished = true;
                     } else {
@@ -190,7 +190,7 @@ public class BooleanObject {
                             left_inside = lowest_left_hit.isEntering();
                             //With union the comb_inside is left_inside || right_inside
                             //After assigning check if comb inside changes if so add it to hit_times
-                            boolean temp_comb_inside = left_inside || right_inside;
+                            boolean temp_comb_inside = left_inside && !right_inside;
                             if (comb_inside != temp_comb_inside) {
                                 hit_times.add(lowest_left_hit);
                                 comb_inside = temp_comb_inside;
@@ -201,7 +201,7 @@ public class BooleanObject {
                             right_inside = lowest_right_hit.isEntering();
                             //With union the comb_inside is left_inside || right_inside
                             //After assigning check if comb inside changes if so add it to hit_times
-                            boolean temp_comb_inside = left_inside || right_inside;
+                            boolean temp_comb_inside = left_inside && !right_inside;
                             if (comb_inside != temp_comb_inside) {
                                 //hit_times.add(lowest_right_hit);
                                 comb_inside = temp_comb_inside;
