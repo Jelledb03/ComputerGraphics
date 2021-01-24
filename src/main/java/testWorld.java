@@ -61,8 +61,18 @@ public class testWorld {
         object_standard_matrix = multiply_matrices(matrixTransformer, standard_translation_matrix, object_standard_matrix);
         object_standard_inv_matrix = multiply_matrices(matrixTransformer, standard_translation_inv_matrix, object_standard_inv_matrix);
 
-        Matrix stam_transformation_matrix = object_standard_matrix;
-        Matrix stam_transformation_inv_matrix = object_standard_inv_matrix;
+        //HOUSE BEGIN
+
+
+        //TREE BEGIN
+        double m14 = 0; //x
+        double m24 = 0; //y
+        double m34 = -3; //z
+        Matrix tree_stam_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
+        Matrix tree_stam_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
+
+        Matrix stam_transformation_matrix = multiply_matrices(matrixTransformer, tree_stam_translation_transformation_matrix, object_standard_matrix);;
+        Matrix stam_transformation_inv_matrix = multiply_matrices(matrixTransformer, tree_stam_translation_inv_transformation_matrix, object_standard_inv_matrix);
 
         double alpha = Math.PI/2;
         Matrix stam_roll_transformation_matrix = matrix3DFactory.create_y_roll_matrix(alpha);
@@ -82,9 +92,9 @@ public class testWorld {
         stam_transformation_inv_matrix = multiply_matrices(matrixTransformer, tree_stam_scaling_inv_transformation_matrix, stam_transformation_inv_matrix);
 
         //Translation Cylinder tree head lower
-        double m14 = 0.2; //x
-        double m24 = 0; //y
-        double m34 = 0; //z
+        m14 = 0.2; //x
+        m24 = 0; //y
+        m34 = -3; //z
         Matrix translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
         Matrix translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
 
@@ -118,7 +128,7 @@ public class testWorld {
         //Translation Cylinder tree head upper
         m14 = -0.2; //x
         m24 = 0; //y
-        m34 = 0; //z
+        m34 = -3; //z
         translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
         translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
 
@@ -131,8 +141,7 @@ public class testWorld {
         tree_head_upper_transformation_matrix = multiply_matrices(matrixTransformer, tree_head_upper_scaling_transformation_matrix, tree_head_upper_transformation_matrix);
         tree_head_upper_transformation_inv_matrix = multiply_matrices(matrixTransformer, tree_head_upper_scaling_inv_transformation_matrix, tree_head_upper_transformation_inv_matrix);
 
-        //Cube
-        //Rotation Matrix (x-roll) om vlak naar oog te draaien (en niet hoek)
+        //TREE ENDING
 
         //World Cube Scaling (wordt de grote omvangende kubus waarin de wereld zit)
         double cube_sx = 300; //x
