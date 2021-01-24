@@ -140,10 +140,10 @@ public class BooleanObject {
                         Hit lowest_right_hit = right.get_hit_times().get(0);
                         if (lowest_left_hit.get_t_hit() < lowest_right_hit.get_t_hit()) {
                             //left is lowest
-                            left_inside = !lowest_left_hit.isEntering();
+                            left_inside = lowest_left_hit.isEntering();
                             //With union the comb_inside is left_inside || right_inside
                             //After assigning check if comb inside changes if so add it to hit_times
-                            boolean temp_comb_inside = left_inside && right_inside;
+                            boolean temp_comb_inside = left_inside || right_inside;
                             if (comb_inside != temp_comb_inside) {
                                 hit_times.add(lowest_left_hit);
                                 comb_inside = temp_comb_inside;
@@ -151,12 +151,12 @@ public class BooleanObject {
                             left.get_hit_times().remove(0);
                         } else {
                             //right is lowest
-                            right_inside = !lowest_right_hit.isEntering();
+                            right_inside = lowest_right_hit.isEntering();
                             //With union the comb_inside is left_inside || right_inside
                             //After assigning check if comb inside changes if so add it to hit_times
-                            boolean temp_comb_inside = left_inside && right_inside;
+                            boolean temp_comb_inside = left_inside || right_inside;
                             if (comb_inside != temp_comb_inside) {
-                                hit_times.add(lowest_right_hit);
+                                //hit_times.add(lowest_right_hit);
                                 comb_inside = temp_comb_inside;
                             }
                             right.get_hit_times().remove(0);
@@ -164,11 +164,13 @@ public class BooleanObject {
                     } else if (right.get_hit_times().size() != 0) {
                         //left hit times list is consumed
                         //add remaining of right hit times to the boolean object
+                        //hit_times.addAll(right.get_hit_times());
                         right.get_hit_times().clear();
                         finished = true;
                     } else if (left.get_hit_times().size() != 0) {
                         //right hit times list is consumed
                         //add remaining of left hit times to the boolean object
+                        hit_times.addAll(left.get_hit_times());
                         left.get_hit_times().clear();
                         finished = true;
                     } else {

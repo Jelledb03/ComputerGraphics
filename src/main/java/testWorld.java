@@ -141,7 +141,7 @@ public class testWorld {
         //world.add_object(cube);
 
         //Boolean objects
-        BooleanObject booleanObject1 = new BooleanObject(cube, sphere,BooleanObjectType.DIFFERENCE);
+        BooleanObject booleanObject1 = new BooleanObject(cube, sphere,BooleanObjectType.INTERSECTION);
         world.add_boolean_object(booleanObject1);
 
         Cube world_cube = objectFactory.create_cube(cube_scaling_transformation_matrix, cube_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.DEFAULT_BACKGROUND_COLOR);
