@@ -12,11 +12,11 @@ public class Config {
     public static Color DEFAULT_BACKGROUND_COLOR = Color.pink;
     public static Color DEFAULT_OBJECT_COLOR = Color.WHITE;
     public static Color WOODCOLOR = new Color(156,124,86);
-    public static Color SKYCOLOR = new Color(135,206,235);
+    public static Color SKYCOLOR = new Color(74, 112, 139);
     public static Color BRICKCOLOR = new Color(138, 51, 53);
     public static Color DOVEWHITE = new Color(203, 194, 190);
     public static Color GRASSCOLOR = new Color(58, 89, 39);
-    public static Color SUNCOLOR = new Color(255, 204, 51);
+    public static Color MOONCOLOR = new Color(245, 243, 206);
 
 
     public static double DEFAULT_DIFFUSE_REFLECTION_COEFF = 0.2775;

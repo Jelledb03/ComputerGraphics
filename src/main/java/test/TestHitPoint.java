@@ -1,3 +1,5 @@
+package test;
+
 import config.Config;
 import internal.*;
 import factory.Matrix3DFactory;
