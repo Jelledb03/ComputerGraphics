@@ -18,6 +18,7 @@ public class Config {
     public static Color GRASSCOLOR = new Color(58, 89, 39);
     public static Color MOONCOLOR = new Color(245, 243, 206);
     public static Color BENCHCOLOR = new Color(139, 231, 139);
+    public static Color ARTCOLOR = new Color(60, 55, 72);
 
 
     public static double DEFAULT_DIFFUSE_REFLECTION_COEFF = 0.2775;
