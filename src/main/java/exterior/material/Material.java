@@ -23,7 +23,7 @@ public class Material {
         this.ambient_reflection_coeff = Config.DEFAULT_AMBIENT_REFLECTION_COEFF;
     }
 
-    public Material(double local_coeff, double reflection_coeff, double refraction_coeff, double material_type_speed, double diffuse_reflection_coeff, double fallof, double specular_reflection_coeff, double ambient_reflection_coeff) {
+    public Material(double local_coeff, double reflection_coeff, double refraction_coeff, double material_type_speed, double ambient_reflection_coeff, double diffuse_reflection_coeff, double specular_reflection_coeff, double fallof) {
         this.local_coeff = local_coeff;
         this.reflection_coeff = reflection_coeff;
         this.refraction_coeff = refraction_coeff;

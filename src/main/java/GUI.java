@@ -42,6 +42,7 @@ public class GUI {
 
         //Create materials
         Material default_material = new Material();
+        Material bench_material = new Material(1, 0, 0, Config.DEFAULT_GLASS_SPEED,0.25, 0.4, 0.774597, 76.8);
 
         //objects Transformation matrices
         //standard scaling factor
@@ -268,55 +269,6 @@ public class GUI {
 
         //BENCH ENDING
 
-        //ART PIECE BEGIN
-        Matrix art_cube_transformation_matrix = object_standard_matrix;
-        Matrix art_cube_transformation_inv_matrix = object_standard_inv_matrix;
-
-        //Translated art cube
-        m14 = 0; //x
-        m24 = 2.25; //y
-        m34 = 1.25; //z
-        Matrix art_cube_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
-        Matrix art_cube_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
-
-        art_cube_transformation_matrix = multiply_matrices(matrixTransformer, art_cube_translation_transformation_matrix, art_cube_transformation_matrix);
-        art_cube_transformation_inv_matrix = multiply_matrices(matrixTransformer, art_cube_translation_inv_transformation_matrix, art_cube_transformation_inv_matrix);
-
-        //Scaling art cube
-        sx = 0.15; //x
-        sy = 0.15; //y
-        sz = 0.25; //z
-        Matrix art_cube_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
-        Matrix art_cube_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
-
-        art_cube_transformation_matrix = multiply_matrices(matrixTransformer, art_cube_scaling_transformation_matrix, art_cube_transformation_matrix);
-        art_cube_transformation_inv_matrix = multiply_matrices(matrixTransformer, art_cube_scaling_inv_transformation_matrix, art_cube_transformation_inv_matrix);
-
-        Matrix art_sphere_transformation_matrix = object_standard_matrix;
-        Matrix art_sphere_transformation_inv_matrix = object_standard_inv_matrix;
-
-        //Translated art sphere
-        m14 = 0; //x
-        m24 = 2.25; //y
-        m34 = 1.30; //z
-        Matrix art_sphere_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
-        Matrix art_sphere_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
-
-        art_sphere_transformation_matrix = multiply_matrices(matrixTransformer, art_sphere_translation_transformation_matrix, art_sphere_transformation_matrix);
-        art_sphere_transformation_inv_matrix = multiply_matrices(matrixTransformer, art_sphere_translation_inv_transformation_matrix, art_sphere_transformation_inv_matrix);
-
-        //Scaling art sphere
-        sx = 0.20; //x
-        sy = 0.20; //y
-        sz = 0.20; //z
-        Matrix art_sphere_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
-        Matrix art_sphere_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
-
-        art_sphere_transformation_matrix = multiply_matrices(matrixTransformer, art_sphere_scaling_transformation_matrix, art_sphere_transformation_matrix);
-        art_sphere_transformation_inv_matrix = multiply_matrices(matrixTransformer, art_sphere_scaling_inv_transformation_matrix, art_sphere_transformation_inv_matrix);
-
-        //ART PIECE ENDING
-
         //MOON BEGIN
         Matrix moon_transformation_matrix = object_standard_matrix;
         Matrix moon_transformation_inv_matrix = object_standard_inv_matrix;
@@ -340,6 +292,34 @@ public class GUI {
 
         moon_transformation_matrix = multiply_matrices(matrixTransformer, moon_translation_transformation_matrix, moon_transformation_matrix);
         moon_transformation_inv_matrix = multiply_matrices(matrixTransformer, moon_translation_inv_transformation_matrix, moon_transformation_inv_matrix);
+
+        alpha = -Math.PI/3;
+        Matrix moon_roll_transformation_matrix = matrix3DFactory.create_x_roll_matrix(alpha);
+        Matrix moon_roll_inv_transformation_matrix = matrix3DFactory.create_inv_x_roll_matrix(alpha);
+
+        moon_transformation_matrix = multiply_matrices(matrixTransformer, moon_roll_transformation_matrix, moon_transformation_matrix);
+        moon_transformation_inv_matrix = multiply_matrices(matrixTransformer, moon_roll_inv_transformation_matrix, moon_transformation_inv_matrix);
+
+        //Moon eater
+
+        Matrix moon_eater_transformation_matrix = object_standard_matrix;
+        Matrix moon_eater_transformation_inv_matrix = object_standard_inv_matrix;
+
+        moon_eater_transformation_matrix = multiply_matrices(matrixTransformer, moon_scaling_transformation_matrix, moon_eater_transformation_matrix);
+        moon_eater_transformation_inv_matrix = multiply_matrices(matrixTransformer, moon_scaling_inv_transformation_matrix, moon_eater_transformation_inv_matrix);
+
+        //Translation Moon
+        m14 = -6; //x
+        m24 = 0; //y
+        m34 = 5; //z
+        Matrix moon_eater_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
+        Matrix moon_eater_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
+
+        moon_eater_transformation_matrix = multiply_matrices(matrixTransformer, moon_eater_translation_transformation_matrix, moon_eater_transformation_matrix);
+        moon_eater_transformation_inv_matrix = multiply_matrices(matrixTransformer, moon_eater_translation_inv_transformation_matrix, moon_eater_transformation_inv_matrix);
+
+        moon_eater_transformation_matrix = multiply_matrices(matrixTransformer, moon_roll_transformation_matrix, moon_eater_transformation_matrix);
+        moon_eater_transformation_inv_matrix = multiply_matrices(matrixTransformer, moon_roll_inv_transformation_matrix, moon_eater_transformation_inv_matrix);
 
         //Moon END
 
@@ -382,24 +362,19 @@ public class GUI {
 
         //BENCH
 
-        Cube bench_sit = objectFactory.create_cube(bench_sit_transformation_matrix, bench_sit_transformation_inv_matrix, default_material, Config.BENCHCOLOR);
+        Cube bench_sit = objectFactory.create_cube(bench_sit_transformation_matrix, bench_sit_transformation_inv_matrix, bench_material, Config.BENCHCOLOR);
         world.add_object(bench_sit);
 
-        Cube bench_railing = objectFactory.create_cube(bench_railing_transformation_matrix, bench_railing_transformation_inv_matrix, default_material, Config.BENCHCOLOR);
+        Cube bench_railing = objectFactory.create_cube(bench_railing_transformation_matrix, bench_railing_transformation_inv_matrix, bench_material, Config.BENCHCOLOR);
         world.add_object(bench_railing);
 
-        //ART PIECE
-
-        Cube art_cube = objectFactory.create_cube(art_cube_transformation_matrix,art_cube_transformation_inv_matrix, default_material, Config.ARTCOLOR);
-        world.add_object(art_cube);
-
-        Sphere art_sphere = objectFactory.create_sphere(art_sphere_transformation_matrix,art_sphere_transformation_inv_matrix, default_material, Config.MOONCOLOR);
-        world.add_object(art_sphere);
-
-        //SUN
+        //MOON
 
         Sphere moon = objectFactory.create_sphere(moon_transformation_matrix,moon_transformation_inv_matrix, default_material, Config.MOONCOLOR);
         world.add_object(moon);
+
+        Sphere moon_eater = objectFactory.create_sphere(moon_eater_transformation_matrix,moon_eater_transformation_inv_matrix, default_material, Config.MOONCOLOR);
+        world.add_object(moon_eater);
 
         //WORLD CUBE
 
@@ -414,8 +389,8 @@ public class GUI {
         BooleanObject complete_bench = new BooleanObject(bench_sit, bench_railing, BooleanObjectType.UNION);
         world.add_boolean_object(complete_bench);
 
-        BooleanObject complete_art_piece = new BooleanObject(art_cube, art_sphere, BooleanObjectType.DIFFERENCE);
-        world.add_boolean_object(complete_art_piece);
+        BooleanObject complete_moon = new BooleanObject(moon, moon_eater, BooleanObjectType.DIFFERENCE);
+        world.add_boolean_object(complete_moon);
 
         Renderer renderer = objectFactory.create_renderer();
         renderer.render_screen(world);
