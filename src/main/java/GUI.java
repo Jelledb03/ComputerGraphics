@@ -128,13 +128,13 @@ public class GUI {
         Matrix tree_head_lower_transformation_inv_matrix = multiply_matrices(matrixTransformer, translation_inv_transformation_matrix, object_standard_inv_matrix);
 
         alpha = Math.PI * 1.5;
-        Matrix cylinder_roll_transformation_matrix = matrix3DFactory.create_y_roll_matrix(alpha);
-        Matrix cylinder_roll_inv_transformation_matrix = matrix3DFactory.create_inv_y_roll_matrix(alpha);
+        Matrix tree_head_roll_transformation_matrix = matrix3DFactory.create_y_roll_matrix(alpha);
+        Matrix tree_head_roll_inv_transformation_matrix = matrix3DFactory.create_inv_y_roll_matrix(alpha);
 
-        tree_head_lower_transformation_matrix = multiply_matrices(matrixTransformer, cylinder_roll_transformation_matrix, tree_head_lower_transformation_matrix);
-        tree_head_lower_transformation_inv_matrix = multiply_matrices(matrixTransformer, cylinder_roll_inv_transformation_matrix, tree_head_lower_transformation_inv_matrix);
+        tree_head_lower_transformation_matrix = multiply_matrices(matrixTransformer, tree_head_roll_transformation_matrix, tree_head_lower_transformation_matrix);
+        tree_head_lower_transformation_inv_matrix = multiply_matrices(matrixTransformer, tree_head_roll_inv_transformation_matrix, tree_head_lower_transformation_inv_matrix);
 
-        //Scaling tree head lower
+        //Scaling tree head
         sx = 0.5; //x
         sy = 0.5; //y
         sz = 0.8; //z
@@ -149,7 +149,7 @@ public class GUI {
         Matrix tree_head_upper_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
 
         tree_head_lower_transformation_matrix = multiply_matrices(matrixTransformer, tree_head_lower_scaling_transformation_matrix, tree_head_lower_transformation_matrix);
-        tree_head_lower_transformation_inv_matrix = multiply_matrices(matrixTransformer, tree_head_lower_scaling_inv_transformation_matrix, tree_head_lower_transformation_inv_matrix);
+        tree_head_lower_transformation_inv_matrix = multiply_matrices(matrixTransformer, tree_head_upper_scaling_inv_transformation_matrix, tree_head_lower_transformation_inv_matrix);
 
         //Translation Cylinder tree head upper
         m14 = -0.2; //x
@@ -161,8 +161,8 @@ public class GUI {
         Matrix tree_head_upper_transformation_matrix = multiply_matrices(matrixTransformer, translation_transformation_matrix, object_standard_matrix);
         Matrix tree_head_upper_transformation_inv_matrix = multiply_matrices(matrixTransformer, translation_inv_transformation_matrix, object_standard_inv_matrix);
 
-        tree_head_upper_transformation_matrix = multiply_matrices(matrixTransformer, cylinder_roll_transformation_matrix, tree_head_upper_transformation_matrix);
-        tree_head_upper_transformation_inv_matrix = multiply_matrices(matrixTransformer, cylinder_roll_inv_transformation_matrix, tree_head_upper_transformation_inv_matrix);
+        tree_head_upper_transformation_matrix = multiply_matrices(matrixTransformer, tree_head_roll_transformation_matrix, tree_head_upper_transformation_matrix);
+        tree_head_upper_transformation_inv_matrix = multiply_matrices(matrixTransformer, tree_head_roll_inv_transformation_matrix, tree_head_upper_transformation_inv_matrix);
 
         tree_head_upper_transformation_matrix = multiply_matrices(matrixTransformer, tree_head_upper_scaling_transformation_matrix, tree_head_upper_transformation_matrix);
         tree_head_upper_transformation_inv_matrix = multiply_matrices(matrixTransformer, tree_head_upper_scaling_inv_transformation_matrix, tree_head_upper_transformation_inv_matrix);
@@ -189,35 +189,84 @@ public class GUI {
         m14 = 0.2; //x
         m24 = 0; //y
         m34 = 3; //z
-        Matrix moon_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
-        Matrix moon_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
+        Matrix tree_head_lower_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
+        Matrix tree_head_lower_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
 
-        Matrix second_tree_head_lower_transformation_matrix = multiply_matrices(matrixTransformer, moon_translation_transformation_matrix, object_standard_matrix);
-        Matrix second_tree_head_lower_transformation_inv_matrix = multiply_matrices(matrixTransformer, moon_translation_inv_transformation_matrix, object_standard_inv_matrix);
+        Matrix second_tree_head_lower_transformation_matrix = multiply_matrices(matrixTransformer, tree_head_lower_translation_transformation_matrix, object_standard_matrix);
+        Matrix second_tree_head_lower_transformation_inv_matrix = multiply_matrices(matrixTransformer, tree_head_lower_translation_inv_transformation_matrix, object_standard_inv_matrix);
 
-        second_tree_head_lower_transformation_matrix = multiply_matrices(matrixTransformer, cylinder_roll_transformation_matrix, second_tree_head_lower_transformation_matrix);
-        second_tree_head_lower_transformation_inv_matrix = multiply_matrices(matrixTransformer, cylinder_roll_inv_transformation_matrix, second_tree_head_lower_transformation_inv_matrix);
+        second_tree_head_lower_transformation_matrix = multiply_matrices(matrixTransformer, tree_head_roll_transformation_matrix, second_tree_head_lower_transformation_matrix);
+        second_tree_head_lower_transformation_inv_matrix = multiply_matrices(matrixTransformer, tree_head_roll_inv_transformation_matrix, second_tree_head_lower_transformation_inv_matrix);
 
         second_tree_head_lower_transformation_matrix = multiply_matrices(matrixTransformer, tree_head_lower_scaling_transformation_matrix, second_tree_head_lower_transformation_matrix);
-        second_tree_head_lower_transformation_inv_matrix = multiply_matrices(matrixTransformer, tree_head_lower_scaling_inv_transformation_matrix, second_tree_head_lower_transformation_inv_matrix);
+        second_tree_head_lower_transformation_inv_matrix = multiply_matrices(matrixTransformer, tree_head_upper_scaling_inv_transformation_matrix, second_tree_head_lower_transformation_inv_matrix);
 
         //Translation Cylinder tree head upper
         m14 = -0.2; //x
         m24 = 0; //y
         m34 = 3; //z
-        moon_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
-        moon_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
+        Matrix moon_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
+        Matrix moon_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
 
         Matrix second_tree_head_upper_transformation_matrix = multiply_matrices(matrixTransformer, moon_translation_transformation_matrix, object_standard_matrix);
         Matrix second_tree_head_upper_transformation_inv_matrix = multiply_matrices(matrixTransformer, moon_translation_inv_transformation_matrix, object_standard_inv_matrix);
 
-        second_tree_head_upper_transformation_matrix = multiply_matrices(matrixTransformer, cylinder_roll_transformation_matrix, second_tree_head_upper_transformation_matrix);
-        second_tree_head_upper_transformation_inv_matrix = multiply_matrices(matrixTransformer, cylinder_roll_inv_transformation_matrix, second_tree_head_upper_transformation_inv_matrix);
+        second_tree_head_upper_transformation_matrix = multiply_matrices(matrixTransformer, tree_head_roll_transformation_matrix, second_tree_head_upper_transformation_matrix);
+        second_tree_head_upper_transformation_inv_matrix = multiply_matrices(matrixTransformer, tree_head_roll_inv_transformation_matrix, second_tree_head_upper_transformation_inv_matrix);
 
         second_tree_head_upper_transformation_matrix = multiply_matrices(matrixTransformer, tree_head_upper_scaling_transformation_matrix, second_tree_head_upper_transformation_matrix);
         second_tree_head_upper_transformation_inv_matrix = multiply_matrices(matrixTransformer, tree_head_upper_scaling_inv_transformation_matrix, second_tree_head_upper_transformation_inv_matrix);
 
         //TREE ENDING
+
+        //BENCH BEGIN
+        Matrix bench_sit_transformation_matrix = object_standard_matrix;
+        Matrix bench_sit_transformation_inv_matrix = object_standard_inv_matrix;
+
+        //Translated Bench Sit
+        m14 = 0; //x
+        m24 = 2.25; //y
+        m34 = -1.25; //z
+        Matrix bench_sit_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
+        Matrix bench_sit_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
+
+        bench_sit_transformation_matrix = multiply_matrices(matrixTransformer, bench_sit_translation_transformation_matrix, bench_sit_transformation_matrix);
+        bench_sit_transformation_inv_matrix = multiply_matrices(matrixTransformer, bench_sit_translation_inv_transformation_matrix, bench_sit_transformation_inv_matrix);
+
+        //Scaling Bench Sit
+        sx = 0.15; //x
+        sy = 0.15; //y
+        sz = 0.25; //z
+        Matrix bench_sit_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
+        Matrix bench_sit_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
+
+        bench_sit_transformation_matrix = multiply_matrices(matrixTransformer, bench_sit_scaling_transformation_matrix, bench_sit_transformation_matrix);
+        bench_sit_transformation_inv_matrix = multiply_matrices(matrixTransformer, bench_sit_scaling_inv_transformation_matrix, bench_sit_transformation_inv_matrix);
+
+        Matrix bench_railing_transformation_matrix = object_standard_matrix;
+        Matrix bench_railing_transformation_inv_matrix = object_standard_inv_matrix;
+
+        //Translated Bench Railing
+        m14 = -0.25; //x
+        m24 = 2.15; //y
+        m34 = -1.25; //z
+        Matrix bench_railing_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
+        Matrix bench_railing_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
+
+        bench_railing_transformation_matrix = multiply_matrices(matrixTransformer, bench_railing_translation_transformation_matrix, bench_railing_transformation_matrix);
+        bench_railing_transformation_inv_matrix = multiply_matrices(matrixTransformer, bench_railing_translation_inv_transformation_matrix, bench_railing_transformation_inv_matrix);
+
+        //Scaling Bench Railing
+        sx = 0.10; //x
+        sy = 0.05; //y
+        sz = 0.25; //z
+        Matrix bench_railing_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
+        Matrix bench_railing_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
+
+        bench_railing_transformation_matrix = multiply_matrices(matrixTransformer, bench_railing_scaling_transformation_matrix, bench_railing_transformation_matrix);
+        bench_railing_transformation_inv_matrix = multiply_matrices(matrixTransformer, bench_railing_scaling_inv_transformation_matrix, bench_railing_transformation_inv_matrix);
+
+        //BENCH ENDING
 
         //MOON BEGIN
         Matrix moon_transformation_matrix = object_standard_matrix;
@@ -260,7 +309,7 @@ public class GUI {
         Cylinder tree_head_upper = objectFactory.create_cylinder(tree_head_upper_transformation_matrix, tree_head_upper_transformation_inv_matrix, default_material, Config.GRASSCOLOR, 0);
         world.add_object(tree_head_upper);
 
-        Cylinder tree_stam = objectFactory.create_cylinder(stam_transformation_matrix, stam_transformation_inv_matrix, default_material, Config.WOODCOLOR, noise, 1);
+        Cylinder tree_stam = objectFactory.create_cylinder(stam_transformation_matrix,stam_transformation_inv_matrix, default_material, Config.WOODCOLOR, noise, 1);
         world.add_object(tree_stam);
 
         //SECOND TREE
@@ -282,6 +331,14 @@ public class GUI {
         Cube door = objectFactory.create_cube(door_transformation_matrix, door_transformation_inv_matrix, default_material, Config.DOVEWHITE);
         world.add_object(door);
 
+        //BENCH
+
+        Cube bench_sit = objectFactory.create_cube(bench_sit_transformation_matrix, bench_sit_transformation_inv_matrix, default_material, Config.BENCHCOLOR);
+        world.add_object(bench_sit);
+
+        Cube bench_railing = objectFactory.create_cube(bench_railing_transformation_matrix, bench_railing_transformation_inv_matrix, default_material, Config.BENCHCOLOR);
+        world.add_object(bench_railing);
+
         //SUN
 
         Sphere moon = objectFactory.create_sphere(moon_transformation_matrix,moon_transformation_inv_matrix, default_material, Config.MOONCOLOR);
@@ -291,6 +348,9 @@ public class GUI {
 
         BooleanObject complete_house = new BooleanObject(house, door, BooleanObjectType.UNION);
         world.add_boolean_object(complete_house);
+
+        BooleanObject complete_bench = new BooleanObject(bench_sit, bench_railing, BooleanObjectType.UNION);
+        world.add_boolean_object(complete_bench);
 
         Cube world_cube = objectFactory.create_cube(cube_scaling_transformation_matrix, cube_scaling_inv_transformation_matrix, default_material, Config.SKYCOLOR);
         world.add_object(world_cube);
