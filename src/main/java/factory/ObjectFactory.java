@@ -1,6 +1,7 @@
 package factory;
 
 import config.Config;
+import exterior.material.Material;
 import internal.InternalTransformer;
 import internal.Matrix;
 import internal.Point;
@@ -85,41 +86,41 @@ public class ObjectFactory {
     }
 
     //creates sphere
-    public Sphere create_sphere(Matrix transform_matrix, Matrix inv_transform_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double medium, Color color){
-        return new Sphere(transform_matrix, inv_transform_matrix, local_coeff, reflection_coeff, refraction_coeff, medium, color);
+    public Sphere create_sphere(Matrix transform_matrix, Matrix inv_transform_matrix, Material material, Color color){
+        return new Sphere(transform_matrix, inv_transform_matrix, material, color);
     }
 
     //creates square
-    public Square create_square(Matrix transform_matrix, Matrix inv_transform_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double medium, Color color){
-        return new Square(transform_matrix, inv_transform_matrix, local_coeff, reflection_coeff, refraction_coeff, medium, color);
+    public Square create_square(Matrix transform_matrix, Matrix inv_transform_matrix, Material material, Color color){
+        return new Square(transform_matrix, inv_transform_matrix, material, color);
     }
 
     //creates cylinder
-    public Cylinder create_cylinder(Matrix transform_matrix, Matrix inv_transform_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double medium, Color color, double s){
-        return new Cylinder(transform_matrix, inv_transform_matrix, local_coeff, reflection_coeff, refraction_coeff, medium, color, s);
+    public Cylinder create_cylinder(Matrix transform_matrix, Matrix inv_transform_matrix, Material material, Color color, double s){
+        return new Cylinder(transform_matrix, inv_transform_matrix, material, color, s);
     }
 
     //creates cube
-    public Cube create_cube(Matrix transform_matrix, Matrix inv_transform_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double medium, Color color){
-        return new Cube(transform_matrix, inv_transform_matrix, local_coeff, reflection_coeff, refraction_coeff, medium, color);
+    public Cube create_cube(Matrix transform_matrix, Matrix inv_transform_matrix, Material material, Color color){
+        return new Cube(transform_matrix, inv_transform_matrix, material, color);
     }
 
     //creates sphere wood texture
-    public Sphere create_sphere(Matrix transform_matrix, Matrix inv_transform_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double medium, Color color, Texture wood_texture){
-        return new Sphere(transform_matrix, inv_transform_matrix, local_coeff, reflection_coeff, refraction_coeff, medium, color, wood_texture);
+    public Sphere create_sphere(Matrix transform_matrix, Matrix inv_transform_matrix, Material material, Color color, Texture wood_texture){
+        return new Sphere(transform_matrix, inv_transform_matrix, material, color, wood_texture);
     }
 
     //creates cube wood texture
-    public Cube create_cube(Matrix transform_matrix, Matrix inv_transform_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double medium, Color color, Texture wood_texture){
-        return new Cube(transform_matrix, inv_transform_matrix, local_coeff, reflection_coeff, refraction_coeff, medium, color, wood_texture);
+    public Cube create_cube(Matrix transform_matrix, Matrix inv_transform_matrix, Material material, Color color, Texture wood_texture){
+        return new Cube(transform_matrix, inv_transform_matrix, material, color, wood_texture);
+    }
+
+    public Cylinder create_cylinder(Matrix transform_matrix, Matrix inv_transform_matrix, Material material, Color color, Texture wood_texture, double s) {
+        return new Cylinder(transform_matrix, inv_transform_matrix, material, color, wood_texture, s);
     }
 
     public Texture create_noise(double scale) {
         return new Noise(scale);
-    }
-
-    public Cylinder create_cylinder(Matrix transform_matrix, Matrix inv_transform_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double medium, Color color, Texture wood_texture, double s) {
-        return new Cylinder(transform_matrix, inv_transform_matrix, local_coeff, reflection_coeff, refraction_coeff, medium, color, wood_texture, s);
     }
 
     public Texture create_floor_texture(double scaling_factor) {

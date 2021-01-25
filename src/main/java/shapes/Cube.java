@@ -1,5 +1,6 @@
 package shapes;
 
+import exterior.material.Material;
 import internal.*;
 import internal.Point;
 import exterior.texture.Texture;
@@ -12,16 +13,16 @@ public class Cube extends Object {
         super(transformation_matrix, inverse_transformation_matrix);
     }
 
-    public Cube(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double c, Color color) {
-        super(transformation_matrix, inverse_transformation_matrix, c, color);
+    public Cube(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Color color) {
+        super(transformation_matrix, inverse_transformation_matrix, color);
     }
 
-    public Cube(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color) {
-        super(transformation_matrix, inverse_transformation_matrix, local_coeff, reflection_coeff, refraction_coeff, c, color);
+    public Cube(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Material material, Color color) {
+        super(transformation_matrix, inverse_transformation_matrix, material, color);
     }
 
-    public Cube(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color, Texture texture) {
-        super(transformation_matrix, inverse_transformation_matrix, local_coeff, reflection_coeff, refraction_coeff, c, color, texture);
+    public Cube(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Material material, Color color, Texture texture) {
+        super(transformation_matrix, inverse_transformation_matrix, material, color, texture);
     }
 
     @Override

@@ -1,4 +1,5 @@
 import config.Config;
+import exterior.material.Material;
 import factory.ObjectFactory;
 import factory.Matrix3DFactory;
 import internal.*;
@@ -28,7 +29,7 @@ public class testWorld {
         Camera camera = objectFactory.create_camera(eye, u, v, n, N);
         //Ray ray = objectFactory.create_ray(camera, Config.DEFAULT_AIR_SPEED, 25, 25);
         World world = objectFactory.create_world(camera);
-        Point lightPoint = objectFactory.create_point(-100, 150, 100);
+        Point lightPoint = objectFactory.create_point(-50, 50, 50);
         //Licht niet zo sterk zetten, mag veel lager
         //Maximaal 0.99
         Light light = objectFactory.create_light(lightPoint, 0.99);
@@ -38,6 +39,9 @@ public class testWorld {
         Texture wood_texture = objectFactory.create_wood_texture(0.3, 0.5, 0.2, 90, 2, 5);
         Texture noise = objectFactory.create_noise(50);
         Texture floor_texture = objectFactory.create_floor_texture(2.5);
+
+        //Create materials
+        Material default_material = new Material();
 
         //objects Transformation matrices
         //standard scaling factor
@@ -250,37 +254,37 @@ public class testWorld {
 
         //FIRST TREE
 
-        Cylinder tree_head_lower = objectFactory.create_cylinder(tree_head_lower_transformation_matrix, tree_head_lower_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.GRASSCOLOR, 0);
+        Cylinder tree_head_lower = objectFactory.create_cylinder(tree_head_lower_transformation_matrix, tree_head_lower_transformation_inv_matrix, default_material, Config.GRASSCOLOR, 0);
         world.add_object(tree_head_lower);
 
-        Cylinder tree_head_upper = objectFactory.create_cylinder(tree_head_upper_transformation_matrix, tree_head_upper_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.GRASSCOLOR, 0);
+        Cylinder tree_head_upper = objectFactory.create_cylinder(tree_head_upper_transformation_matrix, tree_head_upper_transformation_inv_matrix, default_material, Config.GRASSCOLOR, 0);
         world.add_object(tree_head_upper);
 
-        Cylinder tree_stam = objectFactory.create_cylinder(stam_transformation_matrix, stam_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.WOODCOLOR, noise, 1);
+        Cylinder tree_stam = objectFactory.create_cylinder(stam_transformation_matrix, stam_transformation_inv_matrix, default_material, Config.WOODCOLOR, noise, 1);
         world.add_object(tree_stam);
 
         //SECOND TREE
 
-        Cylinder second_tree_head_lower = objectFactory.create_cylinder(second_tree_head_lower_transformation_matrix, second_tree_head_lower_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.GRASSCOLOR, 0);
+        Cylinder second_tree_head_lower = objectFactory.create_cylinder(second_tree_head_lower_transformation_matrix, second_tree_head_lower_transformation_inv_matrix, default_material, Config.GRASSCOLOR, 0);
         world.add_object(second_tree_head_lower);
 
-        Cylinder second_tree_head_upper = objectFactory.create_cylinder(second_tree_head_upper_transformation_matrix, second_tree_head_upper_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.GRASSCOLOR, 0);
+        Cylinder second_tree_head_upper = objectFactory.create_cylinder(second_tree_head_upper_transformation_matrix, second_tree_head_upper_transformation_inv_matrix, default_material, Config.GRASSCOLOR, 0);
         world.add_object(second_tree_head_upper);
 
-        Cylinder second_tree_stam = objectFactory.create_cylinder(second_stam_transformation_matrix, second_stam_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.WOODCOLOR, noise, 1);
+        Cylinder second_tree_stam = objectFactory.create_cylinder(second_stam_transformation_matrix, second_stam_transformation_inv_matrix, default_material, Config.WOODCOLOR, noise, 1);
         world.add_object(second_tree_stam);
 
         //HOUSE
 
-        Cube house = objectFactory.create_cube(house_transformation_matrix, house_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.BRICKCOLOR, floor_texture);
+        Cube house = objectFactory.create_cube(house_transformation_matrix, house_transformation_inv_matrix, default_material, Config.BRICKCOLOR, floor_texture);
         world.add_object(house);
 
-        Cube door = objectFactory.create_cube(door_transformation_matrix, door_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.DOVEWHITE);
+        Cube door = objectFactory.create_cube(door_transformation_matrix, door_transformation_inv_matrix, default_material, Config.DOVEWHITE);
         world.add_object(door);
 
         //SUN
 
-        Sphere sun = objectFactory.create_sphere(sun_transformation_matrix,sun_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.SUNCOLOR);
+        Sphere sun = objectFactory.create_sphere(sun_transformation_matrix,sun_transformation_inv_matrix, default_material, Config.SUNCOLOR);
         world.add_object(sun);
 
         //Boolean objects
@@ -288,7 +292,7 @@ public class testWorld {
         BooleanObject complete_house = new BooleanObject(house, door, BooleanObjectType.UNION);
         world.add_boolean_object(complete_house);
 
-        Cube world_cube = objectFactory.create_cube(cube_scaling_transformation_matrix, cube_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.SKYCOLOR);
+        Cube world_cube = objectFactory.create_cube(cube_scaling_transformation_matrix, cube_scaling_inv_transformation_matrix, default_material, Config.SKYCOLOR);
         world.add_object(world_cube);
 
         Renderer renderer = objectFactory.create_renderer();

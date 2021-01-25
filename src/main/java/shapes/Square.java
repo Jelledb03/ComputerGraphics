@@ -1,5 +1,6 @@
 package shapes;
 
+import exterior.material.Material;
 import internal.*;
 import internal.Point;
 import exterior.texture.Texture;
@@ -14,20 +15,20 @@ public class Square extends Object {
     //het generieke vlak (wat de z=0 plane is). Daarna wordt er gekeken met de hittime of het hit point in de square ligt
     //Zoja is er een intersectie met de square en moet er een hit object worden aangemaakt. Zo nee is er geen intersectie.
 
-    public Square(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double c, Color color) {
-        super(transformation_matrix, inverse_transformation_matrix, c, color);
+    public Square(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Color color) {
+        super(transformation_matrix, inverse_transformation_matrix, color);
     }
 
     public Square(Matrix transformation_matrix, Matrix inverse_transformation_matrix) {
         super(transformation_matrix, inverse_transformation_matrix);
     }
 
-    public Square(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff,double reflection_coeff,double refraction_coeff,double c, Color color) {
-        super(transformation_matrix, inverse_transformation_matrix,local_coeff,reflection_coeff,refraction_coeff, c, color);
+    public Square(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Material material, Color color) {
+        super(transformation_matrix, inverse_transformation_matrix,material, color);
     }
 
-    public Square(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color, Texture texture) {
-        super(transformation_matrix, inverse_transformation_matrix, local_coeff, reflection_coeff, refraction_coeff, c, color, texture);
+    public Square(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Material material, Color color, Texture texture) {
+        super(transformation_matrix, inverse_transformation_matrix, material, color, texture);
     }
 
     @Override

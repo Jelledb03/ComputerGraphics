@@ -1,6 +1,7 @@
 package shapes;
 
 import config.Config;
+import exterior.material.Material;
 import internal.*;
 import internal.MatrixTransformer;
 import internal.Point;
@@ -16,48 +17,36 @@ public abstract class Object {
     private Matrix inverse_transformation_matrix;
     private InternalTransformer internalTransformer;
     private Color color;
-    private double local_coeff;
-    private double refraction_coeff;
-    private double reflection_coeff;
-    private double c; //holds the relative speed of the ray compared to the speed of light
     private int surface = 0;
     private Texture texture;
     private ArrayList<Hit> hit_times;
+    private Material material;
 
-    public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color, Texture texture) {
+    public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Material material, Color color, Texture texture) {
         this.transformation_matrix = transformation_matrix;
         this.inverse_transformation_matrix = inverse_transformation_matrix;
         this.internalTransformer = new InternalTransformer();
-        this.local_coeff = local_coeff;
-        this.reflection_coeff = reflection_coeff;
-        this.refraction_coeff = refraction_coeff;
-        this.c = c;
+        this.material = material;
         this.color = color;
         this.texture = texture;
         this.hit_times = new ArrayList<>();
     }
 
-    public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color) {
+    public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Material material, Color color) {
         this.transformation_matrix = transformation_matrix;
         this.inverse_transformation_matrix = inverse_transformation_matrix;
         this.internalTransformer = new InternalTransformer();
-        this.local_coeff = local_coeff;
-        this.reflection_coeff = reflection_coeff;
-        this.refraction_coeff = refraction_coeff;
-        this.c = c;
+        this.material = material;
         this.color = color;
         this.texture = new WoodTexture();
         this.hit_times = new ArrayList<>();
     }
 
-    public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double c, Color color) {
+    public Object(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Color color) {
         this.transformation_matrix = transformation_matrix;
         this.inverse_transformation_matrix = inverse_transformation_matrix;
         this.internalTransformer = new InternalTransformer();
-        this.local_coeff = Config.DEFAULT_LOCAL_COEFF;
-        this.reflection_coeff = Config.DEFAULT_REFLECTION_COEFF;
-        this.refraction_coeff = Config.DEFAULT_REFRACTION_COEFF;
-        this.c = c;
+        this.material = new Material();
         this.color = color;
         this.hit_times = new ArrayList<>();
     }
@@ -66,10 +55,7 @@ public abstract class Object {
         this.transformation_matrix = transformation_matrix;
         this.inverse_transformation_matrix = inverse_transformation_matrix;
         this.internalTransformer = new InternalTransformer();
-        this.local_coeff = Config.DEFAULT_LOCAL_COEFF;
-        this.reflection_coeff = Config.DEFAULT_REFLECTION_COEFF;
-        this.refraction_coeff = Config.DEFAULT_REFRACTION_COEFF;
-        this.color = Config.DEFAULT_OBJECT_COLOR;
+        this.material = new Material();
         this.hit_times = new ArrayList<>();
     }
 
@@ -152,7 +138,7 @@ public abstract class Object {
                     //IlluminationObject g_illumination_object = new IlluminationObject(0.27048, 12.8, 0.137622, 0.0735);
                     //IlluminationObject b_illumination_object = new IlluminationObject(0.0828, 12.8, 0.086014, 0.0225);
                     //return new HitObject(hitPoint, normal_vector_norm, this.color, t_hit,r_illumination_object,g_illumination_object,b_illumination_object,local_coeff, reflection_coeff, refraction_coeff, this.c);
-                    HitObject hitObject = new HitObject(hitPoint, normal_vector_norm, this.color, t_hit, local_coeff, reflection_coeff, refraction_coeff, this.c, this.texture);
+                    HitObject hitObject = new HitObject(hitPoint, normal_vector_norm, this.color, t_hit, material.get_local_coeff(), material.get_reflection_coeff(), material.get_refraction_coeff(), material.get_material_type_speed(), this.texture);
                     intersection.get_hit_objects().add(hitObject);
                     intersection.get_hit_times().add(t_hit);
                 }
@@ -182,19 +168,19 @@ public abstract class Object {
         this.surface = surface;
     }
 
-    public double get_c() {
-        return c;
-    }
-
-    public void set_c(double c) {
-        this.c = c;
-    }
-
     public ArrayList<Hit> get_hit_times() {
         return hit_times;
     }
 
     public void set_hit_times(ArrayList<Hit> hit_times) {
         this.hit_times = hit_times;
+    }
+
+    public Material get_material() {
+        return material;
+    }
+
+    public void set_material(Material material) {
+        this.material = material;
     }
 }

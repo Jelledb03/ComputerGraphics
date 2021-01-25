@@ -1,5 +1,6 @@
 package shapes;
 
+import exterior.material.Material;
 import internal.*;
 import internal.Point;
 import exterior.texture.Texture;
@@ -8,20 +9,20 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Sphere extends Object {
-    public Sphere(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double c, Color color) {
-        super(transformation_matrix, inverse_transformation_matrix, c, color);
+    public Sphere(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Color color) {
+        super(transformation_matrix, inverse_transformation_matrix, color);
     }
 
     public Sphere(Matrix transformation_matrix, Matrix inverse_transformation_matrix) {
         super(transformation_matrix, inverse_transformation_matrix);
     }
 
-    public Sphere(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color) {
-        super(transformation_matrix, inverse_transformation_matrix, local_coeff, reflection_coeff, refraction_coeff, c, color);
+    public Sphere(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Material material, Color color) {
+        super(transformation_matrix, inverse_transformation_matrix, material, color);
     }
 
-    public Sphere(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color, Texture texture) {
-        super(transformation_matrix, inverse_transformation_matrix, local_coeff, reflection_coeff, refraction_coeff, c, color, texture);
+    public Sphere(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Material material, Color color, Texture texture) {
+        super(transformation_matrix, inverse_transformation_matrix, material, color, texture);
     }
 
     @Override

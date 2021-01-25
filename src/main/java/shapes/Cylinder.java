@@ -1,5 +1,6 @@
 package shapes;
 
+import exterior.material.Material;
 import internal.*;
 import internal.Point;
 import exterior.texture.Texture;
@@ -10,8 +11,8 @@ import java.util.ArrayList;
 public class Cylinder extends Object {
     private double s;
 
-    public Cylinder(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double c, Color color, double s) {
-        super(transformation_matrix, inverse_transformation_matrix, c, color);
+    public Cylinder(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Color color, double s) {
+        super(transformation_matrix, inverse_transformation_matrix, color);
         this.s = s;
     }
 
@@ -20,13 +21,13 @@ public class Cylinder extends Object {
         this.s = s;
     }
 
-    public Cylinder(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color, double s) {
-        super(transformation_matrix, inverse_transformation_matrix, local_coeff, reflection_coeff, refraction_coeff, c, color);
+    public Cylinder(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Material material, Color color, double s) {
+        super(transformation_matrix, inverse_transformation_matrix, material, color);
         this.s = s;
     }
 
-    public Cylinder(Matrix transformation_matrix, Matrix inverse_transformation_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double c, Color color, Texture texture, double s) {
-        super(transformation_matrix, inverse_transformation_matrix, local_coeff, reflection_coeff, refraction_coeff, c, color, texture);
+    public Cylinder(Matrix transformation_matrix, Matrix inverse_transformation_matrix, Material material, Color color, Texture texture, double s) {
+        super(transformation_matrix, inverse_transformation_matrix, material, color, texture);
         this.s = s;
     }
 
