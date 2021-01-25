@@ -91,7 +91,7 @@ public class testWorld {
 
         //HOUSE END
 
-        //TREE BEGIN
+        //FIRST TREE BEGIN
         m14 = 0; //x
         m24 = 0; //y
         m34 = -3; //z
@@ -169,6 +169,86 @@ public class testWorld {
         tree_head_upper_transformation_matrix = multiply_matrices(matrixTransformer, tree_head_upper_scaling_transformation_matrix, tree_head_upper_transformation_matrix);
         tree_head_upper_transformation_inv_matrix = multiply_matrices(matrixTransformer, tree_head_upper_scaling_inv_transformation_matrix, tree_head_upper_transformation_inv_matrix);
 
+        //FIRST TREE ENDING
+
+        //SECOND TREE BEGIN
+        m14 = 0; //x
+        m24 = 0; //y
+        m34 = 3; //z
+        Matrix second_tree_stam_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
+        Matrix second_tree_stam_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
+
+        Matrix second_stam_transformation_matrix = multiply_matrices(matrixTransformer, second_tree_stam_translation_transformation_matrix, object_standard_matrix);
+        ;
+        Matrix second_stam_transformation_inv_matrix = multiply_matrices(matrixTransformer, second_tree_stam_translation_inv_transformation_matrix, object_standard_inv_matrix);
+
+        alpha = Math.PI / 2;
+        Matrix second_stam_roll_transformation_matrix = matrix3DFactory.create_y_roll_matrix(alpha);
+        Matrix second_stam_roll_inv_transformation_matrix = matrix3DFactory.create_inv_y_roll_matrix(alpha);
+
+        second_stam_transformation_matrix = multiply_matrices(matrixTransformer, second_stam_roll_transformation_matrix, second_stam_transformation_matrix);
+        second_stam_transformation_inv_matrix = multiply_matrices(matrixTransformer, second_stam_roll_inv_transformation_matrix, second_stam_transformation_inv_matrix);
+
+        //Scaling Tree Stam
+        sx = 0.2; //x
+        sy = 0.2; //y
+        sz = 1.5; //z
+        Matrix second_tree_stam_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
+        Matrix second_tree_stam_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
+
+        second_stam_transformation_matrix = multiply_matrices(matrixTransformer, second_tree_stam_scaling_transformation_matrix, second_stam_transformation_matrix);
+        second_stam_transformation_inv_matrix = multiply_matrices(matrixTransformer, second_tree_stam_scaling_inv_transformation_matrix, second_stam_transformation_inv_matrix);
+
+        //Translation Cylinder tree head lower
+        m14 = 0.2; //x
+        m24 = 0; //y
+        m34 = 3; //z
+        Matrix second_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
+        Matrix second_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
+
+        Matrix second_tree_head_lower_transformation_matrix = multiply_matrices(matrixTransformer, second_translation_transformation_matrix, object_standard_matrix);
+        Matrix second_tree_head_lower_transformation_inv_matrix = multiply_matrices(matrixTransformer, second_translation_inv_transformation_matrix, object_standard_inv_matrix);
+
+        alpha = Math.PI * 1.5;
+        Matrix second_cylinder_roll_transformation_matrix = matrix3DFactory.create_y_roll_matrix(alpha);
+        Matrix second_cylinder_roll_inv_transformation_matrix = matrix3DFactory.create_inv_y_roll_matrix(alpha);
+
+        second_tree_head_lower_transformation_matrix = multiply_matrices(matrixTransformer, second_cylinder_roll_transformation_matrix, second_tree_head_lower_transformation_matrix);
+        second_tree_head_lower_transformation_inv_matrix = multiply_matrices(matrixTransformer, second_cylinder_roll_inv_transformation_matrix, second_tree_head_lower_transformation_inv_matrix);
+
+        //Scaling tree head lower
+        sx = 0.5; //x
+        sy = 0.5; //y
+        sz = 0.8; //z
+        Matrix second_tree_head_lower_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
+        Matrix second_tree_head_lower_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
+
+        //Scaling tree head upper
+        sx = 0.4; //x
+        sy = 0.4; //y
+        sz = 0.8; //z
+        Matrix second_tree_head_upper_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
+        Matrix second_tree_head_upper_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
+
+        second_tree_head_lower_transformation_matrix = multiply_matrices(matrixTransformer, second_tree_head_lower_scaling_transformation_matrix, second_tree_head_lower_transformation_matrix);
+        second_tree_head_lower_transformation_inv_matrix = multiply_matrices(matrixTransformer, second_tree_head_lower_scaling_inv_transformation_matrix, second_tree_head_lower_transformation_inv_matrix);
+
+        //Translation Cylinder tree head upper
+        m14 = -0.2; //x
+        m24 = 0; //y
+        m34 = 3; //z
+        second_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
+        second_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
+
+        Matrix second_tree_head_upper_transformation_matrix = multiply_matrices(matrixTransformer, second_translation_transformation_matrix, object_standard_matrix);
+        Matrix second_tree_head_upper_transformation_inv_matrix = multiply_matrices(matrixTransformer, second_translation_inv_transformation_matrix, object_standard_inv_matrix);
+
+        second_tree_head_upper_transformation_matrix = multiply_matrices(matrixTransformer, second_cylinder_roll_transformation_matrix, second_tree_head_upper_transformation_matrix);
+        second_tree_head_upper_transformation_inv_matrix = multiply_matrices(matrixTransformer, second_cylinder_roll_inv_transformation_matrix, second_tree_head_upper_transformation_inv_matrix);
+
+        second_tree_head_upper_transformation_matrix = multiply_matrices(matrixTransformer, second_tree_head_upper_scaling_transformation_matrix, second_tree_head_upper_transformation_matrix);
+        second_tree_head_upper_transformation_inv_matrix = multiply_matrices(matrixTransformer, second_tree_head_upper_scaling_inv_transformation_matrix, second_tree_head_upper_transformation_inv_matrix);
+
         //TREE ENDING
 
         //SUN BEGIN
@@ -189,13 +269,21 @@ public class testWorld {
         m14 = -6; //x
         m24 = 0; //y
         m34 = 4; //z
-        translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
-        translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
+        second_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
+        second_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
 
-        sun_transformation_matrix = multiply_matrices(matrixTransformer, translation_transformation_matrix, sun_transformation_matrix);
-        sun_transformation_inv_matrix = multiply_matrices(matrixTransformer, translation_inv_transformation_matrix, sun_transformation_inv_matrix);
+        sun_transformation_matrix = multiply_matrices(matrixTransformer, second_translation_transformation_matrix, sun_transformation_matrix);
+        sun_transformation_inv_matrix = multiply_matrices(matrixTransformer, second_translation_inv_transformation_matrix, sun_transformation_inv_matrix);
 
         //SUN END
+
+        //FLOOR BEGIN
+        Matrix floor_transformation_matrix = object_standard_matrix;
+        Matrix floor_transformation_inv_matrix = object_standard_inv_matrix;
+
+
+
+        //FLOOR END
 
         //World Cube Scaling (wordt de grote omvangende kubus waarin de wereld zit)
         double cube_sx = 300; //x
@@ -204,7 +292,7 @@ public class testWorld {
         Matrix cube_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(cube_sx, cube_sy, cube_sz);
         Matrix cube_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(cube_sx, cube_sy, cube_sz);
 
-        //TREE
+        //FIRST TREE
 
         Cylinder tree_head_lower = objectFactory.create_cylinder(tree_head_lower_transformation_matrix, tree_head_lower_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.GRASSCOLOR, 0);
         world.add_object(tree_head_lower);
@@ -214,6 +302,17 @@ public class testWorld {
 
         Cylinder tree_stam = objectFactory.create_cylinder(stam_transformation_matrix, stam_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.WOODCOLOR, noise, 1);
         world.add_object(tree_stam);
+
+        //SECOND TREE
+
+        Cylinder second_tree_head_lower = objectFactory.create_cylinder(second_tree_head_lower_transformation_matrix, second_tree_head_lower_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.GRASSCOLOR, 0);
+        world.add_object(second_tree_head_lower);
+
+        Cylinder second_tree_head_upper = objectFactory.create_cylinder(second_tree_head_upper_transformation_matrix, second_tree_head_upper_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.GRASSCOLOR, 0);
+        world.add_object(second_tree_head_upper);
+
+        Cylinder second_tree_stam = objectFactory.create_cylinder(second_stam_transformation_matrix, second_stam_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.WOODCOLOR, noise, 1);
+        world.add_object(second_tree_stam);
 
         //HOUSE
 
