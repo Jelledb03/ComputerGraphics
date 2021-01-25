@@ -175,7 +175,7 @@ public class World {
                     Vector m_norm = m.normalize();
                     double dot_product_dir_m = internalTransformer.dot_product(dir_norm, m_norm);*/
                 double c1 = ray.get_c();
-                double c2 = lowest_time_hitObject.get_c();
+                double c2 = lowest_time_hitObject.get_material().get_material_type_speed();
                 double deviation_term = c2 / c1;
                 double speed_calc_refr = Math.pow(deviation_term, 2);
                 double second_term_refr = (1 - Math.pow(dot_product_dir_m, 2));
@@ -202,9 +202,9 @@ public class World {
             }
             //Will calculated the actual color of the hitObject (sum of local_color + reflected_color + refracted_color
 
-            int total_r_color = (int) (lowest_time_hitObject.get_local_coeff() * local_colors.get(0)) + (int) (lowest_time_hitObject.get_reflection_coeff() * reflected_colors.get(0)) + (int) (lowest_time_hitObject.get_refraction_coeff() * refracted_colors.get(0));
-            int total_g_color = (int) (lowest_time_hitObject.get_local_coeff() * local_colors.get(1)) + (int) (lowest_time_hitObject.get_reflection_coeff() * reflected_colors.get(1)) + (int) (lowest_time_hitObject.get_refraction_coeff() * refracted_colors.get(1));
-            int total_b_color = (int) (lowest_time_hitObject.get_local_coeff() * local_colors.get(2)) + (int) (lowest_time_hitObject.get_reflection_coeff() * reflected_colors.get(2)) + (int) (lowest_time_hitObject.get_refraction_coeff() * refracted_colors.get(2));
+            int total_r_color = (int) (lowest_time_hitObject.get_material().get_local_coeff() * local_colors.get(0)) + (int) (lowest_time_hitObject.get_material().get_reflection_coeff() * reflected_colors.get(0)) + (int) (lowest_time_hitObject.get_material().get_refraction_coeff() * refracted_colors.get(0));
+            int total_g_color = (int) (lowest_time_hitObject.get_material().get_local_coeff() * local_colors.get(1)) + (int) (lowest_time_hitObject.get_material().get_reflection_coeff() * reflected_colors.get(1)) + (int) (lowest_time_hitObject.get_material().get_refraction_coeff() * refracted_colors.get(1));
+            int total_b_color = (int) (lowest_time_hitObject.get_material().get_local_coeff() * local_colors.get(2)) + (int) (lowest_time_hitObject.get_material().get_reflection_coeff() * reflected_colors.get(2)) + (int) (lowest_time_hitObject.get_material().get_refraction_coeff() * refracted_colors.get(2));
             Color lowest_time_hitObject_color = new Color(total_r_color, total_g_color, total_b_color);
             lowest_time_hitObject.set_color(lowest_time_hitObject_color);
             //lowest_time_hitObject.get_r_illuminationObject().set_intensity(local_intensities.get(0));

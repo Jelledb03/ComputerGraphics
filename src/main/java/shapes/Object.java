@@ -138,7 +138,7 @@ public abstract class Object {
                     //IlluminationObject g_illumination_object = new IlluminationObject(0.27048, 12.8, 0.137622, 0.0735);
                     //IlluminationObject b_illumination_object = new IlluminationObject(0.0828, 12.8, 0.086014, 0.0225);
                     //return new HitObject(hitPoint, normal_vector_norm, this.color, t_hit,r_illumination_object,g_illumination_object,b_illumination_object,local_coeff, reflection_coeff, refraction_coeff, this.c);
-                    HitObject hitObject = new HitObject(hitPoint, normal_vector_norm, this.color, t_hit, material.get_local_coeff(), material.get_reflection_coeff(), material.get_refraction_coeff(), material.get_material_type_speed(), this.texture);
+                    HitObject hitObject = new HitObject(hitPoint, normal_vector_norm, this.color, t_hit, material, this.texture);
                     intersection.get_hit_objects().add(hitObject);
                     intersection.get_hit_times().add(t_hit);
                 }

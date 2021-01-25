@@ -24,9 +24,9 @@ public class Config {
     public static double DEFAULT_SPECULAR_REFLECTION_COEFF = 0.773911;
     public static double DEFAULT_AMBIENT_REFLECTION_COEFF = 0.23125;
 
-    public static double DEFAULT_LOCAL_COEFF = 0.5;
-    public static double DEFAULT_REFLECTION_COEFF = 0.5;
-    public static double DEFAULT_REFRACTION_COEFF = 0.3;
+    public static double DEFAULT_LOCAL_COEFF = 1;
+    public static double DEFAULT_REFLECTION_COEFF = 0;
+    public static double DEFAULT_REFRACTION_COEFF = 0;
 
     //Refraction Coefficients
     public static double DEFAULT_AIR_SPEED = 0.9997;
