@@ -2,7 +2,7 @@ package shapes;
 
 import internal.*;
 import internal.Point;
-import texture.Texture;
+import exterior.texture.Texture;
 
 import java.awt.*;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package texture;
+package exterior.texture;
 
 public abstract class Texture {
     private boolean texture;

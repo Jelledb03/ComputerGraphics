@@ -1,4 +1,4 @@
-package texture;
+package exterior.texture;
 
 public class WoodTexture extends Texture{
     private double D;

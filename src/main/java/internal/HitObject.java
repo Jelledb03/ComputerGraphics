@@ -1,12 +1,9 @@
 package internal;
 
-import texture.Texture;
-import texture.WoodTexture;
-import world.Light;
+import exterior.texture.Texture;
+import exterior.texture.WoodTexture;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class HitObject {
     //This will create a hit object that will include the hit point in the 3D world, the hit time (when the ray hits, have to search for the lowest)

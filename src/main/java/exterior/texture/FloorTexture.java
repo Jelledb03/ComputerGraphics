@@ -1,4 +1,4 @@
-package texture;
+package exterior.texture;
 
 public class FloorTexture extends Texture{
     double scaling_factor;

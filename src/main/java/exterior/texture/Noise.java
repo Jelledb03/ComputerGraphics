@@ -1,4 +1,4 @@
-package texture;
+package exterior.texture;
 
 import java.util.Random;
 

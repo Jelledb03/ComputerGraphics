@@ -4,12 +4,11 @@ import config.Config;
 import internal.*;
 import internal.MatrixTransformer;
 import internal.Point;
-import texture.Texture;
-import texture.WoodTexture;
+import exterior.texture.Texture;
+import exterior.texture.WoodTexture;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
 
 //Wanneer we dit als abstract classificieren kunnen we hier geen objecten van initialiseren
 public abstract class Object {

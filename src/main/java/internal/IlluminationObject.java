@@ -2,8 +2,7 @@ package internal;
 
 
 import config.Config;
-import org.w3c.dom.Text;
-import texture.Texture;
+import exterior.texture.Texture;
 
 //This will contain all parameters needed for every illumination object
 //Will create a R, G and B object for every hitObject
