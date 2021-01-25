@@ -13,8 +13,6 @@ import world.Camera;
 import world.Light;
 import world.World;
 
-import java.awt.*;
-
 public class testWorld {
     public static void main(String[] args) {
         ObjectFactory objectFactory = new ObjectFactory();
@@ -33,7 +31,7 @@ public class testWorld {
         Camera camera = objectFactory.create_camera(eye, u, v, n, N);
         //Ray ray = objectFactory.create_ray(camera, Config.DEFAULT_AIR_SPEED, 25, 25);
         World world = objectFactory.create_world(camera);
-        Point lightPoint = objectFactory.create_point(100, 150, 100);
+        Point lightPoint = objectFactory.create_point(-100, 150, 100);
         //Licht niet zo sterk zetten, mag veel lager
         //Maximaal 0.99
         Light light = objectFactory.create_light(lightPoint, 0.99);
@@ -42,6 +40,7 @@ public class testWorld {
         //Create textures
         Texture wood_texture = objectFactory.create_wood_texture(0.3, 0.5, 0.2, 90, 2, 5);
         Texture noise = objectFactory.create_noise(50);
+        Texture floor_texture = objectFactory.create_floor_texture(2.5);
 
         //objects Transformation matrices
         //standard scaling factor
@@ -53,7 +52,7 @@ public class testWorld {
 
         //standard translation factor
         double standard_m14 = 5; //x
-        double standard_m24 = 0; //y
+        double standard_m24 = -1; //y
         double standard_m34 = 0; //z
         Matrix standard_translation_matrix = matrix3DFactory.create_trans_matrix(standard_m14, standard_m24, standard_m34);
         Matrix standard_translation_inv_matrix = matrix3DFactory.create_inv_trans_matrix(standard_m14, standard_m24, standard_m34);
@@ -62,19 +61,48 @@ public class testWorld {
         object_standard_inv_matrix = multiply_matrices(matrixTransformer, standard_translation_inv_matrix, object_standard_inv_matrix);
 
         //HOUSE BEGIN
+        //House
+        Matrix house_transformation_matrix = object_standard_matrix;
+        Matrix house_transformation_inv_matrix = object_standard_inv_matrix;
 
+        //Door
+        Matrix door_transformation_matrix = object_standard_matrix;
+        Matrix door_transformation_inv_matrix = object_standard_matrix;
+
+        double m14 = 1.49; //x
+        double m24 = 0; //y
+        double m34 = -0.6; //z
+        Matrix door_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
+        Matrix door_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
+
+        door_transformation_matrix = multiply_matrices(matrixTransformer, door_translation_transformation_matrix, object_standard_matrix);
+        ;
+        door_transformation_inv_matrix = multiply_matrices(matrixTransformer, door_translation_inv_transformation_matrix, object_standard_inv_matrix);
+
+        double sx = 0.5; //x
+        double sy = 0.001; //y
+        double sz = 0.2; //z
+        Matrix door_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
+        Matrix door_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
+
+        door_transformation_matrix = multiply_matrices(matrixTransformer, door_scaling_transformation_matrix, door_transformation_matrix);
+        ;
+        door_transformation_inv_matrix = multiply_matrices(matrixTransformer, door_scaling_inv_transformation_matrix, door_transformation_inv_matrix);
+
+        //HOUSE END
 
         //TREE BEGIN
-        double m14 = 0; //x
-        double m24 = 0; //y
-        double m34 = -3; //z
+        m14 = 0; //x
+        m24 = 0; //y
+        m34 = -3; //z
         Matrix tree_stam_translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
         Matrix tree_stam_translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
 
-        Matrix stam_transformation_matrix = multiply_matrices(matrixTransformer, tree_stam_translation_transformation_matrix, object_standard_matrix);;
+        Matrix stam_transformation_matrix = multiply_matrices(matrixTransformer, tree_stam_translation_transformation_matrix, object_standard_matrix);
+        ;
         Matrix stam_transformation_inv_matrix = multiply_matrices(matrixTransformer, tree_stam_translation_inv_transformation_matrix, object_standard_inv_matrix);
 
-        double alpha = Math.PI/2;
+        double alpha = Math.PI / 2;
         Matrix stam_roll_transformation_matrix = matrix3DFactory.create_y_roll_matrix(alpha);
         Matrix stam_roll_inv_transformation_matrix = matrix3DFactory.create_inv_y_roll_matrix(alpha);
 
@@ -82,9 +110,9 @@ public class testWorld {
         stam_transformation_inv_matrix = multiply_matrices(matrixTransformer, stam_roll_inv_transformation_matrix, stam_transformation_inv_matrix);
 
         //Scaling Tree Stam
-        double sx = 0.2; //x
-        double sy = 0.2; //y
-        double sz = 1.5; //z
+        sx = 0.2; //x
+        sy = 0.2; //y
+        sz = 1.5; //z
         Matrix tree_stam_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
         Matrix tree_stam_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
 
@@ -143,6 +171,32 @@ public class testWorld {
 
         //TREE ENDING
 
+        //SUN BEGIN
+        Matrix sun_transformation_matrix = object_standard_matrix;
+        Matrix sun_transformation_inv_matrix = object_standard_inv_matrix;
+
+        //Scaling Sun
+        sx = 0.5; //x
+        sy = 0.5; //y
+        sz = 0.5; //z
+        Matrix sun_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(sx, sy, sz);
+        Matrix sun_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(sx, sy, sz);
+
+        sun_transformation_matrix = multiply_matrices(matrixTransformer, sun_scaling_transformation_matrix, sun_transformation_matrix);
+        sun_transformation_inv_matrix = multiply_matrices(matrixTransformer, sun_scaling_inv_transformation_matrix, sun_transformation_inv_matrix);
+
+        //Translation Sun
+        m14 = -6; //x
+        m24 = 0; //y
+        m34 = 4; //z
+        translation_transformation_matrix = matrix3DFactory.create_trans_matrix(m14, m24, m34);
+        translation_inv_transformation_matrix = matrix3DFactory.create_inv_trans_matrix(m14, m24, m34);
+
+        sun_transformation_matrix = multiply_matrices(matrixTransformer, translation_transformation_matrix, sun_transformation_matrix);
+        sun_transformation_inv_matrix = multiply_matrices(matrixTransformer, translation_inv_transformation_matrix, sun_transformation_inv_matrix);
+
+        //SUN END
+
         //World Cube Scaling (wordt de grote omvangende kubus waarin de wereld zit)
         double cube_sx = 300; //x
         double cube_sy = 300; //y
@@ -150,51 +204,33 @@ public class testWorld {
         Matrix cube_scaling_transformation_matrix = matrix3DFactory.create_scal_matrix(cube_sx, cube_sy, cube_sz);
         Matrix cube_scaling_inv_transformation_matrix = matrix3DFactory.create_inv_scal_matrix(cube_sx, cube_sy, cube_sz);
 
-        Color objectColor = Color.GRAY;
-        Color objectColor_2 = Color.RED;
-        Color grass_color = new Color(58, 89, 39);
+        //TREE
 
-        //REFRACTION
+        Cylinder tree_head_lower = objectFactory.create_cylinder(tree_head_lower_transformation_matrix, tree_head_lower_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.GRASSCOLOR, 0);
+        world.add_object(tree_head_lower);
 
-//        Sphere sphere = objectFactory.create_sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 0, 0, 1, Config.DEFAULT_AIR_SPEED, objectColor_2);
-//        world.add_object(sphere);
-//
+        Cylinder tree_head_upper = objectFactory.create_cylinder(tree_head_upper_transformation_matrix, tree_head_upper_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.GRASSCOLOR, 0);
+        world.add_object(tree_head_upper);
 
+        Cylinder tree_stam = objectFactory.create_cylinder(stam_transformation_matrix, stam_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.WOODCOLOR, noise, 1);
+        world.add_object(tree_stam);
 
-        //REFLECTION
+        //HOUSE
 
-//        Sphere sphere = objectFactory.create_sphere(reflection_translation_transformation_matrix, reflection_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor_2, wood_texture);
-//        world.add_object(sphere);
+        Cube house = objectFactory.create_cube(house_transformation_matrix, house_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.BRICKCOLOR, floor_texture);
+        world.add_object(house);
 
-        Cylinder cylinder = objectFactory.create_cylinder(tree_head_lower_transformation_matrix,tree_head_lower_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, grass_color, 0);
-        world.add_object(cylinder);
+        Cube door = objectFactory.create_cube(door_transformation_matrix, door_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.DOVEWHITE);
+        world.add_object(door);
 
-        Cylinder cylinder2 = objectFactory.create_cylinder(tree_head_upper_transformation_matrix,tree_head_upper_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, grass_color, 0);
-        world.add_object(cylinder2);
+        //SUN
 
-        Cylinder cylinder_stam = objectFactory.create_cylinder(stam_transformation_matrix, stam_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.WOODCOLOR, noise,1);
-        world.add_object(cylinder_stam);
-
-        //Cylinder cylinder = objectFactory.create_cylinder(object_transformation_matrix, object_inv_transformation_matrix,1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor, 1);
-        //world.add_object(cylinder);
-
-        //Sphere sphere_2 = objectFactory.create_sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 0, 1, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
-        //world.add_object(sphere_2);
-
-        //REFRACTION CUBE
-
-//        Sphere sphere = objectFactory.create_sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 0, 0, 1, Config.DEFAULT_AIR_SPEED, objectColor_2);
-//        world.add_object(sphere);
-//
-        //Cube cube = objectFactory.create_cube(cube_translation_transformation_matrix, cube_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
-        //world.add_object(cube);
-
-        //Cube cube = objectFactory.create_cube(full_cube_matrix, full_cube_inv_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
-        //world.add_object(cube);
+        Sphere sun = objectFactory.create_sphere(sun_transformation_matrix,sun_transformation_inv_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.SUNCOLOR);
+        world.add_object(sun);
 
         //Boolean objects
-//        BooleanObject booleanObject1 = new BooleanObject(cube, sphere,BooleanObjectType.DIFFERENCE);
-//        world.add_boolean_object(booleanObject1);
+        BooleanObject complete_house = new BooleanObject(house, door, BooleanObjectType.UNION);
+        world.add_boolean_object(complete_house);
 
         Cube world_cube = objectFactory.create_cube(cube_scaling_transformation_matrix, cube_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.SKYCOLOR);
         world.add_object(world_cube);
@@ -204,8 +240,8 @@ public class testWorld {
         System.out.println("rendered");
     }
 
-    static Matrix multiply_matrices(MatrixTransformer matrixTransformer, Matrix matrix_1, Matrix matrix_2){
-        double[][] transformed_scaling_matrix_array = matrixTransformer.multiplyMatrices(matrix_1.get_matrix(),matrix_2.get_matrix());
+    static Matrix multiply_matrices(MatrixTransformer matrixTransformer, Matrix matrix_1, Matrix matrix_2) {
+        double[][] transformed_scaling_matrix_array = matrixTransformer.multiplyMatrices(matrix_1.get_matrix(), matrix_2.get_matrix());
         return new Matrix(transformed_scaling_matrix_array);
     }
 }

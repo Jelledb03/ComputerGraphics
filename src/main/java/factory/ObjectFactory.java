@@ -11,6 +11,7 @@ import shapes.Cube;
 import shapes.Cylinder;
 import shapes.Sphere;
 import shapes.Square;
+import texture.FloorTexture;
 import texture.Noise;
 import texture.Texture;
 import texture.WoodTexture;
@@ -119,5 +120,9 @@ public class ObjectFactory {
 
     public Cylinder create_cylinder(Matrix transform_matrix, Matrix inv_transform_matrix, double local_coeff, double reflection_coeff, double refraction_coeff, double medium, Color color, Texture wood_texture, double s) {
         return new Cylinder(transform_matrix, inv_transform_matrix, local_coeff, reflection_coeff, refraction_coeff, medium, color, wood_texture, s);
+    }
+
+    public Texture create_floor_texture(double scaling_factor) {
+        return new FloorTexture(scaling_factor);
     }
 }
