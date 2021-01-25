@@ -99,24 +99,13 @@ public class testWorld {
         Color objectColor = Color.GREEN;
         Color objectColor_2 = Color.BLUE;
 
-        //REFRACTION
-
-//        Sphere sphere = objectFactory.create_sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 0, 0, 1, Config.DEFAULT_AIR_SPEED, objectColor_2);
-//        world.add_object(sphere);
-//
-//        Sphere sphere_2 = objectFactory.create_sphere(refraction_translation_transformation_matrix, refraction_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
-//        world.add_object(sphere_2);
-
         //REFLECTION
 
-        //Sphere sphere = objectFactory.create_sphere(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 0, 1, 0, Config.DEFAULT_AIR_SPEED, objectColor_2);
-        //world.add_object(sphere);
-
-        Cube cube = objectFactory.create_cube(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, objectColor_2);
+        Cube cube = objectFactory.create_cube(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix, 0.2, 0.8, 0, Config.DEFAULT_AIR_SPEED, objectColor_2);
         world.add_object(cube);
 
-        //Sphere sphere_2 = objectFactory.create_sphere(reflection_translation_transformation_matrix, reflection_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
-        //world.add_object(sphere_2);
+        Sphere sphere_2 = objectFactory.create_sphere(reflection_translation_transformation_matrix, reflection_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
+        world.add_object(sphere_2);
 
         //REFRACTION CUBE
 
@@ -125,12 +114,6 @@ public class testWorld {
 //
 //        Cube cube = objectFactory.create_cube(refraction_translation_transformation_matrix, refraction_translation_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
 //        world.add_object(cube);
-
-        //Cube cube = objectFactory.create_cube(full_cube_matrix, full_cube_inv_matrix, 1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor);
-        //world.add_object(cube);
-
-        //Cylinder cylinder = objectFactory.create_cylinder(object_scaling_transformation_matrix, object_scaling_inv_transformation_matrix,1, 0, 0, Config.DEFAULT_GLASS_SPEED, objectColor, 0.5);
-        //world.add_object(cylinder);
 
         Cube world_cube = objectFactory.create_cube(cube_scaling_transformation_matrix, cube_scaling_inv_transformation_matrix, 1, 0, 0, Config.DEFAULT_AIR_SPEED, Config.DEFAULT_BACKGROUND_COLOR);
         world.add_object(world_cube);
