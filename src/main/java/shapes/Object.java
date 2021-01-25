@@ -134,10 +134,6 @@ public abstract class Object {
                     double[][] normal_vector_d = matrixTransformer.multiplyMatrices(this.get_transformation_matrix().get_matrix(), transformed_normal_vector.get_vector());
                     Vector normal_vector = new Vector(normal_vector_d);
                     Vector normal_vector_norm = normal_vector.normalize();
-                    //IlluminationObject r_illumination_object = new IlluminationObject(0.7038, 12.8, 0.256777, 0.19125);
-                    //IlluminationObject g_illumination_object = new IlluminationObject(0.27048, 12.8, 0.137622, 0.0735);
-                    //IlluminationObject b_illumination_object = new IlluminationObject(0.0828, 12.8, 0.086014, 0.0225);
-                    //return new HitObject(hitPoint, normal_vector_norm, this.color, t_hit,r_illumination_object,g_illumination_object,b_illumination_object,local_coeff, reflection_coeff, refraction_coeff, this.c);
                     HitObject hitObject = new HitObject(hitPoint, normal_vector_norm, this.color, t_hit, material, this.texture);
                     intersection.get_hit_objects().add(hitObject);
                     intersection.get_hit_times().add(t_hit);

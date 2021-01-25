@@ -36,13 +36,13 @@ public class HitObject {
         this.color = color;
         this.hit_time = hit_time;
         this.collided = true;
-        this.r_illuminationObject = new IlluminationObject(texture);
-        this.g_illuminationObject = new IlluminationObject(texture);
-        this.b_illuminationObject = new IlluminationObject(texture);
+        this.r_illuminationObject = new IlluminationObject(material, texture);
+        this.g_illuminationObject = new IlluminationObject(material, texture);
+        this.b_illuminationObject = new IlluminationObject(material, texture);
         this.material = material;
     }
 
-    public HitObject(Point hit_point, Vector normal_vector, Color color, double hit_time, IlluminationObject r_illuminationObject, IlluminationObject g_illuminationObject, IlluminationObject b_illuminationObject,Material material) {
+    public HitObject(Point hit_point, Vector normal_vector, Color color, double hit_time, IlluminationObject r_illuminationObject, IlluminationObject g_illuminationObject, IlluminationObject b_illuminationObject, Material material) {
         this.hit_point = hit_point;
         this.normal_vector = normal_vector;
         this.color = color;

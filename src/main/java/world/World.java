@@ -298,14 +298,14 @@ public class World {
                 double y = P.get_Y();
                 double z = P.get_Z();
                 double texture_param = illuminationObject.get_texture().texture(x,y,z);
-                double total_diffuse_coeff = illuminationObject.get_diffuse_reflection_coeff() * total_lambert;
-                double total_specular_coeff = illuminationObject.get_specular_reflection_coeff() * Math.pow(total_phong, illuminationObject.get_fallof());
-                double total_ambient_coeff = illuminationObject.get_ambient_reflection_coeff() * total_ambient;
+                double total_diffuse_coeff = illuminationObject.get_material().get_diffuse_reflection_coeff() * total_lambert;
+                double total_specular_coeff = illuminationObject.get_material().get_specular_reflection_coeff() * Math.pow(total_phong, illuminationObject.get_material().get_fallof());
+                double total_ambient_coeff = illuminationObject.get_material().get_ambient_reflection_coeff() * total_ambient;
                 total_local_intensity = texture_param * ( total_ambient_coeff + total_diffuse_coeff ) + total_specular_coeff;
             }else {
-                double total_diffuse_coeff = illuminationObject.get_diffuse_reflection_coeff() * total_lambert;
-                double total_specular_coeff = illuminationObject.get_specular_reflection_coeff() * Math.pow(total_phong, illuminationObject.get_fallof());
-                double total_ambient_coeff = illuminationObject.get_ambient_reflection_coeff() * total_ambient;
+                double total_diffuse_coeff = illuminationObject.get_material().get_diffuse_reflection_coeff() * total_lambert;
+                double total_specular_coeff = illuminationObject.get_material().get_specular_reflection_coeff() * Math.pow(total_phong, illuminationObject.get_material().get_fallof());
+                double total_ambient_coeff = illuminationObject.get_material().get_ambient_reflection_coeff() * total_ambient;
                 total_local_intensity = total_diffuse_coeff + total_specular_coeff + total_ambient_coeff;
             }
             /** Nog eens navragen of dit correct is of hoe ik dit beter zou kunnen oplossen **/
